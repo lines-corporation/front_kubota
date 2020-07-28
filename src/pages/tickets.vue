@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>チケット一覧</h2>
+    <h2>現在、申し込みできるチケット一覧</h2>
 
     <v-simple-table
       :fixed-header="false"

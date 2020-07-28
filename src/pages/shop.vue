@@ -6,18 +6,18 @@
         <v-col
           v-for="card in cards"
           :key="card.title"
-          :cols="card.flex"
         >
   <v-card>
     <v-img
       class="white--text align-end"
       height="200px"
+      width="300px"
       :src="card.src"
     >
     </v-img>
     <v-card-title>{{ card.title }}</v-card-title>
     <v-card-text class="text--primary">
-       
+      <div>価格：2,500円</div>
       <div>Whitehaven Beach</div>
 
     </v-card-text>

@@ -7,14 +7,38 @@
   <v-container fluid>
     <v-row>
       <v-col cols="4">
-        <v-subheader>第２メールアドレス</v-subheader>
+        <v-subheader>お名前</v-subheader>
       </v-col>
       <v-col cols="8">
           <v-text-field
-            v-model="email2"
-            label="第２メールアドレス"
+            v-model="name"
+            label="お名前"
             outlined
           ></v-text-field>
+      </v-col>
+     </v-row>
+    <v-row>
+      <v-col cols="4">
+        <v-subheader>メールアドレス</v-subheader>
+      </v-col>
+      <v-col cols="8">
+          <v-text-field
+            v-model="from_mail"
+            label="メールアドレス"
+            outlined
+          ></v-text-field>
+      </v-col>
+     </v-row>
+    <v-row>
+      <v-col cols="4">
+        <v-subheader>問い合わせ内容</v-subheader>
+      </v-col>
+      <v-col cols="8">
+          <v-textarea
+            v-model="body"
+            label="お問い合わせ内容"
+            outlined
+          ></v-textarea>
       </v-col>
      </v-row>
         <v-row>
@@ -43,7 +67,7 @@ export default {
   },
   created () {
     let self = this;
-    if(!self.$store.$auth.getToken('local')){
+    if(!self.$store.$auth.getToken('local') || 1){
       let url = "/rcms-api/1/token";
       this.$auth.ctx.$axios.post(url,{}).then(function(response) {
           self.$store.$auth.setToken('local',response.data.access_token);
@@ -53,13 +77,15 @@ export default {
   methods: {
     inquiry() {
       let self = this;
+      console.log(self.$store.$auth.getToken('local'));
+
       this.$store.$auth.ctx.$axios.post('/rcms-api/1/inquiry1/messages/send',
       {
-        from_mail:'test2@email.com',
+        from_mail:this.from_mail,
         inquiry_category_id: 1,
-        name: 'aaaa',
-        body: 'test',
-        ext_01: 'ext_01',
+        name: this.name,
+        body: this.body,
+        ext_01: 'test',
         ext_04: '1',
       },{
         headers: {'X-RCMS-API-ACCESS-TOKEN': this.$store.$auth.getToken('local')}
@@ -76,7 +102,9 @@ export default {
   data () {
     return {
       access_token: '',
-      email2:'',
+      from_mail:'',
+      name:'',
+      body:'',
     }
   },
 }

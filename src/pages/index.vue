@@ -1,10 +1,24 @@
 <template>
   <div class="container">
     <h2>NECファンクラブサイトへようこそ！</h2>
-    <form v-if="!auth.loggedIn" @submit.prevent="login">
+    <div v-if="!auth.loggedIn">
+    <p>ＮＥＣスポーツ公式サイトの新規会員申込ページから、会員登録をしてください。<br>
+      右側に表示している「お申込はこちらから」バナーから入会登録フォームへ進み、会員登録をお願いします。<br>
+<br>
+      【登録手順】 ◆◆詳細画面は「ご利用方法」をご覧ください◆◆<br>
+<br>
+      現在、臨時の入会フォームにて新規入会登録を受け付けております。<br>
+<br>
+      なお、会員証はご入会後お届けまでに１ヶ月程度お時間をいただいておりますので、ご承知おきください。<br>
+<br>
+      ◆ご注意ください！◆<br>
+      ＮＥＣイントラネットへの接続環境でなければ、「NECスポーツ後援会」にはご入会出来ませんのでご注意ください。<br>
+      また、手続の際は電子メールをご確認いただける状態でお願いいたします。<br>
+      </p>
+    <form @submit.prevent="login">
       <h3>既に会員の方は以下からログインをしてください。</h3>
        <NuxtLink to="/login">
-        Login
+        ログインはこちらから
       </NuxtLink>
       <p>
         <NuxtLink to="/reminder">
@@ -23,6 +37,34 @@
       </NuxtLink>
       </p>
     </form>
+
+    <h2>会員特典</h2>
+    <v-container fluid>
+      <v-row dense>
+        <v-col
+          v-for="card in cards"
+          :key="card.title"
+        >
+        <v-card
+        width="250px"
+        >
+          <v-img
+            class="white--text align-end"
+            height="200px"
+            :src="card.src"
+          >
+          </v-img>
+          <v-card-title>{{ card.title }}</v-card-title>
+          <v-card-text class="text--primary">
+            <div>説明を書く</div>
+
+          </v-card-text>
+        </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+    </div>
+  
     <div v-else>
       <h3>申し込み可能なチケットの一覧</h3>
 
@@ -78,6 +120,17 @@ export default {
   },
   data: () => ({
     topics_list:[],
+    cards: [
+      { title: '公式戦チケットが無料！', src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', flex: 4 },
+      { title: '入会記念ストラッププレゼント', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 4 },
+      { title: '年間特典グッズプレゼント！', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 4 },
+      { title: '卓上カレンダープレゼント', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 4 },
+      { title: '試合会場での応援グッズ配布', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 4 },
+      { title: '会員証の発行', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 4 },
+      { title: 'メールマガジンの発行', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 4 },
+      { title: '会員専用WEBサイトのご利用', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 4 },
+      { title: 'サポートショップでの特典', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 4 },
+    ],
   }),
 }
 </script>
