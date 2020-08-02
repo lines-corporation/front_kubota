@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <h2>NECファンクラブサイトへようこそ！</h2>
+    <h2 class="headline font-weight-bold mb-5">NECファンクラブサイトへようこそ！</h2>
     <div v-if="!auth.loggedIn">
-    <p>ＮＥＣスポーツ公式サイトの新規会員申込ページから、会員登録をしてください。<br>
+    <p  class="body-1">ＮＥＣスポーツ公式サイトの新規会員申込ページから、会員登録をしてください。<br>
       右側に表示している「お申込はこちらから」バナーから入会登録フォームへ進み、会員登録をお願いします。<br>
 <br>
       【登録手順】 ◆◆詳細画面は「ご利用方法」をご覧ください◆◆<br>
@@ -16,29 +16,31 @@
       また、手続の際は電子メールをご確認いただける状態でお願いいたします。<br>
       </p>
     <form @submit.prevent="login">
-      <h3>既に会員の方は以下からログインをしてください。</h3>
+      <h3 class="subtitle mb-3">既に会員の方は以下からログインをしてください。</h3>
+      <p  class="body-1">
        <NuxtLink to="/login">
         ログインはこちらから
       </NuxtLink>
-      <p>
+      </p>
+      <p  class="body-1">
         <NuxtLink to="/reminder">
           パスワードを忘れた方はこちらから
         </NuxtLink>
       </p>
-      <h3>会員登録はこちらから</h3>
-      <p>
+      <h3 class="subtitle mb-3">会員登録はこちらから</h3>
+      <p  class="body-1">
        <NuxtLink to="/form_nec">
         NECの方はこちらの会員登録フォームへ
       </NuxtLink>
       </p>
-      <p>
+      <p  class="body-1">
        <NuxtLink to="/form">
         社外の方はこちらの会員登録フォームへ
       </NuxtLink>
       </p>
     </form>
 
-    <h2>会員特典</h2>
+    <h2 class="headline font-weight-bold mb-5">会員特典</h2>
     <v-container fluid>
       <v-row dense>
         <v-col

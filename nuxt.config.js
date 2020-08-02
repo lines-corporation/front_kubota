@@ -24,7 +24,11 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    ],script: [
+      {
+        src: 'https://sandbox.paygent.co.jp/js/PaygentToken.js'
+      }
+    ],
   },
   /*
   ** Global CSS
@@ -80,9 +84,12 @@ export default {
      ignoreNotFoundWarnings: true
   },
   router: {
+    middleware: ['auth']
   },
   axios: {
-    baseURL: 'http://127.0.0.1',
+    //baseURL: 'http://127.0.0.1',
+    baseURL: 'https://ec-kuroco.a.kuroco.app',
+    //baseURL: 'https://member-necsports.g.kuroco.app',
   },
   auth: {
     localStorage: {

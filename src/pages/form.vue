@@ -332,6 +332,8 @@
 </template>
 
 <script>
+
+
 import axios from 'axios';
 
 export default {
@@ -347,20 +349,42 @@ export default {
   },
   methods: {
     regist() {
-      this.$auth.ctx.$axios.post('/rcms-api/1/members/insert',
-      {
-        email:'test2@email.com',
-        login_pwd: 'test1234',
-        nickname: 'aaaa',
-        text: 'test',
-      },{
-        headers: {'X-RCMS-API-ACCESS-TOKEN': this.$store.$auth.getToken('local')}
-      }
-      ).then(function(response) {
-        if (response.data.code == "200") {
-          console.log(response.data.columns);
+
+      let self = this;
+
+      let paygentToken = new PaygentToken();
+      paygentToken.createToken(
+      '40508', 'test_rJ2o0DcPx35l3fg1Hvwe1lfb', {
+      card_number:'4242424242424242',
+      expire_year:'20',
+      expire_month: '11',
+      cvc:'123',
+      name:'KENTA KATO'
+      },function(response) {
+  
+        self.$auth.ctx.$axios.post('/rcms-api/1/ec/purchase',
+        {
+          ec_payment_id: 58,
+          product_id: 41201,
+          quantity: 1,
+          card_token: response.tokenizedCardObject.token,
+        },{
+          withCredentials: true,
+          headers: {'X-RCMS-API-ACCESS-TOKEN': self.$store.$auth.getToken('local')}
         }
+        ).then(function(response) {
+          console.log(response);
+          if (response.data.code == "200") {
+            console.log(response.data.columns);
+          }
+          if(response.data.access_token){
+            self.$store.$auth.setToken('local',response.data.access_token);
+          }
+        }).catch(error => console.log(error));
+        
       });
+
+
     },
     save (birth) {
       this.$refs.menu.save(birth)
@@ -368,6 +392,14 @@ export default {
   },
   data () {
     return {
+      token: '',
+      card: {
+        name: 'OMISE VUEJS',
+        number: '4111111111111111',
+        expiration_month: '11',
+        expiration_year: '29',
+        security_code: '110'
+      },
       access_token: '',
       password_show: false,
       password: '',
@@ -379,6 +411,7 @@ export default {
       name: '',
       nameKana: '',
       zip: '',
+      sex: '',
       tdfk_cd: '',
       address1: '',
       address2: '',
@@ -437,7 +470,9 @@ export default {
       rules: {
           required: value => !!value || 'この項目は必須入力です',
           password_min: v => v.length >= 8 || '最低8文字以上を入力してください',
-          zip_length: v => v.length > 7 || '7文字の半角数字で入力してください',
+          zip_length: v => v.length <= 7 || '7文字の半角数字で入力してください',
+          is_hankaku: v => !!v.match(/^[ｦ-ﾟ 0-9]*$/) || '半角英数字で入力してください',
+          is_card_number: v => v.length >= 14 && v.length <= 16 || '16桁から18桁の数字で入力してください',
         },
     }
   },

@@ -36,14 +36,14 @@ export default {
     return {
       show1: false,
       form: {
-        email: 'edit',
-        password: 'edit1234'
+        email: 'kenta+guest@diverta.co.jp',
+        password: 'guest1234'
       }
     }
   },
   methods: {
     async login() {
-      let resp = await this.$auth.loginWith('local', { data: this.form }).then(
+      let resp = await this.$auth.loginWith('local', { data: this.form,withCredentials: true }).then(
         (response) => {
           this.$store.dispatch('snackbar/setMessage', 'ログインしました');
           this.$store.dispatch('snackbar/snackOn');
