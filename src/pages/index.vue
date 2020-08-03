@@ -29,12 +29,12 @@
       </p>
       <h3 class="subtitle mb-3">会員登録はこちらから</h3>
       <p  class="body-1">
-       <NuxtLink to="/form_nec">
+       <NuxtLink to="/regist">
         NECの方はこちらの会員登録フォームへ
       </NuxtLink>
       </p>
       <p  class="body-1">
-       <NuxtLink to="/form">
+       <NuxtLink to="/regist">
         社外の方はこちらの会員登録フォームへ
       </NuxtLink>
       </p>

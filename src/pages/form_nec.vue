@@ -386,7 +386,7 @@ export default {
     let self = this;
     if(!self.$store.$auth.getToken('local')){
       let url = "/rcms-api/1/token";
-      this.$auth.ctx.$axios.post(url,{}).then(function(response) {
+      this.$auth.ctx.$axios.post(url,{withCredentials: true}).then(function(response) {
           self.$store.$auth.setToken('local',response.data.access_token);
       });
     }
