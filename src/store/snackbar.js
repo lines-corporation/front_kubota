@@ -1,46 +1,46 @@
 export const state = () => ({
   isEnable: false,
   message: false,
-  color: 'success',
+  color: "success",
 })
 
 export const getters = {
-  status: state => {
+  status: (state) => {
     return state.isEnable
   },
-  message: state => {
+  message: (state) => {
     return state.message
-  }
+  },
 }
 
 export const mutations = {
-  setenable (state) {
+  setenable(state) {
     state.isEnable = true
   },
-  setdisable (state) {
+  setdisable(state) {
     state.isEnable = false
   },
-  setMessage (state, message) {
-    state.color = 'success';
-    state.message = message;
+  setMessage(state, message) {
+    state.color = "success"
+    state.message = message
   },
-  setError (state, message) {
-    state.color = 'error';
-    state.message = message;
-  }
+  setError(state, message) {
+    state.color = "error"
+    state.message = message
+  },
 }
 
 export const actions = {
-  snackOn ({commit}) {
-    commit('setenable')
+  snackOn({ commit }) {
+    commit("setenable")
   },
-  snackOff ({commit}) {
-    commit('setdisable')
+  snackOff({ commit }) {
+    commit("setdisable")
   },
-  setMessage ({commit}, message) {
-    commit('setMessage', message)
+  setMessage({ commit }, message) {
+    commit("setMessage", message)
   },
-  setError ({commit}, message) {
-    commit('setError', message)
-  }
+  setError({ commit }, message) {
+    commit("setError", message)
+  },
 }

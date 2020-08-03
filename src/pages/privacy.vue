@@ -22,19 +22,19 @@
 <script>
 export default {
   auth: false,
-  data () {
+  data() {
     return {
       items: [
         {
-          title: 'プライバシーポリシー',
-          to: '/privacy'
+          title: "プライバシーポリシー",
+          to: "/privacy",
         },
         {
-          title: '特定商取引法に基づく表示',
-          to: '/tokutei'
-        }
-      ]
+          title: "特定商取引法に基づく表示",
+          to: "/tokutei",
+        },
+      ],
     }
-  }
+  },
 }
 </script>
