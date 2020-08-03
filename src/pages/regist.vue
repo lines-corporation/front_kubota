@@ -66,6 +66,7 @@ export default {
           }
         })
         .catch((error) => {
+          console.log(error)
           this.$store.dispatch(
             "snackbar/setError",
             "メールアドレスが間違っています。再度、ご確認ください。"

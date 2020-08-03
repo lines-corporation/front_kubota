@@ -15,11 +15,7 @@
           </v-list-item-content>
         </template>
 
-        <v-list-item
-          v-for="subItem in item.items"
-          :key="subItem.title"
-          @click=""
-        >
+        <v-list-item v-for="subItem in item.items" :key="subItem.title">
           <v-list-item-content>
             <v-list-item-title v-text="subItem.title" />
           </v-list-item-content>

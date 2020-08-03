@@ -62,7 +62,7 @@ export default {
   },
   created() {
     let self = this
-    if (!self.$store.$auth.getToken("local") || 1) {
+    if (!self.$store.$auth.getToken("local")) {
       let url = "/rcms-api/1/token"
       this.$auth.ctx.$axios.post(url, {}).then(function (response) {
         self.$store.$auth.setToken("local", response.data.access_token)
