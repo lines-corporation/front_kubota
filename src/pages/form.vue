@@ -670,6 +670,7 @@ export default {
               email: this.email,
               email2: this.email2,
               login_pwd: this.password,
+              auto_login: 1,
             },
             {
               withCredentials: true,
@@ -680,6 +681,7 @@ export default {
           )
           .then(function (response) {
             console.log(response)
+            self.$store.$auth.setToken("local", response.data.access_token)
             self.$store.dispatch("snackbar/setMessage", "情報登録しました")
             self.$store.dispatch("snackbar/snackOn")
             self.e1 = 4
