@@ -12,7 +12,7 @@
         </p>
     <v-container
     id="scroll-target"
-    style="max-height: 400px"
+    style="max-height: 400px;border:1px solid;"
     class="overflow-y-auto"
     outlined
   >
