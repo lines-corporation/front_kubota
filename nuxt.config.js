@@ -81,8 +81,8 @@ export default {
   },
   axios: {
     //baseURL: 'http://127.0.0.1',
-    baseURL: "https://ec-kuroco.a.kuroco.app",
-    //baseURL: 'https://member-necsports.g.kuroco.app',
+    //baseURL: "https://ec-kuroco.a.kuroco.app",
+    baseURL: 'https://member-necsports.g.kuroco.app',
   },
   auth: {
     localStorage: {

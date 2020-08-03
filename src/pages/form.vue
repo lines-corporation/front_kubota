@@ -663,7 +663,7 @@ export default {
               tdfk_cd: this.tdfk_cd,
               address1: this.address1,
               address2: this.address2,
-              //address3: this.address3,
+              address3: this.address3,
               tel: this.tel,
               tel2: this.tel2,
               fax: this.fax,
