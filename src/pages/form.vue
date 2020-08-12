@@ -608,9 +608,6 @@ export default {
           },
           {
             withCredentials: true,
-            headers: {
-              "X-RCMS-API-ACCESS-TOKEN": self.$store.$auth.getToken("local"),
-            },
           }
         )
         .then(function (response) {
@@ -635,24 +632,10 @@ export default {
     this.$auth.ctx.$axios
       .get(url, {
         withCredentials: true,
-        headers: {
-          "X-RCMS-API-ACCESS-TOKEN": self.$store.$auth.getToken("local"),
-        },
       })
       .then(function (response) {
         console.log(response)
       })
-
-    if (!self.$store.$auth.getToken("local")) {
-      let url = "/rcms-api/1/token"
-      this.$auth.ctx.$axios
-        .post(url, { withCredentials: true })
-        .then(function (response) {
-          if (response.status == 200 && response.data.access_token) {
-            self.$store.$auth.setToken("local", response.data.access_token)
-          }
-        })
-    }
   },
   methods: {
     send_email() {
@@ -666,9 +649,6 @@ export default {
             },
             {
               withCredentials: true,
-              headers: {
-                "X-RCMS-API-ACCESS-TOKEN": self.$store.$auth.getToken("local"),
-              },
             }
           )
           .then(function (response) {
@@ -707,9 +687,6 @@ export default {
             },
             {
               withCredentials: true,
-              headers: {
-                "X-RCMS-API-ACCESS-TOKEN": self.$store.$auth.getToken("local"),
-              },
             }
           )
           .then(function (response) {
