@@ -100,20 +100,22 @@ export default {
           login: {
             url: "/rcms-api/1/login",
             method: "post",
+            withCredentials: true,
           },
           user: {
             url: "/rcms-api/1/profile",
             method: "get",
+            property: "user",
+            withCredentials: true,
           },
-          logout: { url: "/rcms-api/1/logout", method: "post" },
-        },
-        user: {
-          property: "user",
-          autoFetch: true,
+          logout: { 
+            url: "/rcms-api/1/logout",
+            method: "post",
+            withCredentials: true,
+          },
         },
         tokenType: false,
         tokenRequired: false,
-        globalToken: true,
         autoFetchUser: true,
       },
     },
