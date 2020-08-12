@@ -437,13 +437,31 @@
             <v-container fluid>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>性別</v-subheader>
+                  <v-subheader>料金プラン</v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-radio-group v-model="sex" row>
                     <v-radio label="男性" value="m" />
                     <v-radio label="女性" value="f" />
                   </v-radio-group>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-subheader>登録プレゼント</v-subheader>
+                </v-col>
+                <v-col cols="8">
+                  <v-radio-group v-model="sex" row>
+                    <v-radio label="男性" value="m" />
+                    <v-radio label="女性" value="f" />
+                  </v-radio-group>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12">
+                  <v-btn type="submit" block x-large color="success" dark>
+                    登録する
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-container>
@@ -612,12 +630,27 @@ export default {
     }
 
     let self = this
+
+    let url = "/rcms-api/1/profile"
+    this.$auth.ctx.$axios
+      .get(url, {
+        withCredentials: true,
+        headers: {
+          "X-RCMS-API-ACCESS-TOKEN": self.$store.$auth.getToken("local"),
+        },
+      })
+      .then(function (response) {
+        console.log(response)
+      })
+
     if (!self.$store.$auth.getToken("local")) {
       let url = "/rcms-api/1/token"
       this.$auth.ctx.$axios
         .post(url, { withCredentials: true })
         .then(function (response) {
-          self.$store.$auth.setToken("local", response.data.access_token)
+          if (response.status == 200 && response.data.access_token) {
+            self.$store.$auth.setToken("local", response.data.access_token)
+          }
         })
     }
   },
@@ -686,7 +719,14 @@ export default {
             self.$store.dispatch("snackbar/snackOn")
             self.e1 = 4
           })
-          .catch((error) => console.log(error))
+          .catch(function (error) {
+            self.$store.dispatch(
+              "snackbar/setError",
+              error.response.data.errors.join("\n")
+            )
+            self.$store.dispatch("snackbar/snackOn")
+            console.log(error)
+          })
       }
     },
     purchase() {
@@ -725,17 +765,20 @@ export default {
               )
               .then(function (response) {
                 console.log(response)
-                if (response.data.code == "200") {
-                  console.log(response.data.columns)
-                }
                 if (response.data.access_token) {
-                  self.$store.$auth.setToken("local", response.data.access_token)
+                  self.$store.$auth.setToken(
+                    "local",
+                    response.data.access_token
+                  )
                 }
+                self.$store.dispatch("snackbar/setMessage", "登録完了しました")
+                self.$store.dispatch("snackbar/snackOn")
+                self.$router.push("/")
               })
               .catch((error) => console.log(error))
           }
         )
-       }
+      }
     },
     save(birth) {
       this.$refs.menu.save(birth)
