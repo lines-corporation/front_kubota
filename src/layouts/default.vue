@@ -30,7 +30,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>NECSPORTS.NET Members</v-toolbar-title>
       <v-spacer />
-      <v-toolbar-title height="30" v-text="subtitle" />
+      <v-toolbar-title height="30" to="/mypage" v-text="subtitle" />
       <v-btn v-if="!auth.loggedIn" icon to="/login" nuxt>
         <v-icon>mdi-account</v-icon>
       </v-btn>
@@ -126,7 +126,12 @@ export default {
     },
     subtitle() {
       if (this.$store.$auth.loggedIn) {
-        return this.$auth.user.nickname + "さんでログイン中"
+        const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
+        let group_idnms = ""
+        Object.keys(group_ids).forEach(function (key) {
+          group_idnms += " " + group_ids[key]
+        })
+        return this.$auth.user.name1 + "さん" + group_idnms
       } else {
         return ""
       }

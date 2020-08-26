@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h2 class="headline font-weight-bold mb-5">
-      NECファンクラブサイトへようこそ！
+      NECファンクラブサイトへようこそ！0827
     </h2>
     <div v-if="!auth.loggedIn">
       <p class="body-1">
@@ -18,6 +18,7 @@
         ＮＥＣイントラネットへの接続環境でなければ、「NECスポーツ後援会」にはご入会出来ませんのでご注意ください。<br >
         また、手続の際は電子メールをご確認いただける状態でお願いいたします。<br >
       </p>
+
       <form @submit.prevent="login">
         <h3 class="subtitle mb-3">
           既に会員の方は以下からログインをしてください。
@@ -71,6 +72,15 @@
     </div>
 
     <div v-else>
+      <div v-if="can_upgrade">
+        <h3>有料会員へのご案内</h3>
+        <p class="body-1">
+          <NuxtLink to="/upgrade">
+            有料会員になる場合はこちらから
+          </NuxtLink>
+        </p>
+      </div>
+
       <h3>申し込み可能なチケットの一覧</h3>
 
       <v-simple-table :fixed-header="false">
@@ -112,8 +122,10 @@
 
 <script>
 export default {
+  middleware: "auth",
   auth: false,
   data: () => ({
+    can_upgrade: true,
     topics_list: [],
     cards: [
       {
@@ -190,8 +202,17 @@ export default {
   mounted() {
     if (this.$auth.loggedIn) {
       let self = this
-      let url = "/rcms-api/1/topics1"
-      this.$auth.ctx.$axios.get(url).then(function (response) {
+      const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
+      Object.keys(group_ids).forEach(function (key) {
+        if (["110", "108"].indexOf(key) !== -1) {
+          self.can_upgrade = false
+        }
+      })
+
+      let url = "/rcms-api/1/tickets"
+      this.$auth.ctx.$axios
+        .get(url)
+        .then(function (response) {
         self.topics_list = response.data.list
       })
     }
