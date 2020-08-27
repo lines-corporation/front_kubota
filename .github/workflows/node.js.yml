@@ -24,9 +24,12 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: dist
-          path: |
-            dist
-            functions/ssr/dist
+          path: dist
+      - name: Archive Production Artifact at function
+        uses: actions/upload-artifact@master
+        with:
+          name: functions_ssr_dist
+          path: functions/ssr/dist
   deploy:
     name: Deploy
     needs: build
@@ -38,6 +41,12 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: dist
+          path: dist
+      - name: Download Artifact at function
+        uses: actions/download-artifact@master
+        with:
+          name: functions_ssr_dist
+          path: functions/ssr/dist
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
