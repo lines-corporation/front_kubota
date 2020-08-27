@@ -17,6 +17,21 @@
        "source": "**",
        "function": "ssr"
      }
+    ],
+    "headers": [
+      {
+        "source" : "**/*.@(jpg|jpeg|gif|png|ico|webp)",
+        "headers" : [ {
+        "key" : "Cache-Control",
+        "value" : "max-age=31536000"
+        } ]
+      }, {
+        "source" : "**/*.@(js|css)",
+        "headers" : [ {
+        "key" : "Cache-Control",
+        "value" : "max-age=31536000"
+        } ]
+      }
     ]
   }
 }
