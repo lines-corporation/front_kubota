@@ -437,13 +437,34 @@
             <v-container fluid>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>性別</v-subheader>
+                  <v-subheader>プラン</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                  <v-radio-group v-model="sex" row>
-                    <v-radio label="男性" value="m" />
-                    <v-radio label="女性" value="f" />
+                  <v-radio-group v-model="group_id">
+                    <v-radio label="無料" value="105" />
+                    <v-radio label="NECレッドロケッツ会員 スター会員" value="110" />
+                    <v-radio label="NECレッドロケッツ会員 ロケッツ会員" value="109" />
+                    <v-radio label="NECグリーンロケッツ会員 スター会員" value="108" />
+                    <v-radio label="NECグリーンロケッツ会員 ロケッツ会員" value="106" />
                   </v-radio-group>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-subheader>会員特典</v-subheader>
+                </v-col>
+                <v-col cols="8">
+                  <v-radio-group v-model="goods">
+                    <v-radio label="オリジナルＴシャツ" value="105" />
+                    <v-radio label="応援グッズ" value="110" />
+                  </v-radio-group>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12">
+                  <v-btn type="submit" block x-large color="success" dark>
+                    登録する
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-container>
