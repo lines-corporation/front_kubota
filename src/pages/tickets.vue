@@ -40,6 +40,7 @@
 
 <script>
 export default {
+  auth: true,
   data: () => ({
     topics_list: [],
   }),
@@ -54,7 +55,7 @@ export default {
   mounted() {
     console.log(this.$auth.loggedIn)
     let self = this
-    let url = "/rcms-api/1/topics1"
+    let url = "/rcms-api/1/tickets"
     this.$auth.ctx.$axios.get(url).then(function (response) {
       self.topics_list = response.data.list
     })

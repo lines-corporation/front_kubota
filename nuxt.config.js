@@ -83,6 +83,7 @@ export default {
     //baseURL: 'http://127.0.0.1',
     //baseURL: "https://ec-kuroco.a.kuroco.app",
     baseURL: 'https://member-necsports.g.kuroco.app',
+    credentials: true,
   },
   auth: {
     localStorage: {
@@ -100,28 +101,19 @@ export default {
           login: {
             url: "/rcms-api/1/login",
             method: "post",
-            propertyName: "access_token",
           },
           user: {
             url: "/rcms-api/1/profile",
             method: "get",
             propertyName: false,
           },
-          logout: { url: "/rcms-api/1/logout", method: "post" },
+          logout: { 
+            url: "/rcms-api/1/logout",
+            method: "post",
+          },
         },
-        token: {
-          property: "access_token",
-          required: true,
-          type: "Bearer",
-        },
-        user: {
-          property: "user",
-          autoFetch: true,
-        },
-        tokenName: "X-RCMS-API-ACCESS-TOKEN",
-        tokenType: "",
-        tokenRequired: true,
-        globalToken: true,
+        tokenType: false,
+        tokenRequired: false,
         autoFetchUser: true,
       },
     },
