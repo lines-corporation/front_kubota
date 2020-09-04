@@ -2,7 +2,7 @@
   <div>
     <header>
       <h2>
-        社外会員登録
+        社内会員登録
       </h2>
     </header>
     <v-stepper v-model="e1">
@@ -159,7 +159,7 @@
         <v-stepper-content step="3">
           <header>
             <h2>
-              社外会員登録 情報登録
+              社内会員登録 情報登録
             </h2>
           </header>
           <v-form
@@ -169,6 +169,53 @@
             @submit.prevent="regist"
           >
             <v-container fluid>
+              <v-row>
+                <v-col cols="4">
+                  <v-subheader>所属</v-subheader>
+                </v-col>
+                <v-col cols="8">
+                  <v-select
+                    v-model="company_code"
+                    :items="company_codes"
+                    item-text="name"
+                    item-value="code"
+                    menu-props="auto"
+                    label="所属会社を選択してください"
+                    hide-details
+                    single-line
+                    outlined
+                  />
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col cols="4">
+                  <v-subheader>社員番号</v-subheader>
+                </v-col>
+                <v-col cols="8">
+                  <v-text-field
+                    v-model="employee_no"
+                    label="社員番号"
+                    :rules="[rules.required]"
+                    outlined
+                  />
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col cols="4">
+                  <v-subheader>社内文書メール</v-subheader>
+                </v-col>
+                <v-col cols="8">
+                  <v-text-field
+                    v-model="employee_mail"
+                    label="社内文書メール"
+                    :rules="[rules.required]"
+                    outlined
+                  />
+                </v-col>
+              </v-row>
+
               <v-row>
                 <v-col cols="4">
                   <v-subheader>お名前</v-subheader>
@@ -272,7 +319,6 @@
                     item-value="code"
                     menu-props="auto"
                     label="都道府県を選択してください"
-                    :rules="[rules.required]"
                     hide-details
                     single-line
                     outlined
@@ -339,7 +385,7 @@
                 </v-col>
                 <v-col cols="8">
                   <v-text-field
-                    v-model="tel2"
+                    v-model="m_tel"
                     label="携帯電話番号"
                     type="tel"
                     hint="ハイフンなしの半角数字をご入力ください"
@@ -370,11 +416,12 @@
                   </v-subheader>
                 </v-col>
                 <v-col cols="8">
-                  {{ email }}
                   <v-text-field
                     v-model="email"
+                    label="第１メールアドレス"
                     :rules="[rules.required]"
-                    type="hidden"
+                    type="email"
+                    outlined
                   />
                 </v-col>
               </v-row>
@@ -412,288 +459,7 @@
               <v-row>
                 <v-col cols="12">
                   <v-btn type="submit" block x-large color="success" dark>
-                    登録する
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </v-stepper-content>
-
-        <v-stepper-content step="4">
-          <header>
-            <h2>
-              プラン選択
-            </h2>
-          </header>
-          <v-form
-            ref="form4"
-            v-model="valid"
-            lazy-validation
-            @submit.prevent="purchase"
-          >
-            <v-container fluid>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>チーム選択（後から変更ができません）</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-radio-group v-model="team_color" row>
-              <v-radio
-                label="NECグリーンロケッツ"
-                value="red"
-              />
-              <v-radio
-                label="NECグリーンロケッツ"
-                value="green"
-              />
-            </v-radio-group>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>料金プラン</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-radio-group v-if="green_team" v-model="group_id">
-              <v-radio
-                label="NECグリーンロケッツ 無料会員"
-                value="105"
-                v-if="this_group_id == '105'"
-              />
-              <v-radio
-                label="NECグリーンロケッツ ロケッツ会員"
-                value="106"
-                v-if="this_group_id == '105' || this_group_id == '106'"
-              />
-              <v-radio label="NECグリーンロケッツ スター会員" value="108" />
-            </v-radio-group>
-            <v-radio-group v-if="red_team" v-model="group_id">
-              <v-radio label="NECレッドロケッツ 無料会員" value="111" />
-              <v-radio label="NECレッドロケッツ ロケッツ会員" value="109" />
-              <v-radio label="NECレッドロケッツ スター会員" value="110" />
-            </v-radio-group>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>支払方法</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-radio-group v-model="ec_payment_id">
-              <v-radio label="カード決済" value="58" />
-              <v-radio label="銀行振り込み" value="60" />
-              <v-radio label="コンビニ決済" value="59" />
-            </v-radio-group>
-            <p class="body-1" v-if="ec_payment_id=='60'">
-              振込先がメールで送信されますので、そちらで振込先をご確認ください。
-            </p>
-            <p class="body-1" v-if="ec_payment_id=='59'">
-              コンビニ決済用のメールが送信されますので、そちらの案内にそってお支払いをお願いいたします。
-            </p>
-            <div class="card-wrapper" v-if="ec_payment_id=='58'">
-              <div class="card-form">
-                <div class="card-list">
-                  <div class="card-item" v-bind:class="{ '-active' : isCardFlipped }">
-                    <div class="card-item__side -front">
-                      <div class="card-item__focus" v-bind:class="{'-active' : focusElementStyle }" v-bind:style="focusElementStyle" ref="focusElement"></div>
-                      <div class="card-item__cover">
-                        <img
-                        v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + currentCardBackground + '.jpeg'" class="card-item__bg">
-                      </div>
-                      
-                      <div class="card-item__wrapper">
-                        <div class="card-item__top">
-                          <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png" class="card-item__chip">
-                          <div class="card-item__type">
-                            <transition name="slide-fade-up">
-                              <img v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + getCardType + '.png'" v-if="getCardType" v-bind:key="getCardType" alt="" class="card-item__typeImg">
-                            </transition>
-                          </div>
-                        </div>
-                        <label for="cardNumber" class="card-item__number" ref="cardNumber">
-                          <template v-if="getCardType === 'amex'">
-                          <span v-for="(n, $index) in amexCardMask" :key="$index">
-                            <transition name="slide-fade-up">
-                              <div
-                                class="card-item__numberItem"
-                                v-if="$index > 4 && $index < 14 && cardNumber.length > $index && n.trim() !== ''"
-                              >*</div>
-                              <div class="card-item__numberItem"
-                                :class="{ '-active' : n.trim() === '' }"
-                                :key="$index" v-else-if="cardNumber.length > $index">
-                                {{cardNumber[$index]}}
-                              </div>
-                              <div
-                                class="card-item__numberItem"
-                                :class="{ '-active' : n.trim() === '' }"
-                                v-else
-                                :key="$index + 1"
-                              >{{n}}</div>
-                            </transition>
-                          </span>
-                          </template>
-
-                          <template v-else>
-                            <span v-for="(n, $index) in otherCardMask" :key="$index">
-                              <transition name="slide-fade-up">
-                                <div
-                                  class="card-item__numberItem"
-                                  v-if="$index > 4 && $index < 15 && cardNumber.length > $index && n.trim() !== ''"
-                                >*</div>
-                                <div class="card-item__numberItem"
-                                  :class="{ '-active' : n.trim() === '' }"
-                                  :key="$index" v-else-if="cardNumber.length > $index">
-                                  {{cardNumber[$index]}}
-                                </div>
-                                <div
-                                  class="card-item__numberItem"
-                                  :class="{ '-active' : n.trim() === '' }"
-                                  v-else
-                                  :key="$index + 1"
-                                >{{n}}</div>
-                              </transition>
-                            </span>
-                          </template>
-                        </label>
-                        <div class="card-item__content">
-                          <label for="cardName" class="card-item__info" ref="cardName">
-                            <div class="card-item__holder">クレジットカード番号</div>
-                            <transition name="slide-fade-up">
-                              <div class="card-item__name" v-if="cardName.length" key="1">
-                                <transition-group name="slide-fade-right">
-                                  <span class="card-item__nameItem" v-for="(n, $index) in cardName.replace(/\s\s+/g, ' ')" v-if="$index === $index" v-bind:key="$index + 1">{{n}}</span>
-                                </transition-group>
-                              </div>
-                              <div class="card-item__name" v-else key="2">お名前（ローマ字）</div>
-                            </transition>
-                          </label>
-                          <div class="card-item__date" ref="cardDate">
-                            <label for="cardMonth" class="card-item__dateTitle">有効期限</label>
-                            <label for="cardMonth" class="card-item__dateItem">
-                              <transition name="slide-fade-up">
-                                <span v-if="cardMonth" v-bind:key="cardMonth">{{cardMonth}}</span>
-                                <span v-else key="2">MM</span>
-                              </transition>
-                            </label>
-                            /
-                            <label for="cardYear" class="card-item__dateItem">
-                              <transition name="slide-fade-up">
-                                <span v-if="cardYear" v-bind:key="cardYear">{{String(cardYear).slice(2,4)}}</span>
-                                <span v-else key="2">YY</span>
-                              </transition>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-item__side -back">
-                      <div class="card-item__cover">
-                        <img
-                        v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + currentCardBackground + '.jpeg'" class="card-item__bg">
-                      </div>
-                      <div class="card-item__band"></div>
-                      <div class="card-item__cvv">
-                          <div class="card-item__cvvTitle">CVV</div>
-                          <div class="card-item__cvvBand">
-                            <span v-for="(n, $index) in cardCvv" :key="$index">
-                              *
-                            </span>
-
-                        </div>
-                          <div class="card-item__type">
-                              <img v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + getCardType + '.png'" v-if="getCardType" class="card-item__typeImg">
-                          </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-form__inner">
-                  <div class="card-input">
-                    <label for="cardNumber" class="card-input__label">クレジットカード番号</label>
-                    <input type="text" id="cardNumber" class="card-input__input" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off">
-                  </div>
-                  <div class="card-input">
-                    <label for="cardName" class="card-input__label">お名前（ローマ字）</label>
-                    <input type="text" id="cardName" class="card-input__input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
-                  </div>
-                  <div class="card-form__row">
-                    <div class="card-form__col">
-                      <div class="card-form__group">
-                        <label for="cardMonth" class="card-input__label">有効期限</label>
-                        <select class="card-input__input -select" id="cardMonth" v-model="cardMonth" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
-                          <option value="" disabled selected>Month</option>
-                          <option v-bind:value="n < 10 ? '0' + n : n" v-for="n in 12" v-bind:disabled="n < minCardMonth" v-bind:key="n">
-                              {{n < 10 ? '0' + n : n}}
-                          </option>
-                        </select>
-                        <select class="card-input__input -select" id="cardYear" v-model="cardYear" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
-                          <option value="" disabled selected>Year</option>
-                          <option v-bind:value="$index + minCardYear" v-for="(n, $index) in 12" v-bind:key="n">
-                              {{$index + minCardYear}}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="card-form__col -cvv">
-                      <div class="card-input">
-                        <label for="cardCvv" class="card-input__label">CVV</label>
-                        <input type="text" class="card-input__input" id="cardCvv" maxlength="4" v-model="cardCvv" v-on:focus="flipCard(true)" v-on:blur="flipCard(false)" autocomplete="off">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>登録プレゼント</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-radio-group v-model="present">
-              <v-radio label="オリジナルユニフォーム" value="1" />
-              <v-radio label="オリジナルグッズ" value="2" />
-            </v-radio-group>
-          </v-col>
-        </v-row>
-              <v-row>
-<<<<<<< HEAD
-                <v-col cols="4">
-                  <v-subheader>プラン</v-subheader>
-                </v-col>
-                <v-col cols="8">
-                  <v-radio-group v-model="group_id">
-                    <v-radio label="無料" value="105" />
-                    <v-radio label="NECレッドロケッツ会員 スター会員" value="110" />
-                    <v-radio label="NECレッドロケッツ会員 ロケッツ会員" value="109" />
-                    <v-radio label="NECグリーンロケッツ会員 スター会員" value="108" />
-                    <v-radio label="NECグリーンロケッツ会員 ロケッツ会員" value="106" />
-                  </v-radio-group>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="4">
-                  <v-subheader>会員特典</v-subheader>
-                </v-col>
-                <v-col cols="8">
-                  <v-radio-group v-model="goods">
-                    <v-radio label="オリジナルＴシャツ" value="105" />
-                    <v-radio label="応援グッズ" value="110" />
-                  </v-radio-group>
-=======
-                <v-col cols="12">
-                  <v-btn type="submit" block x-large color="success" dark>
-                    登録する
-                  </v-btn>
->>>>>>> 7acb3d0378fcfd4c2ea0a9473b09ea01d5d2e36d
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <v-btn type="submit" block x-large color="success" dark>
-                    登録する
+                    規約に同意して登録する
                   </v-btn>
                 </v-col>
               </v-row>
@@ -706,130 +472,136 @@
 </template>
 
 <script>
+import axios from "axios"
+
 export default {
   auth: false,
   data() {
     return {
-      email_hash: "",
       valid: true,
       e1: 1,
-      token: "",
-      team_color: false,
-      red_team: false,
-      green_team: false,
-      group_id: false,
-      this_group_id: false,
-      present: "1",
-      ec_payment_id: false,
-      card: {
-        name: "OMISE VUEJS",
-        number: "4111111111111111",
-        expiration_month: "11",
-        expiration_year: "29",
-        security_code: "110",
-      },
       access_token: "",
       password_show: false,
-      password: "test1234",
+      password: "",
       email: "",
-      fax: "0332673900",
-      tel: "0332673900",
-      tel2: "09027658176",
-      email2: "kenta+email2@diverta.co.jp",
-      name: "かとう",
-      nameKana: "カトウ",
-      zip: "1620823",
-      sex: "m",
-      tdfk_cd: "13",
-      address1: "aaa",
-      address2: "bbb",
-      address3: "ccc",
-      birth: "1976-05-25",
+      fax: "",
+      tel: "",
+      m_tel: "",
+      email2: "",
+      employee_no: "",
+      employee_mail: "",
+      name: "",
+      nameKana: "",
+      zip: "",
+      tdfk_cd: "",
+      address1: "",
+      address2: "",
+      address3: "",
+      birth: "",
       menu: false,
+      company_code: "company_code",
+      company_codes: [
+        { header: "あ" },
+        { code: "000001", name: "000001 ＮＥＣ" },
+        { code: "139226", name: "139226 ＮＥＣエンベデッドプロダクツ" },
+        { header: "か" },
+        { code: "111003", name: "111003 ＮＥＣ企業年金基金" },
+        { code: "114921", name: "114921 ＮＥＣキャピタルソリューション" },
+        { code: "111002", name: "111002 日本電気健康保険組合" },
+        { code: "113320", name: "113320 日本電気航空宇宙システム" },
+        { code: "113923", name: "113923 国際社会経済研究所" },
+        { header: "さ" },
+        { code: "112211", name: "112211 ＮＥＣ静岡ビジネス" },
+        { code: "114330", name: "114330 ＮＥＣスペーステクノロジー" },
+        { code: "113414", name: "113414 ＮＥＣソリューションイノベータ" },
+        { header: "た" },
+        { code: "113105", name: "113105 ＮＥＣ通信システム" },
+        { code: "113901", name: "113901 ＮＥＣディスプレイソリューション" },
+        { code: "113980", name: "113980 ＮＥＣ特許技術情報センター" },
+        { header: "な" },
+        { code: "113460", name: "113460 ＮＥＣネクサソリューションズ" },
+        { code: "113305", name: "113305 ＮＥＣネッツエスアイ" },
+        { code: "113307", name: "113307 ＮＥＣネッツエスアイ・サービス" },
+        { code: "112206", name: "112206 ＮＥＣネットイノベーション" },
+        { code: "113332", name: "113332 ＮＥＣネットワーク・センサ" },
+        { header: "は" },
+        { code: "113947", name: "113947 ＮＥＣＶＡＬＷＡＹ" },
+        { code: "113953", name: "113953 ＮＥＣファシリティーズ" },
+        { code: "113412", name: "113412 ＮＥＣフィールディング" },
+        {
+          code: "139070",
+          name: "113332 139070 ＮＥＣフィールディングシステムテクノロジー",
+        },
+        { code: "112743", name: "112743 ＮＥＣプラットフォームズ" },
+        { code: "113968", name: "113968 ＮＥＣフレンドリースタフ" },
+        { code: "139225", name: "113968 ＮＥＣパーソナルコンピュータ" },
+        { header: "ま" },
+        { code: "113220", name: "113220 ＮＥＣマグナスコミュニケーションズ" },
+        { code: "113997", name: "113997 ＮＥＣマネジメントパートナー" },
+        { header: "ら" },
+        { code: "113941", name: "113941 ＮＥＣライベックス" },
+      ],
       arrTdfk_cd: [
-        { code: "01", name: "北海道" },
-        { code: "02", name: "青森県" },
-        { code: "03", name: "岩手県" },
-        { code: "04", name: "宮城県" },
-        { code: "05", name: "秋田県" },
-        { code: "06", name: "山形県" },
-        { code: "07", name: "福島県" },
-        { code: "08", name: "茨城県" },
-        { code: "09", name: "栃木県" },
-        { code: "10", name: "群馬県" },
-        { code: "11", name: "埼玉県" },
-        { code: "12", name: "千葉県" },
-        { code: "13", name: "東京都" },
-        { code: "14", name: "神奈川県" },
-        { code: "15", name: "新潟県" },
-        { code: "16", name: "富山県" },
-        { code: "17", name: "石川県" },
-        { code: "18", name: "福井県" },
-        { code: "19", name: "山梨県" },
-        { code: "20", name: "長野県" },
-        { code: "21", name: "岐阜県" },
-        { code: "22", name: "静岡県" },
-        { code: "23", name: "愛知県" },
-        { code: "24", name: "三重県" },
-        { code: "25", name: "滋賀県" },
-        { code: "26", name: "京都府" },
-        { code: "27", name: "大阪府" },
-        { code: "28", name: "兵庫県" },
-        { code: "29", name: "奈良県" },
-        { code: "30", name: "和歌山県" },
-        { code: "31", name: "鳥取県" },
-        { code: "32", name: "島根県" },
-        { code: "33", name: "岡山県" },
-        { code: "34", name: "広島県" },
-        { code: "35", name: "山口県" },
-        { code: "36", name: "徳島県" },
-        { code: "37", name: "香川県" },
-        { code: "38", name: "愛媛県" },
-        { code: "39", name: "高知県" },
-        { code: "40", name: "福岡県" },
-        { code: "41", name: "佐賀県" },
-        { code: "42", name: "長崎県" },
-        { code: "43", name: "熊本県" },
-        { code: "44", name: "大分県" },
-        { code: "45", name: "宮崎県" },
-        { code: "46", name: "鹿児島県" },
-        { code: "47", name: "沖縄県" },
-        { code: "99", name: "海外" },
+        { code: "北海道", name: "北海道" },
+        { code: "青森県", name: "青森県" },
+        { code: "岩手県", name: "岩手県" },
+        { code: "宮城県", name: "宮城県" },
+        { code: "秋田県", name: "秋田県" },
+        { code: "山形県", name: "山形県" },
+        { code: "福島県", name: "福島県" },
+        { code: "茨城県", name: "茨城県" },
+        { code: "栃木県", name: "栃木県" },
+        { code: "群馬県", name: "群馬県" },
+        { code: "埼玉県", name: "埼玉県" },
+        { code: "千葉県", name: "千葉県" },
+        { code: "東京都", name: "東京都" },
+        { code: "神奈川県", name: "神奈川県" },
+        { code: "新潟県", name: "新潟県" },
+        { code: "山梨県", name: "山梨県" },
+        { code: "長野県", name: "長野県" },
+        { code: "富山県", name: "富山県" },
+        { code: "石川県", name: "石川県" },
+        { code: "福井県", name: "福井県" },
+        { code: "静岡県", name: "静岡県" },
+        { code: "愛知県", name: "愛知県" },
+        { code: "岐阜県", name: "岐阜県" },
+        { code: "三重県", name: "三重県" },
+        { code: "滋賀県", name: "滋賀県" },
+        { code: "京都府", name: "京都府" },
+        { code: "大阪府", name: "大阪府" },
+        { code: "兵庫県", name: "兵庫県" },
+        { code: "奈良県", name: "奈良県" },
+        { code: "和歌山県", name: "和歌山県" },
+        { code: "鳥取県", name: "鳥取県" },
+        { code: "島根県", name: "島根県" },
+        { code: "岡山県", name: "岡山県" },
+        { code: "広島県", name: "広島県" },
+        { code: "山口県", name: "山口県" },
+        { code: "徳島県", name: "徳島県" },
+        { code: "香川県", name: "香川県" },
+        { code: "愛媛県", name: "愛媛県" },
+        { code: "高知県", name: "高知県" },
+        { code: "福岡県", name: "福岡県" },
+        { code: "佐賀県", name: "佐賀県" },
+        { code: "長崎県", name: "長崎県" },
+        { code: "熊本県", name: "熊本県" },
+        { code: "大分県", name: "大分県" },
+        { code: "宮崎県", name: "宮崎県" },
+        { code: "鹿児島県", name: "鹿児島県" },
+        { code: "沖縄県", name: "沖縄県" },
       ],
       rules: {
         required: (value) => !!value || "この項目は必須入力です",
         password_min: (v) => v.length >= 8 || "最低8文字以上を入力してください",
-        zip_length: (v) => v.length <= 7 || "7文字の半角数字で入力してください",
-        is_hankaku: (v) =>
-          !!v.match(/^[ｦ-ﾟ 0-9]*$/) || "半角英数字で入力してください",
-        is_card_number: (v) =>
-          (v.length >= 14 && v.length <= 16) ||
-          "16桁から18桁の数字で入力してください",
+        zip_length: (v) => v.length > 7 || "7文字の半角数字で入力してください",
       },
-      currentCardBackground: Math.floor(Math.random()* 25 + 1), // just for fun :D
-      cardName: "",
-      cardNumber: "",
-      cardMonth: "",
-      cardYear: "",
-      cardCvv: "",
-      minCardYear: new Date().getFullYear(),
-      amexCardMask: "#### ###### #####",
-      otherCardMask: "#### #### #### ####",
-      cardNumberTemp: "",
-      isCardFlipped: false,
-      focusElementStyle: null,
-      isInputFocused: false,
     }
-  },
-  mounted() {
-    this.cardNumberTemp = this.otherCardMask;
   },
   watch: {
     menu(val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"))
     },
     zip: function (val) {
-      /*
       if (7 != val.length) {
         this.tdfk_cd = ""
         this.address1 = ""
@@ -849,863 +621,60 @@ export default {
           self.address2 = ""
         }
       })
-      */
-    },
-    cardYear () {
-      if (this.cardMonth < this.minCardMonth) {
-        this.cardMonth = "";
-      }
     },
   },
   created() {
-    if (this.$route.query.key) {
-      this.email_hash = this.$route.query.key
-      let self = this
-      self.$auth.ctx.$axios
-        .post(
-          "/rcms-api/1/member/invite",
-          {
-            email_hash: this.email_hash,
-          },
-          {
-            withCredentials: true,
-          }
-        )
+    let self = this
+    if (!self.$store.$auth.getToken("local")) {
+      let url = "/rcms-api/1/token"
+      this.$auth.ctx.$axios
+        .post(url, { withCredentials: true })
         .then(function (response) {
-          console.log(response)
-          self.email = response.data.data.email
-          self.$store.dispatch(
-            "snackbar/setMessage",
-            "メールアドレスを確認しました"
-          )
-          self.$store.dispatch("snackbar/snackOn")
-          self.e1 = 3
-        })
-        .catch(function (error) {
-          console.log(error)
-          self.e1 = 2
+          self.$store.$auth.setToken("local", response.data.access_token)
         })
     }
-
-    let self = this
-
-    let url = "/rcms-api/1/profile"
-    this.$auth.ctx.$axios
-      .get(url, {
-        withCredentials: true,
-      })
-      .then(function (response) {
-        console.log(response)
-      })
-  },
-  computed: {
-    getCardType () {
-      let number = this.cardNumber;
-      let re = new RegExp("^4");
-      if (number.match(re) != null) return "visa";
-
-      re = new RegExp("^(34|37)");
-      if (number.match(re) != null) return "amex";
-
-      re = new RegExp("^5[1-5]");
-      if (number.match(re) != null) return "mastercard";
-
-      re = new RegExp("^6011");
-      if (number.match(re) != null) return "discover";
-      
-      re = new RegExp('^9792')
-      if (number.match(re) != null) return 'troy'
-
-      return "visa"; // default type
-    },
-		generateCardNumberMask () {
-			return this.getCardType === "amex" ? this.amexCardMask : this.otherCardMask;
-    },
-    minCardMonth () {
-      if (this.cardYear === this.minCardYear) return new Date().getMonth() + 1;
-      return 1;
-    },
   },
   methods: {
     send_email() {
       if (this.$refs.form1.validate()) {
-        let self = this
-        self.$auth.ctx.$axios
-          .post(
-            "/rcms-api/1/member/invite",
-            {
-              email: this.email,
-            },
-            {
-              withCredentials: true,
-            }
-          )
-          .then(function (response) {
-            console.log(response)
-            self.$store.dispatch("snackbar/setMessage", "メール送信しました")
-            self.$store.dispatch("snackbar/snackOn")
-            self.e1 = 2
-          })
-          .catch((error) => console.log(error))
+        this.$store.dispatch("snackbar/setMessage", "メール送信しました")
+        this.$store.dispatch("snackbar/snackOn")
+        this.e1 = 2
       }
+    },
+    confirm_passcode() {
+      this.$store.dispatch("snackbar/setError", "パスコードが不正です")
+      this.$store.dispatch("snackbar/snackOn")
+      //this.e1 = 3;
     },
     regist() {
-      if (this.$refs.form3.validate()) {
-        let self = this
-        self.$auth.ctx.$axios
-          .post(
-            "/rcms-api/1/member/regist",
-            {
-              name1: this.name,
-              namekana1: this.nameKana,
-              sex: this.sex,
-              birth: this.birth,
-              zip_main: this.zip.substr(0, 3),
-              zip_sub: this.zip.substr(3),
-              tdfk_cd: this.tdfk_cd,
-              address1: this.address1,
-              address2: this.address2,
-              address3: this.address3,
-              tel: this.tel,
-              tel2: this.tel2,
-              fax: this.fax,
-              email: this.email,
-              email2: this.email2,
-              login_pwd: this.password,
-              auto_login: 1,
-            },
-            {
-              withCredentials: true,
-            }
-          )
-          .then(function (response) {
-            console.log(response)
-            self.$store.$auth.setToken("local", response.data.access_token)
-            self.$store.dispatch("snackbar/setMessage", "情報登録しました")
-            self.$store.dispatch("snackbar/snackOn")
-            self.e1 = 4
-
-            const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
-            Object.keys(group_ids).forEach(function (key) {
-              if (["105","106","108"].indexOf(key) !== -1) {
-                self.green_team = true
-                self.group_id = key
-              }
-              if (["109","110","111"].indexOf(key) !== -1) {
-                self.red_team = true
-                self.group_id = key
-              }
-            })
-            self.this_group_id = self.group_id
-
-          })
-          .catch(function (error) {
-            self.$store.dispatch(
-              "snackbar/setError",
-              error.response.data.errors.join("\n")
-            )
-            self.$store.dispatch("snackbar/snackOn")
-            console.log(error)
-          })
-      }
-    },
-    purchase() {
-      if (this.$refs.form4.validate()) {
-        let self = this
-
-        let paygentToken = new PaygentToken()
-        paygentToken.createToken(
-          "40508",
-          "test_rJ2o0DcPx35l3fg1Hvwe1lfb",
+      this.$auth.ctx.$axios
+        .post(
+          "/rcms-api/1/members/insert",
           {
-            card_number: "4242424242424242",
-            expire_year: "20",
-            expire_month: "11",
-            cvc: "123",
-            name: "KENTA KATO",
+            email: "test2@email.com",
+            login_pwd: "test1234",
+            nickname: "aaaa",
+            text: "test",
           },
-          function (response) {
-            self.$auth.ctx.$axios
-              .post(
-                "/rcms-api/1/ec/purchase",
-                {
-                  ec_payment_id: 58,
-                  product_id: 41201,
-                  quantity: 1,
-                  card_token: response.tokenizedCardObject.token,
-                },
-                {
-                  withCredentials: true,
-                  headers: {
-                    "X-RCMS-API-ACCESS-TOKEN": self.$store.$auth.getToken(
-                      "local"
-                    ),
-                  },
-                }
-              )
-              .then(function (response) {
-                console.log(response)
-                if (response.data.access_token) {
-                  self.$store.$auth.setToken(
-                    "local",
-                    response.data.access_token
-                  )
-                }
-                self.$store.dispatch("snackbar/setMessage", "登録完了しました")
-                self.$store.dispatch("snackbar/snackOn")
-                self.$router.push("/")
-              })
-              .catch((error) => console.log(error))
+          {
+            headers: {
+              "X-RCMS-API-ACCESS-TOKEN": this.$store.$auth.getToken("local"),
+            },
           }
         )
-      }
+        .then(function (response) {
+          if (response.data.code == "200") {
+            console.log(response.data.columns)
+          }
+        })
     },
     save(birth) {
       this.$refs.menu.save(birth)
-    },
-    flipCard (status) {
-      this.isCardFlipped = status;
-    },
-    focusInput (e) {
-      this.isInputFocused = true;
-      let targetRef = e.target.dataset.ref;
-      let target = this.$refs[targetRef];
-      this.focusElementStyle = {
-        width: `${target.offsetWidth}px`,
-        height: `${target.offsetHeight}px`,
-        transform: `translateX(${target.offsetLeft}px) translateY(${target.offsetTop}px)`
-      }
-    },
-    blurInput() {
-      let vm = this;
-      setTimeout(() => {
-        if (!vm.isInputFocused) {
-          vm.focusElementStyle = null;
-        }
-      }, 300);
-      vm.isInputFocused = false;
     },
   },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-//@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600,700|Source+Sans+Pro:400,600,700&display=swap");
-
-.card-wrapper {
-  //min-height: 100vh;
-  display: flex;
-  //padding: 50px 15px;
-  @media screen and (max-width: 700px), (max-height: 500px) {
-    flex-wrap: wrap;
-    flex-direction: column;
-  }
-}
-
-.card-form {
-  max-width: 570px;
-  //margin: auto;
-  width: 100%;
-
-  @media screen and (max-width: 576px) {
-    margin: 0 auto;
-  }
-
-  &__inner {
-    background: #fff;
-    // box-shadow: 3px 13px 30px 0px rgba(21, 34, 67, 0.2);
-    //box-shadow: 0 30px 60px 0 rgba(90, 116, 148, 0.4);
-    border-radius: 10px;
-    padding: 35px;
-    padding-top: 180px;
-
-    @media screen and (max-width: 480px) {
-      padding: 25px;
-      padding-top: 165px;
-    }
-    @media screen and (max-width: 360px) {
-      padding: 15px;
-      padding-top: 165px;
-    }
-  }
-
-  &__row {
-    display: flex;
-    align-items: flex-start;
-    @media screen and (max-width: 480px) {
-      flex-wrap: wrap;
-    }
-  }
-
-  &__col {
-    flex: auto;
-    margin-right: 35px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-
-    @media screen and (max-width: 480px) {
-      margin-right: 0;
-      flex: unset;
-      width: 100%;
-      margin-bottom: 20px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    &.-cvv {
-      max-width: 150px;
-      @media screen and (max-width: 480px) {
-        max-width: initial;
-      }
-    }
-  }
-
-  &__group {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-
-    .card-input__input {
-      flex: 1;
-      margin-right: 15px;
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-
-  &__button {
-    width: 100%;
-    height: 55px;
-    background: #2364d2;
-    border: none;
-    border-radius: 5px;
-    font-size: 22px;
-    font-weight: 500;
-    font-family: "Source Sans Pro", sans-serif;
-    box-shadow: 3px 10px 20px 0px rgba(35, 100, 210, 0.3);
-    color: #fff;
-    margin-top: 20px;
-    cursor: pointer;
-
-    @media screen and (max-width: 480px) {
-      margin-top: 10px;
-    }
-  }
-}
-
-.card-item {
-  max-width: 430px;
-  height: 270px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  z-index: 2;
-  width: 100%;
-
-  @media screen and (max-width: 480px) {
-    max-width: 310px;
-    height: 220px;
-    width: 90%;
-  }
-
-  @media screen and (max-width: 360px) {
-    height: 180px;
-  }
-
-  &.-active {
-    .card-item__side {
-      &.-front {
-        transform: perspective(1000px) rotateY(180deg) rotateX(0deg)
-          rotateZ(0deg);
-      }
-      &.-back {
-        transform: perspective(1000px) rotateY(0) rotateX(0deg) rotateZ(0deg);
-        // box-shadow: 0 20px 50px 0 rgba(81, 88, 206, 0.65);
-      }
-    }
-  }
-
-  &__focus {
-    position: absolute;
-    z-index: 3;
-    border-radius: 5px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    transition: all 0.35s cubic-bezier(0.71, 0.03, 0.56, 0.85);
-    opacity: 0;
-    pointer-events: none;
-    overflow: hidden;
-    border: 2px solid rgba(255, 255, 255, 0.65);
-
-    &:after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgb(8, 20, 47);
-      height: 100%;
-      border-radius: 5px;
-      filter: blur(25px);
-      opacity: 0.5;
-    }
-
-    &.-active {
-      opacity: 1;
-    }
-  }
-
-  &__side {
-    border-radius: 15px;
-    overflow: hidden;
-    // box-shadow: 3px 13px 30px 0px rgba(11, 19, 41, 0.5);
-    box-shadow: 0 20px 60px 0 rgba(14, 42, 90, 0.55);
-    transform: perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg);
-    transform-style: preserve-3d;
-    transition: all 0.8s cubic-bezier(0.71, 0.03, 0.56, 0.85);
-    backface-visibility: hidden;
-    height: 100%;
-
-    &.-back {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      transform: perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg);
-      z-index: 2;
-      padding: 0;
-      // background-color: #2364d2;
-      // background-image: linear-gradient(
-      //   43deg,
-      //   #4158d0 0%,
-      //   #8555c7 46%,
-      //   #2364d2 100%
-      // );
-      height: 100%;
-
-      .card-item__cover {
-        transform: rotateY(-180deg)
-      }
-    }
-  }
-  &__bg {
-    max-width: 100%;
-    display: block;
-    max-height: 100%;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-  &__cover {
-    height: 100%;
-    background-color: #1c1d27;
-    position: absolute;
-    height: 100%;
-    background-color: #1c1d27;
-    left: 0;
-    top: 0;
-    width: 100%;
-    border-radius: 15px;
-    overflow: hidden;
-    &:after {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(6, 2, 29, 0.45);
-    }
-  }
-
-  &__top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 40px;
-    padding: 0 10px;
-
-    @media screen and (max-width: 480px) {
-      margin-bottom: 25px;
-    }
-    @media screen and (max-width: 360px) {
-      margin-bottom: 15px;
-    }
-  }
-
-  &__chip {
-    width: 60px;
-    @media screen and (max-width: 480px) {
-      width: 50px;
-    }
-    @media screen and (max-width: 360px) {
-      width: 40px;
-    }
-  }
-
-  &__type {
-    height: 45px;
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-    max-width: 100px;
-    margin-left: auto;
-    width: 100%;
-
-    @media screen and (max-width: 480px) {
-      height: 40px;
-      max-width: 90px;
-    }
-    @media screen and (max-width: 360px) {
-      height: 30px;
-    }
-  }
-
-  &__typeImg {
-    max-width: 100%;
-    object-fit: contain;
-    max-height: 100%;
-    object-position: top right;
-  }
-
-  &__info {
-    color: #fff;
-    width: 100%;
-    max-width: calc(100% - 85px);
-    padding: 10px 15px;
-    font-weight: 500;
-    display: block;
-
-    cursor: pointer;
-
-    @media screen and (max-width: 480px) {
-      padding: 10px;
-    }
-  }
-
-  &__holder {
-    opacity: 0.7;
-    font-size: 13px;
-    margin-bottom: 6px;
-    @media screen and (max-width: 480px) {
-      font-size: 12px;
-      margin-bottom: 5px;
-    }
-  }
-
-  &__wrapper {
-    font-family: "Source Code Pro", monospace;
-    padding: 25px 15px;
-    position: relative;
-    z-index: 4;
-    height: 100%;
-    text-shadow: 7px 6px 10px rgba(14, 42, 90, 0.8);
-    user-select: none;
-    @media screen and (max-width: 480px) {
-      padding: 20px 10px;
-    }
-  }
-
-  &__name {
-    font-size: 18px;
-    line-height: 1;
-    white-space: nowrap;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-transform: uppercase;
-    @media screen and (max-width: 480px) {
-      font-size: 16px;
-    }
-  }
-  &__nameItem {
-    display: inline-block;
-    min-width: 8px;
-    position: relative;
-  }
-
-  &__number {
-    font-weight: 500;
-    line-height: 1;
-    color: #fff;
-    font-size: 27px;
-    margin-bottom: 35px;
-    display: inline-block;
-    padding: 10px 15px;
-    cursor: pointer;
-
-    @media screen and (max-width: 480px) {
-      font-size: 21px;
-      margin-bottom: 15px;
-      padding: 10px 10px;
-    }
-
-    @media screen and (max-width: 360px) {
-      font-size: 19px;
-      margin-bottom: 10px;
-      padding: 10px 10px;
-    }
-  }
-
-  &__numberItem {
-    width: 16px;
-    display: inline-block;
-    &.-active {
-      width: 30px;
-    }
-
-    @media screen and (max-width: 480px) {
-      width: 13px;
-
-      &.-active {
-        width: 16px;
-      }
-    }
-
-    @media screen and (max-width: 360px) {
-      width: 12px;
-
-      &.-active {
-        width: 8px;
-      }
-    }
-  }
-
-  &__content {
-    color: #fff;
-    display: flex;
-    align-items: flex-start;
-  }
-
-  &__date {
-    flex-wrap: wrap;
-    font-size: 18px;
-    margin-left: auto;
-    padding: 10px;
-    display: inline-flex;
-    width: 80px;
-    white-space: nowrap;
-    flex-shrink: 0;
-    cursor: pointer;
-
-    @media screen and (max-width: 480px) {
-      font-size: 16px;
-    }
-  }
-
-  &__dateItem {
-    position: relative;
-    span {
-      width: 22px;
-      display: inline-block;
-    }
-  }
-
-  &__dateTitle {
-    opacity: 0.7;
-    font-size: 13px;
-    padding-bottom: 6px;
-    width: 100%;
-
-    @media screen and (max-width: 480px) {
-      font-size: 12px;
-      padding-bottom: 5px;
-    }
-  }
-  &__band {
-    background: rgba(0, 0, 19, 0.8);
-    width: 100%;
-    height: 50px;
-    margin-top: 30px;
-    position: relative;
-    z-index: 2;
-    @media screen and (max-width: 480px) {
-      margin-top: 20px;
-    }
-    @media screen and (max-width: 360px) {
-      height: 40px;
-      margin-top: 10px;
-    }
-  }
-
-  &__cvv {
-    text-align: right;
-    position: relative;
-    z-index: 2;
-    padding: 15px;
-    .card-item__type {
-      opacity: 0.7;
-    }
-
-    @media screen and (max-width: 360px) {
-      padding: 10px 15px;
-    }
-  }
-  &__cvvTitle {
-    padding-right: 10px;
-    font-size: 15px;
-    font-weight: 500;
-    color: #fff;
-    margin-bottom: 5px;
-  }
-  &__cvvBand {
-    height: 45px;
-    background: #fff;
-    margin-bottom: 30px;
-    text-align: right;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 10px;
-    color: #1a3b5d;
-    font-size: 18px;
-    border-radius: 4px;
-    box-shadow: 0px 10px 20px -7px rgba(32, 56, 117, 0.35);
-
-    @media screen and (max-width: 480px) {
-      height: 40px;
-      margin-bottom: 20px;
-    }
-
-    @media screen and (max-width: 360px) {
-      margin-bottom: 15px;
-    }
-  }
-}
-
-.card-list {
-  margin-bottom: -130px;
-
-  @media screen and (max-width: 480px) {
-    margin-bottom: -120px;
-  }
-}
-
-.card-input {
-  margin-bottom: 20px;
-  &__label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: #1a3b5d;
-    width: 100%;
-    display: block;
-    user-select: none;
-  }
-  &__input {
-    width: 100%;
-    height: 50px;
-    border-radius: 5px;
-    box-shadow: none;
-    border: 1px solid #ced6e0;
-    transition: all 0.3s ease-in-out;
-    font-size: 18px;
-    padding: 5px 15px;
-    background: none;
-    color: #1a3b5d;
-    font-family: "Source Sans Pro", sans-serif;
-
-    &:hover,
-    &:focus {
-      border-color: #3d9cff;
-    }
-
-    &:focus {
-      box-shadow: 0px 10px 20px -13px rgba(32, 56, 117, 0.35);
-    }
-    &.-select {
-      -webkit-appearance: none;
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAeCAYAAABuUU38AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAUxJREFUeNrM1sEJwkAQBdCsngXPHsQO9O5FS7AAMVYgdqAd2IGCDWgFnryLFQiCZ8EGnJUNimiyM/tnk4HNEAg/8y6ZmMRVqz9eUJvRaSbvutCZ347bXVJy/ZnvTmdJ862Me+hAbZCTs6GHpyUi1tTSvPnqTpoWZPUa7W7ncT3vK4h4zVejy8QzM3WhVUO8ykI6jOxoGA4ig3BLHcNFSCGqGAkig2yqgpEiMsjSfY9LxYQg7L6r0X6wS29YJiYQYecemY+wHrXD1+bklGhpAhBDeu/JfIVGxaAQ9sb8CI+CQSJ+QmJg0Ii/EE2MBiIXooHRQhRCkBhNhBcEhLkwf05ZCG8ICCOpk0MULmvDSY2M8UawIRExLIQIEgHDRoghihgRIgiigBEjgiFATBACAgFgghEwSAAGgoBCBBgYAg5hYKAIFYgHBo6w9RRgAFfy160QuV8NAAAAAElFTkSuQmCC');
-      background-size: 12px;
-      background-position: 90% center;
-      background-repeat: no-repeat;
-      padding-right: 30px;
-    }
-  }
-}
-
-.slide-fade-up-enter-active {
-  transition: all 0.25s ease-in-out;
-  transition-delay: 0.1s;
-  position: relative;
-}
-.slide-fade-up-leave-active {
-  transition: all 0.25s ease-in-out;
-  position: absolute;
-}
-.slide-fade-up-enter {
-  opacity: 0;
-  transform: translateY(15px);
-  pointer-events: none;
-}
-.slide-fade-up-leave-to {
-  opacity: 0;
-  transform: translateY(-15px);
-  pointer-events: none;
-}
-
-.slide-fade-right-enter-active {
-  transition: all 0.25s ease-in-out;
-  transition-delay: 0.1s;
-  position: relative;
-}
-.slide-fade-right-leave-active {
-  transition: all 0.25s ease-in-out;
-  position: absolute;
-}
-.slide-fade-right-enter {
-  opacity: 0;
-  transform: translateX(10px) rotate(45deg);
-  pointer-events: none;
-}
-.slide-fade-right-leave-to {
-  opacity: 0;
-  transform: translateX(-10px) rotate(45deg);
-  pointer-events: none;
-}
-
-.github-btn {
-  position: absolute;
-  right: 40px;
-  bottom: 50px;
-  text-decoration: none;
-  padding: 15px 25px;
-  border-radius: 4px;
-  box-shadow: 0px 4px 30px -6px rgba(36, 52, 70, 0.65);
-  background: #24292e;
-  color: #fff;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 16px;
-  text-align: center;
-  transition: all .3s ease-in-out;
-
-  @media screen and (min-width: 500px) {
-    &:hover {
-      transform: scale(1.1);
-      box-shadow: 0px 17px 20px -6px rgba(36, 52, 70, 0.36);
-    }
-  }
-
-  @media screen and (max-width: 700px) {
-    position: relative;
-    bottom: auto;
-    right: auto;
-    margin-top: 20px;
-
-    &:active {
-      transform: scale(1.1);
-      box-shadow: 0px 17px 20px -6px rgba(36, 52, 70, 0.36);
-    }
-  }
-}
-</style>
+<style scoped></style>

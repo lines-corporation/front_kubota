@@ -4,10 +4,11 @@
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
-      color="#3d5d87"
+      color="#003D7A"
       dark
       fixed
       app
+      right
     >
       <v-list>
         <v-list-item
@@ -21,16 +22,28 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title
+              v-text="
+                auth.loggedIn && item.title_loggedIn
+                  ? item.title_loggedIn
+                  : item.title
+              "
+            />
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" color="#042f5e" dense dark fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>NECSPORTS.NET Members</v-toolbar-title>
+    <v-app-bar :clipped-left="clipped" color="#003D7A" dense dark fixed app>
+      <v-toolbar-title>
+        <a href="/">
+          <img
+            src="@/assets/images/necrocketsclublogo.jpg"
+            style="height: 50px; padding: 10px;"
+          />
+        </a>
+      </v-toolbar-title>
       <v-spacer />
-      <v-toolbar-title height="30" to="/mypage" v-text="subtitle" />
+      <v-toolbar-title height="30" to="/" v-text="subtitle" />
       <v-btn v-if="!auth.loggedIn" icon to="/login" nuxt>
         <v-icon>mdi-account</v-icon>
       </v-btn>
@@ -41,14 +54,38 @@
       <v-btn icon to="/faq" nuxt>
         <v-icon>mdi-help</v-icon>
       </v-btn>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
     </v-app-bar>
     <v-main>
       <v-container>
         <nuxt />
       </v-container>
     </v-main>
-    <v-footer :absolute="!fixed" app>
-      <span>Copyright NEC Corporation. All rights reserved.</span>
+
+    <v-footer color="#003D7A" padless app>
+      <v-row justify="center" no-gutters>
+        <v-btn color="white" text rounded class="my-2" to="/inquiry">
+          お問い合わせ
+        </v-btn>
+        <v-btn color="white" text rounded class="my-2" to="/faq">
+          よくある質問
+        </v-btn>
+        <v-btn color="white" text rounded class="my-2" to="/privacy">
+          プライバシーポリシー
+        </v-btn>
+        <v-btn color="white" text rounded class="my-2" to="/tokutei">
+          特定商取引法に基づく表示
+        </v-btn>
+        <v-col class="#003D7A text-center white--text" cols="12">
+          <img
+            src="@/assets/images/necrocketsclublogo.jpg"
+            style="height: 40px; padding: 10px;"
+          />
+        </v-col>
+        <v-col class="#003D7A text-center white--text" cols="12">
+          <span>Copyright NEC Corporation. All rights reserved.</span>
+        </v-col>
+      </v-row>
     </v-footer>
 
     <v-snackbar
@@ -79,17 +116,16 @@ export default {
         {
           icon: "mdi-home",
           title: "HOME",
+          title_loggedIn: "マイページ",
           to: "/",
         },
         {
           icon: "mdi-lightbulb",
-          title: "チケット申し込み",
-          to: "/tickets",
+          title: "チケット(近日公開!)",
         },
         {
           icon: "mdi-cart",
-          title: "グッズ",
-          to: "/shop",
+          title: "グッズ(近日公開!)",
         },
         {
           icon: "mdi-compass",

@@ -50,13 +50,11 @@ export default {
       await this.$auth
         .loginWith("local", { data: this.form, withCredentials: true })
         .then((response) => {
-          console.log(response)
           this.$store.dispatch("snackbar/setMessage", "ログインしました")
           this.$store.dispatch("snackbar/snackOn")
           this.$router.push("/")
         })
         .catch((error) => {
-          console.log(error)
           this.$store.dispatch("snackbar/setError", "ログインに失敗しました")
           this.$store.dispatch("snackbar/snackOn")
         })

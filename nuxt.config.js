@@ -81,8 +81,8 @@ export default {
   },
   axios: {
     //baseURL: 'http://127.0.0.1',
-    //baseURL: "https://ec-kuroco.a.kuroco.app",
-    baseURL: 'https://member-necsports.g.kuroco.app',
+    baseURL: "https://kuroco.necsports.net",
+    //baseURL: 'https://member-necsports.g.kuroco.app',
     credentials: true,
   },
   auth: {
@@ -107,7 +107,7 @@ export default {
             method: "get",
             propertyName: false,
           },
-          logout: { 
+          logout: {
             url: "/rcms-api/1/logout",
             method: "post",
           },
