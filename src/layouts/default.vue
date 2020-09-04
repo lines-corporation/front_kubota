@@ -37,7 +37,7 @@
       <v-toolbar-title>
         <a href="/">
           <img
-            src="@/assets/images/necrocketsclublogo.jpg"
+            src="@/assets/images/logo.svg"
             style="height: 50px; padding: 10px;"
           />
         </a>
@@ -78,7 +78,7 @@
         </v-btn>
         <v-col class="#003D7A text-center white--text" cols="12">
           <img
-            src="@/assets/images/necrocketsclublogo.jpg"
+            src="@/assets/images/logo.svg"
             style="height: 40px; padding: 10px;"
           />
         </v-col>
