@@ -62,7 +62,7 @@
       </v-container>
     </v-main>
 
-    <v-footer color="#003D7A" padless app>
+    <v-footer color="#003D7A" padless app absolute inset>
       <v-row justify="center" no-gutters>
         <v-btn color="white" text rounded class="my-2" to="/inquiry">
           お問い合わせ
