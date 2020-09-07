@@ -418,14 +418,14 @@
             </v-container>
           </v-form>
         </v-stepper-content>
-        <v-stepper-content step="3">
+        <v-stepper-content step="4">
           <header>
             <h2>
               社外会員登録 決済情報登録
             </h2>
           </header>
           <v-form
-            ref="form3"
+            ref="form4"
             v-model="valid"
             lazy-validation
             @submit.prevent="purchase"
@@ -639,10 +639,10 @@ export default {
         { code: "47", name: "沖縄県" },
         { code: "99", name: "海外" },
       ],
-      ec_payment_id: 58,
-      product_id: 41201,
+      ec_payment_id: "58",
+      product_id: "41201",
       cardName: "",
-      cardNumber: "4242424242424242",
+      cardNumber: "",
       cardMonth: "",
       cardYear: "",
       cardCvv: "",

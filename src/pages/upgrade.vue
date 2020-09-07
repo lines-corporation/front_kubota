@@ -19,9 +19,19 @@
           <v-col cols="8">
             <v-radio-group v-if="green_team" v-model="product_id">
               <v-radio label="NECグリーンロケッツ スター会員" value="41203" />
+              <v-radio
+                v-if="green_rockets"
+                label="NECグリーンロケッツ ロケッツ会員"
+                value="41201"
+              />
             </v-radio-group>
             <v-radio-group v-if="red_team" v-model="product_id">
               <v-radio label="NECレッドロケッツ スター会員" value="41202" />
+              <v-radio
+                v-if="red_rockets"
+                label="NECレッドロケッツ ロケッツ会員"
+                value="41204"
+              />
             </v-radio-group>
           </v-col>
         </v-row>
@@ -137,6 +147,8 @@ export default {
       valid: true,
       red_team: false,
       green_team: false,
+      green_rockets: false,
+      red_rockets: false,
       product_id: null,
       present: "1",
       ec_payment_id: "58",
@@ -168,17 +180,19 @@ export default {
     Object.keys(group_ids).forEach(function (key) {
       if (["113"].indexOf(key) !== -1) {
         self.green_team = true
+        self.green_rockets = true
         self.product_id = "41202"
       }
       if (["110"].indexOf(key) !== -1) {
         self.red_team = true
+        self.red_rockets = true
         self.product_id = "41203"
       }
       if (["111", "114"].indexOf(key) !== -1) {
         self.$router.push("/")
       }
     })
-    if (!self.product_id) {
+    if (!self.product_id && !self.green_rockets && !self.red_rockets) {
       self.$router.push("/")
     }
   },

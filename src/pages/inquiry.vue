@@ -52,50 +52,20 @@ export default {
       body: "",
     }
   },
-  computed: {
-    user() {
-      return this.$auth.user
-    },
-    auth() {
-      return this.$store.$auth
-    },
-  },
-  created() {
-    let self = this
-    if (!self.$store.$auth.getToken("local")) {
-      let url = "/rcms-api/1/token"
-      this.$auth.ctx.$axios.post(url, {}).then(function (response) {
-        self.$store.$auth.setToken("local", response.data.access_token)
-      })
-    }
-  },
   methods: {
     inquiry() {
       let self = this
-      console.log(self.$store.$auth.getToken("local"))
-
       this.$store.$auth.ctx.$axios
-        .post(
-          "/rcms-api/1/inquiry1/messages/send",
-          {
-            from_mail: this.from_mail,
-            inquiry_category_id: 1,
-            name: this.name,
-            body: this.body,
-            ext_01: "test",
-            ext_04: "1",
-          },
-          {
-            headers: {
-              "X-RCMS-API-ACCESS-TOKEN": this.$store.$auth.getToken("local"),
-            },
-          }
-        )
+        .post("/rcms-api/1/inquiry/6", {
+          from_mail: this.from_mail,
+          name: this.name,
+          body: this.body,
+        })
         .then(function (response) {
           if (response.data.errors.length == 0) {
             self.$store.dispatch(
               "snackbar/setMessage",
-              "お問い合わせ送信しました。"
+              "お問い合わせを送信しました。"
             )
             self.$store.dispatch("snackbar/snackOn")
             self.$router.push("/")
