@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxt-ts",
-    "build": "nuxt build && npm run build:copy:ssr",
+    "build": "nuxt-ts build",
     "build:copy:ssr": "rimraf functions/ssr && mkdirp functions/ssr && cp -R .nuxt/dist functions/ssr/dist",
     "start": "nuxt-ts start",
     "export": "nuxt-ts export",

@@ -59,7 +59,7 @@ export default {
               "パスワード再設定メールを送信しました。"
             )
             self.$store.dispatch("snackbar/snackOn")
-            self.$router.push("/login")
+            self.$router.push("/")
           }
         })
         .catch((error) => {

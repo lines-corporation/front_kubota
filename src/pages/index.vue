@@ -1,10 +1,11 @@
 <template>
   <div class="container">
-    <div v-if="!auth.loggedIn">
-      <form @submit.prevent="login">
-        <h3 class="subtitle mb-3">
-          ロケッツクラブ会員の方は以下よりログインしてください。
-        </h3>
+    <no-ssr>
+      <div v-if="!auth.loggedIn">
+        <form @submit.prevent="login">
+          <h3 class="subtitle mb-3">
+            ロケッツクラブ会員の方は以下よりログインしてください。
+          </h3>
 
           <form @submit.prevent="login">
             <p>このページはログインしてからご覧ください。</p>
@@ -36,9 +37,9 @@
             </NuxtLink>
           </p>
 
-        <h3 class="subtitle mb-3">
-          2019年度ロケッツクラブ会員で更新の方は以下よりログインしてください。
-        </h3>
+          <h3 class="subtitle mb-3">
+            2019年度ロケッツクラブ会員で更新の方は以下よりログインしてください。
+          </h3>
 
           <form @submit.prevent="login">
             <p>このページはログインしてからご覧ください。</p>
@@ -70,219 +71,220 @@
             </NuxtLink>
           </p>
 
-        <h3 class="subtitle mb-3">
-          新規入会はこちら
-        </h3>
-        <p class="body-1">
-          <NuxtLink to="/form">
-            社外の方はこちらの会員登録フォームへ
-          </NuxtLink>
-        </p>
-        <p class="body-1">
-          <NuxtLink to="/inquiry">
-            社内の方はお問い合わせください
-          </NuxtLink>
-        </p>
-      </form>
+          <h3 class="subtitle mb-3">
+            新規入会はこちら
+          </h3>
+          <p class="body-1">
+            <NuxtLink to="/form">
+              社外の方はこちらの会員登録フォームへ
+            </NuxtLink>
+          </p>
+          <p class="body-1">
+            <NuxtLink to="/inquiry">
+              社内の方はお問い合わせください
+            </NuxtLink>
+          </p>
+        </form>
+      </div>
 
-    </div>
+      <div v-else>
+        <v-row>
+          <v-col cols="12" sm="3">
+            <v-card class="mx-auto" outlined>
+              <v-card-text>
+                <p>名前：{{ user.name1 }}</p>
+                <p>会員番号：{{ user.member_no }}</p>
+                <p>会員種別：{{ group_nm }}</p>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn text color="deep-purple accent-4" to="/profile_edit">
+                  プロフィール変更はこちら
+                </v-btn>
+              </v-card-actions>
+            </v-card>
 
-    <div v-else>
-      <v-row>
-        <v-col cols="12" sm="3">
-          <v-card class="mx-auto" outlined>
-            <v-card-text>
-              <p>名前：{{ user.name1 }}</p>
-              <p>会員番号：{{ user.member_no }}</p>
-              <p>会員種別：{{ group_nm }}</p>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn text color="deep-purple accent-4" to="/profile_edit">
-                プロフィール変更はこちら
-              </v-btn>
-            </v-card-actions>
-          </v-card>
+            <v-card v-if="can_upgrade" class="mx-auto" outlined>
+              <v-card-text>
+                <h3>アップグレードのご案内</h3>
+                <p class="body-1">
+                  <NuxtLink to="/upgrade">
+                    スター会員になる場合はこちら
+                  </NuxtLink>
+                </p>
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="12" sm="6">
+            <v-card class="mx-auto" outlined>
+              <v-card-text>
+                <h3>お知らせ</h3>
 
-          <v-card v-if="can_upgrade" class="mx-auto" outlined>
-            <v-card-text>
-              <h3>アップグレードのご案内</h3>
-              <p class="body-1">
-                <NuxtLink to="/upgrade">
-                  スター会員になる場合はこちら
-                </NuxtLink>
-              </p>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-card class="mx-auto" outlined>
-            <v-card-text>
-              <h3>お知らせ</h3>
+                <v-simple-table :fixed-header="false">
+                  <template v-slot:default>
+                    <tbody>
+                      <router-link
+                        v-for="item in topics_list1"
+                        :key="item.topics_id"
+                        :to="'/info/' + item.topics_id"
+                        tag="tr"
+                      >
+                        <td>{{ item.ymd }}</td>
+                        <td>{{ item.subject }}</td>
+                        <td>
+                          <v-btn icon :to="'/info/' + item.topics_id" nuxt>
+                            <v-icon>mdi-forward</v-icon>
+                          </v-btn>
+                        </td>
+                      </router-link>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-card-text>
+            </v-card>
+            <v-card class="mx-auto" outlined>
+              <v-card-text>
+                <h3>購入済みのチケット</h3>
 
-              <v-simple-table :fixed-header="false">
-                <template v-slot:default>
-                  <tbody>
-                    <router-link
-                      v-for="item in topics_list"
-                      :key="item.topics_id"
-                      :to="'/info/' + item.topics_id"
-                      tag="tr"
-                    >
-                      <td>{{ item.ymd }}</td>
-                      <td>{{ item.subject }}</td>
-                      <td>
-                        <v-btn icon :to="'/info/' + item.topics_id" nuxt>
-                          <v-icon>mdi-forward</v-icon>
-                        </v-btn>
-                      </td>
-                    </router-link>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            </v-card-text>
-          </v-card>
-          <v-card class="mx-auto" outlined>
-            <v-card-text>
-              <h3>購入済みのチケット</h3>
+                <v-simple-table :fixed-header="false">
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">
+                          購入日
+                        </th>
+                        <th class="text-left">
+                          チケット名
+                        </th>
+                        <th class="text-left" />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <router-link
+                        v-for="item in topics_list5"
+                        :key="item.topics_id"
+                        :to="'/ticket/' + item.topics_id"
+                        tag="tr"
+                      >
+                        <td>{{ item.ymd }}</td>
+                        <td>{{ item.subject }}</td>
+                        <td>
+                          <v-btn icon :to="'/ticket/' + item.topics_id" nuxt>
+                            <v-icon>mdi-forward</v-icon>
+                          </v-btn>
+                        </td>
+                      </router-link>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-card-text>
+            </v-card>
+            <v-card class="mx-auto" outlined>
+              <v-card-text>
+                <h3>今後の試合</h3>
 
-              <v-simple-table :fixed-header="false">
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">
-                        購入日
-                      </th>
-                      <th class="text-left">
-                        チケット名
-                      </th>
-                      <th class="text-left" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <router-link
-                      v-for="item in topics_list"
-                      :key="item.topics_id"
-                      :to="'/ticket/' + item.topics_id"
-                      tag="tr"
-                    >
-                      <td>{{ item.ymd }}</td>
-                      <td>{{ item.subject }}</td>
-                      <td>
-                        <v-btn icon :to="'/ticket/' + item.topics_id" nuxt>
-                          <v-icon>mdi-forward</v-icon>
-                        </v-btn>
-                      </td>
-                    </router-link>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            </v-card-text>
-          </v-card>
-          <v-card class="mx-auto" outlined>
-            <v-card-text>
-              <h3>今後の試合</h3>
+                <v-simple-table :fixed-header="false">
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">
+                          年月日
+                        </th>
+                        <th class="text-left">
+                          試合
+                        </th>
+                        <th class="text-left" />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <router-link
+                        v-for="item in topics_list"
+                        :key="item.topics_id"
+                        :to="'/event/' + item.topics_id"
+                        tag="tr"
+                      >
+                        <td>{{ item.ymd }}</td>
+                        <td>{{ item.subject }}</td>
+                        <td>
+                          <v-btn icon :to="'/event/' + item.topics_id" nuxt>
+                            <v-icon>mdi-forward</v-icon>
+                          </v-btn>
+                        </td>
+                      </router-link>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="12" sm="3">
+            <v-card class="mx-auto" outlined>
+              <v-card-text>
+                <h3>来場履歴</h3>
 
-              <v-simple-table :fixed-header="false">
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">
-                        年月日
-                      </th>
-                      <th class="text-left">
-                        試合
-                      </th>
-                      <th class="text-left" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <router-link
-                      v-for="item in topics_list"
-                      :key="item.topics_id"
-                      :to="'/event/' + item.topics_id"
-                      tag="tr"
-                    >
-                      <td>{{ item.ymd }}</td>
-                      <td>{{ item.subject }}</td>
-                      <td>
-                        <v-btn icon :to="'/event/' + item.topics_id" nuxt>
-                          <v-icon>mdi-forward</v-icon>
-                        </v-btn>
-                      </td>
-                    </router-link>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="12" sm="3">
-          <v-card class="mx-auto" outlined>
-            <v-card-text>
-              <h3>来場履歴</h3>
+                <v-simple-table :fixed-header="false">
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">
+                          年月日
+                        </th>
+                        <th class="text-left">
+                          イベント
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <router-link
+                        v-for="item in topics_list"
+                        :key="item.topics_id"
+                        :to="'/event/' + item.topics_id"
+                        tag="tr"
+                      >
+                        <td>{{ item.ymd }}</td>
+                        <td>{{ item.subject }}</td>
+                      </router-link>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-card-text>
+            </v-card>
+            <v-card class="mx-auto" outlined>
+              <v-card-text>
+                <h3>グッズ購入履歴</h3>
 
-              <v-simple-table :fixed-header="false">
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">
-                        年月日
-                      </th>
-                      <th class="text-left">
-                        イベント
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <router-link
-                      v-for="item in topics_list"
-                      :key="item.topics_id"
-                      :to="'/event/' + item.topics_id"
-                      tag="tr"
-                    >
-                      <td>{{ item.ymd }}</td>
-                      <td>{{ item.subject }}</td>
-                    </router-link>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            </v-card-text>
-          </v-card>
-          <v-card class="mx-auto" outlined>
-            <v-card-text>
-              <h3>グッズ購入履歴</h3>
-
-              <v-simple-table :fixed-header="false">
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">
-                        購入日
-                      </th>
-                      <th class="text-left">
-                        グッズ
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <router-link
-                      v-for="item in topics_list"
-                      :key="item.topics_id"
-                      :to="'/ticket/' + item.topics_id"
-                      tag="tr"
-                    >
-                      <td>{{ item.ymd }}</td>
-                      <td>{{ item.subject }}</td>
-                    </router-link>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </div>
+                <v-simple-table :fixed-header="false">
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">
+                          購入日
+                        </th>
+                        <th class="text-left">
+                          グッズ
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <router-link
+                        v-for="item in topics_list"
+                        :key="item.topics_id"
+                        :to="'/ticket/' + item.topics_id"
+                        tag="tr"
+                      >
+                        <td>{{ item.ymd }}</td>
+                        <td>{{ item.subject }}</td>
+                      </router-link>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
+    </no-ssr>
   </div>
+  </no-ssr>
 </template>
 
 <script>
@@ -291,12 +293,14 @@ export default {
   auth: false,
   data: () => ({
     can_upgrade: true,
-    topics_list: [],
+    topics_list6: [],
+    topics_list5: [],
+    topics_list1: [],
     show_pwd1: false,
     show_pwd2: false,
     form: {
-      email: "kenta+guest@diverta.co.jp",
-      password: "guest1234",
+      email: "",
+      password: "",
     },
   }),
   computed: {
@@ -330,10 +334,15 @@ export default {
         }
       })
 
-      let url = "/rcms-api/1/tickets"
-      this.$auth.ctx.$axios.get(url).then(function (response) {
-        self.topics_list = response.data.list
+      this.$auth.ctx.$axios.get("/rcms-api/1/infos").then(function (response) {
+        self.topics_list1 = response.data.list
       })
+
+      this.$auth.ctx.$axios
+        .get("/rcms-api/1/tickets")
+        .then(function (response) {
+          self.topics_list5 = response.data.list
+        })
     }
   },
   methods: {

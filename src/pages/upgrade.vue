@@ -6,7 +6,7 @@
       </h2>
     </header>
     <v-form
-      ref="form4"
+      ref="form3"
       v-model="valid"
       lazy-validation
       @submit.prevent="purchase"
@@ -18,10 +18,10 @@
           </v-col>
           <v-col cols="8">
             <v-radio-group v-if="green_team" v-model="product_id">
-              <v-radio label="NECグリーンロケッツ スター会員" value="41202" />
+              <v-radio label="NECグリーンロケッツ スター会員" value="41203" />
             </v-radio-group>
             <v-radio-group v-if="red_team" v-model="product_id">
-              <v-radio label="NECレッドロケッツ スター会員" value="41203" />
+              <v-radio label="NECレッドロケッツ スター会員" value="41202" />
             </v-radio-group>
           </v-col>
         </v-row>
@@ -66,7 +66,6 @@
                       { value: '5', text: '5月' },
                       { value: '6', text: '6月' },
                       { value: '7', text: '7月' },
-                      ,
                       { value: '8', text: '8月' },
                       { value: '9', text: '9月' },
                       { value: '10', text: '10月' },
@@ -108,17 +107,6 @@
                 </v-col>
               </v-row>
             </div>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>アップグレード特典</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-radio-group v-model="present">
-              <v-radio label="オリジナルユニフォーム" value="1" />
-              <v-radio label="オリジナルグッズ" value="2" />
-            </v-radio-group>
           </v-col>
         </v-row>
         <v-row>
@@ -178,19 +166,25 @@ export default {
     let self = this
     const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
     Object.keys(group_ids).forEach(function (key) {
-      if (["105", "106", "108"].indexOf(key) !== -1) {
+      if (["113"].indexOf(key) !== -1) {
         self.green_team = true
         self.product_id = "41202"
       }
-      if (["109", "110", "111"].indexOf(key) !== -1) {
+      if (["110"].indexOf(key) !== -1) {
         self.red_team = true
         self.product_id = "41203"
       }
+      if (["111", "114"].indexOf(key) !== -1) {
+        self.$router.push("/")
+      }
     })
+    if (!self.product_id) {
+      self.$router.push("/")
+    }
   },
   methods: {
     purchase() {
-      if (this.$refs.form4.validate()) {
+      if (this.$refs.form3.validate()) {
         let self = this
 
         if (this.ec_payment_id == 58) {
@@ -226,7 +220,12 @@ export default {
                     self.$store.dispatch("snackbar/snackOn")
                     self.$router.push("/")
                   })
-                  .catch((error) => console.log(error))
+                  .catch(function (error) {
+                    self.$store.dispatch(
+                      "snackbar/setError",
+                      error.response.data.errors?.[0]
+                    )
+                  })
               } else {
                 self.$store.dispatch(
                   "snackbar/setError",
@@ -255,7 +254,12 @@ export default {
               self.$store.dispatch("snackbar/snackOn")
               self.$router.push("/")
             })
-            .catch((error) => console.log(error))
+            .catch(function (error) {
+              self.$store.dispatch(
+                "snackbar/setError",
+                error.response.data.errors?.[0]
+              )
+            })
         }
         self.loader = false
       }

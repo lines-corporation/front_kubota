@@ -3,7 +3,7 @@ export default {
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
    */
-  mode: "universal",
+  mode: "spa",
   srcDir: "src/",
   /*
    ** Nuxt target
@@ -90,7 +90,7 @@ export default {
       prefix: "rcms_api.",
     },
     redirect: {
-      login: "/login", // 未ログイン時に認証ルートへアクセスした際のリダイレクトURL
+      login: "/", // 未ログイン時に認証ルートへアクセスした際のリダイレクトURL
       logout: "/", // ログアウト時のリダイレクトURL(4.9.1ではそのままでは動かない)
       callback: false,
       home: "/", // ログイン後のリダイレクトURL(4.9.1ではそのままでは動かない)

@@ -44,7 +44,7 @@
       </v-toolbar-title>
       <v-spacer />
       <v-toolbar-title height="30" to="/" v-text="subtitle" />
-      <v-btn v-if="!auth.loggedIn" icon to="/login" nuxt>
+      <v-btn v-if="!auth.loggedIn" icon to="/" nuxt>
         <v-icon>mdi-account</v-icon>
       </v-btn>
 
@@ -191,7 +191,7 @@ export default {
         console.log(response)
         this.$store.dispatch("snackbar/setMessage", "ログアウトしました")
         this.$store.dispatch("snackbar/snackOn")
-        this.$router.push("/login")
+        this.$router.push("/")
       })
     },
   },
