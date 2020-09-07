@@ -572,7 +572,6 @@ export default {
     return {
       valid: true,
       e1: 1,
-      access_token: "",
       password_show: false,
       login_pwd: "",
       email: "",
@@ -640,6 +639,14 @@ export default {
         { code: "47", name: "沖縄県" },
         { code: "99", name: "海外" },
       ],
+      ec_payment_id: 58,
+      product_id: 41201,
+      cardName: "",
+      cardNumber: "4242424242424242",
+      cardMonth: "",
+      cardYear: "",
+      cardCvv: "",
+      loading: false,
       rules: {
         required: (value) => !!value || "この項目は必須入力です",
         password_min: (v) => v.length >= 8 || "最低8文字以上を入力してください",
@@ -682,7 +689,6 @@ export default {
           email_hash: this.email_hash,
         })
         .then(function (response) {
-          console.log(response)
           self.email = response.data.data.email
           self.$store.dispatch(
             "snackbar/setMessage",
@@ -707,7 +713,7 @@ export default {
             email: self.email,
           })
           .then(function (response) {
-            if (response.data.code == "200") {
+            if (response.data.errors.length === 0) {
               self.$store.dispatch("snackbar/setMessage", "メール送信しました")
               self.$store.dispatch("snackbar/snackOn")
               self.e1 = 2
