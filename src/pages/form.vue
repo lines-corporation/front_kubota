@@ -237,6 +237,7 @@
                       v-model="birth"
                       :max="new Date().toISOString().substr(0, 10)"
                       min="1900-01-01"
+                      locale="jp-ja"
                       @change="save"
                     />
                   </v-menu>
