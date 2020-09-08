@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-flex class="text-left">
-      <h2>規約</h2>
+      <h2>プライバシーポリシー</h2>
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -25,10 +25,6 @@ export default {
   data() {
     return {
       items: [
-        {
-          title: "NECロケッツクラブ会員規約",
-          to: "/kiyaku_nec",
-        },
         {
           title: "プライバシーポリシー",
           to: "/privacy",

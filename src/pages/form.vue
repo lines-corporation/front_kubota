@@ -2,7 +2,7 @@
   <div>
     <header>
       <h2>
-        社内会員登録
+        NECロケッツクラブ会員登録
       </h2>
     </header>
     <v-stepper v-model="e1">
@@ -26,15 +26,14 @@
         <v-divider />
 
         <v-stepper-step step="4">
-          プラン選択
+          会員種別選択
         </v-stepper-step>
       </v-stepper-header>
 
       <v-stepper-items>
         <v-stepper-content step="1">
           <p class="mt-1 max-w-4xl text-sm leading-5 text-gray-500">
-            会員登録をされる際は、以下の規約にご同意いただく必要がございます。ご一読の上、同意いただける場合は[同意して送信する]ボタンをクリックしてください。<br />
-            ご入会後は1年以上の継続をお願いします(試合シーズンのみのご入会はご遠慮いただいております)
+            会員登録をされる際は、以下の規約にご同意いただく必要がございます。ご一読の上、同飯いただける場合は【同意して送信する】ボタンをクリックしてください。
           </p>
 
           <v-container
@@ -159,7 +158,7 @@
         <v-stepper-content step="3">
           <header>
             <h2>
-              社外会員登録 情報登録
+              NECロケッツクラブ会員　情報登録
             </h2>
           </header>
           <v-form
@@ -412,7 +411,7 @@
               <v-row>
                 <v-col cols="12">
                   <v-btn type="submit" block x-large color="success" dark>
-                    規約に同意して登録する
+                    登録する
                   </v-btn>
                 </v-col>
               </v-row>

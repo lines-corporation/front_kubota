@@ -7,6 +7,14 @@
       <v-container fluid>
         <v-row>
           <v-col cols="4">
+            <v-subheader>会員番号</v-subheader>
+          </v-col>
+          <v-col cols="8">
+            <v-text-field v-model="member_no" label="会員番号" outlined />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4">
             <v-subheader>お名前</v-subheader>
           </v-col>
           <v-col cols="8">
@@ -50,6 +58,7 @@ export default {
       from_mail: "",
       name: "",
       body: "",
+      member_no:"",
     }
   },
   methods: {
@@ -60,6 +69,7 @@ export default {
           from_mail: this.from_mail,
           name: this.name,
           body: this.body,
+          ext_01: this.member_no,
         })
         .then(function (response) {
           if (response.data.errors.length == 0) {

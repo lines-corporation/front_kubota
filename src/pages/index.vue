@@ -4,11 +4,11 @@
       <div v-if="!auth.loggedIn">
         <form @submit.prevent="login">
           <h3 class="subtitle mb-3">
-            ロケッツクラブ会員の方は以下よりログインしてください。
+            NECロケッツクラブ会員の方はこちら
           </h3>
 
           <form @submit.prevent="login">
-            <p>このページはログインしてからご覧ください。</p>
+            <p>NECロケッツクラブ会員の方はこちらよりログインしてください。</p>
             <p>
               <v-text-field
                 v-model="form.email"
@@ -42,7 +42,6 @@
           </h3>
 
           <form @submit.prevent="login">
-            <p>このページはログインしてからご覧ください。</p>
             <p>
               <v-text-field
                 v-model="form.email"
@@ -72,11 +71,11 @@
           </p>
 
           <h3 class="subtitle mb-3">
-            新規入会はこちら
+            NEC
           </h3>
           <p class="body-1">
             <NuxtLink to="/form">
-              社外の方はこちらの会員登録フォームへ
+              NECロケッツクラブ会員新規入会登録
             </NuxtLink>
           </p>
           <p class="body-1">
@@ -108,7 +107,7 @@
                 <h3>アップグレードのご案内</h3>
                 <p class="body-1">
                   <NuxtLink to="/upgrade">
-                    スター会員になる場合はこちら
+                    スタ―会員への種別変更はこちら
                   </NuxtLink>
                 </p>
               </v-card-text>

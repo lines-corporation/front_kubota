@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>FAQ</h2>
+    <h2>よくある質問</h2>
     <v-list>
       <v-list-group
         v-for="item in items"
