@@ -33,7 +33,7 @@
       <v-stepper-items>
         <v-stepper-content step="1">
           <p class="mt-1 max-w-4xl text-sm leading-5 text-gray-500">
-            会員登録をされる際は、以下の規約にご同意いただく必要がございます。ご一読の上、同飯いただける場合は【同意して送信する】ボタンをクリックしてください。
+            会員登録をされる際は、以下の規約にご同意いただく必要がございます。ご一読の上、ご同意いただける場合は【同意して送信する】ボタンをクリックしてください。
           </p>
 
           <v-container
@@ -406,6 +406,14 @@
                     counter
                     @click:append="password_show = !password_show"
                   />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-subheader>第２メールアドレス</v-subheader>
+                </v-col>
+                <v-col cols="8">
+                  <v-checkbox v-model="disabled" class="mx-2" label="Disabled"></v-checkbox>
                 </v-col>
               </v-row>
               <v-row>

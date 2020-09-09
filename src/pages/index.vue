@@ -71,7 +71,7 @@
           </p>
 
           <h3 class="subtitle mb-3">
-            NEC
+            NECロケッツクラブ新規入会はこちら
           </h3>
           <p class="body-1">
             <NuxtLink to="/form">

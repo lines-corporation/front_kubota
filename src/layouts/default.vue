@@ -134,7 +134,7 @@ export default {
         },
         {
           icon: "mdi-help",
-          title: "FAQ",
+          title: "よくある質問",
           to: "/faq",
         },
         {
