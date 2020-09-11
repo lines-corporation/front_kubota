@@ -36,31 +36,17 @@ export default {
       category_items: [
         {
           action: "NECロケッツクラブについて",
-          title: "試合のチケットや払い戻し、利用方法などに関するご質問はこちら",
+          title: "NECロケッツクラブの会員組織についてのご質問はこちら",
           active: false,
           items: [],
           category_id: 19,
         },
         {
           action: "入会・更新・退会について",
-          title: "入会や退会などに関するご質問はこちら",
+          title: "入会、更新、退会などに関するご質問はこちら",
           active: false,
           items: [],
           category_id: 23,
-        },
-        {
-          action: "グッズ関連",
-          title: "グッズの購入や発送などに関するご質問はこちら",
-          active: false,
-          items: [],
-          category_id: 24,
-        },
-        {
-          action: "サイトの利用方法",
-          title: "当サイトの利用方法に関するご質問はこちら",
-          active: false,
-          items: [],
-          category_id: 25,
         },
         {
           action: "会員情報設定について",
@@ -68,13 +54,6 @@ export default {
           active: false,
           items: [],
           category_id: 28,
-        },
-        {
-          action: "その他",
-          title: "その他のご質問はこちら",
-          active: false,
-          items: [],
-          category_id: 26,
         },
       ],
     }

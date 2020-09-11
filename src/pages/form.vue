@@ -365,7 +365,7 @@
                     v-model="tel"
                     label="電話番号"
                     type="tel"
-                    :rules="[rules.required]"
+                    :rules="[rules.required, rules.tel]"
                     hint="ハイフンなしの半角数字をご入力ください"
                     counter
                     outlined
@@ -381,6 +381,7 @@
                     v-model="m_tel"
                     label="携帯電話番号"
                     type="tel"
+                    :rules="[rules.tel]"
                     hint="ハイフンなしの半角数字をご入力ください"
                     counter
                     outlined
@@ -396,6 +397,7 @@
                     v-model="fax"
                     label="FAX番号"
                     type="tel"
+                    :rules="[rules.tel]"
                     hint="ハイフンなしの半角数字をご入力ください"
                     counter
                     outlined
@@ -455,7 +457,7 @@
                   <v-checkbox
                     v-model="mailmaga_flg"
                     class="mx-2"
-                    label="許可する"
+                    label="希望する"
                   />
                 </v-col>
               </v-row>
@@ -707,6 +709,8 @@ export default {
         required: (value) => !!value || "この項目は必須入力です",
         password_min: (v) => v.length >= 8 || "最低8文字以上を入力してください",
         zip_length: (v) => v.length == 7 || "7文字の半角数字で入力してください",
+        tel: (v) =>
+          /^0[0-9]{9,10}$/.test(v) || "ハイフンなしの半角数字をご入力ください",
       },
     }
   },

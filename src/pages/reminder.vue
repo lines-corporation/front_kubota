@@ -15,6 +15,8 @@
           <v-stepper-step :complete="e1 > 2" step="2">
             パスワード変更
           </v-stepper-step>
+
+          <v-divider />
         </v-stepper-header>
 
         <v-stepper-items>
@@ -64,9 +66,23 @@
               ref="form2"
               v-model="valid"
               lazy-validation
-              @submit.prevent="regist"
+              @submit.prevent="set_password"
             >
               <v-container fluid>
+                <v-row>
+                  <v-col cols="12">
+                    <p>
+                      仮パスワードを入力してください。
+                    </p>
+                    <p>
+                      <v-text-field
+                        v-model="temp_pwd"
+                        :type="text"
+                        label="仮パスワード"
+                      />
+                    </p>
+                  </v-col>
+                </v-row>
                 <v-row>
                   <v-col cols="12">
                     <p>
@@ -75,9 +91,13 @@
                     <p>
                       <v-text-field
                         v-model="login_pwd"
+                        :append-icon="password_show ? 'mdi-eye' : 'mdi-eye-off'"
+                        :rules="[rules.required, rules.password_min]"
+                        :type="password_show ? 'text' : 'password'"
                         label="新しいパスワード"
-                        type="password"
-                        outlined
+                        hint="最低8文字以上の英数混合のパスワードを設定ください。"
+                        counter
+                        @click:append="password_show = !password_show"
                       />
                     </p>
                   </v-col>
@@ -87,9 +107,19 @@
                     <p>
                       <v-text-field
                         v-model="login_pwd2"
-                        label="新しいパスワード（確認用）"
-                        type="password"
-                        outlined
+                        :append-icon="
+                          password_show2 ? 'mdi-eye' : 'mdi-eye-off'
+                        "
+                        :rules="[
+                          rules.required,
+                          rules.password_min,
+                          rules.password2,
+                        ]"
+                        :type="password_show2 ? 'text' : 'password'"
+                        label="新しいパスワード(確認用)"
+                        hint="最低8文字以上の英数混合のパスワードを設定ください。"
+                        counter
+                        @click:append="password_show2 = !password_show2"
                       />
                     </p>
                   </v-col>
@@ -125,28 +155,30 @@ export default {
     return {
       token: "",
       e1: 1,
+      valid: true,
+      email: "",
+      password_show: false,
+      login_pwd: "",
+      password_show2: false,
+      login_pwd2: "",
+      temp_pwd: "",
+      loading: false,
+      rules: {
+        required: (value) => !!value || "この項目は必須入力です",
+        password_min: (v) => v.length >= 8 || "最低8文字以上を入力してください",
+        password2: (v) => v == this.login_pwd || "確認用パスワードが違います",
+      },
     }
   },
   created() {
-    if (this.$route.query.token) {
-      this.token = this.$route.query.token
-      let self = this
-      self.$auth.ctx.$axios
-        .post("/rcms-api/1/reminder", {
-          token: this.token,
-        })
-        .then(function (response) {
-          self.$store.dispatch(
-            "snackbar/setMessage",
-            "新しいパスワードを入力してください。"
-          )
-          self.$store.dispatch("snackbar/snackOn")
-          self.e1 = 2
-        })
-        .catch(function (error) {
-          console.log(error)
-          self.e1 = 1
-        })
+    this.token = this.$route.query.token
+    if (this.token) {
+      this.$store.dispatch(
+        "snackbar/setMessage",
+        "新しいパスワードを入力してください。"
+      )
+      this.$store.dispatch("snackbar/snackOn")
+      this.e1 = 2
     }
   },
   methods: {
@@ -160,20 +192,44 @@ export default {
           if (response.data.errors.length == 0) {
             self.$store.dispatch(
               "snackbar/setMessage",
-              "パスワード再設定メールを送信しました。"
+              "パスワード再設定メールを送信しました。メールのリンクから新しいパスワードを設定してください。"
+            )
+            self.$store.dispatch("snackbar/snackOn")
+          }
+        })
+        .catch(function (error) {
+          self.$store.dispatch(
+            "snackbar/setError",
+            error.response.data.errors?.[0]
+          )
+          self.$store.dispatch("snackbar/snackOn")
+        })
+    },
+    async set_password() {
+      if (this.$refs.form2.validate() && this.token) {
+        let self = this
+        self.$auth.ctx.$axios
+          .post("/rcms-api/1/reminder", {
+            token: this.token,
+            login_pwd: this.login_pwd,
+            temp_pwd: this.temp_pwd,
+          })
+          .then(function (response) {
+            self.$store.dispatch(
+              "snackbar/setMessage",
+              "パスワードを更新しました。"
             )
             self.$store.dispatch("snackbar/snackOn")
             self.$router.push("/")
-          }
-        })
-        .catch((error) => {
-          console.log(error)
-          this.$store.dispatch(
-            "snackbar/setError",
-            "メールアドレスが見つからないか、入力が間違っています。再度、ご確認ください。"
-          )
-          this.$store.dispatch("snackbar/snackOn")
-        })
+          })
+          .catch(function (error) {
+            self.$store.dispatch(
+              "snackbar/setError",
+              error.response.data.errors?.[0]
+            )
+            self.$store.dispatch("snackbar/snackOn")
+          })
+      }
     },
   },
 }

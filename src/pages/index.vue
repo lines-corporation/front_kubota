@@ -4,11 +4,14 @@
       <div v-if="!auth.loggedIn">
         <form @submit.prevent="login">
           <h3 class="subtitle mb-3">
-            NECロケッツクラブ会員の方はこちら
+            NECロケッツクラブ　会員ログイン
           </h3>
 
           <form @submit.prevent="login">
-            <p>NECロケッツクラブ会員の方はこちらよりログインしてください。</p>
+            <p>メールアドレスとパスワードを入力してください。</p>
+            <p>
+              ◆NECスポーツ後援会ログイン画面とは異なりますのでご注意ください◆
+            </p>
             <p>
               <v-text-field
                 v-model="form.email"
@@ -25,39 +28,6 @@
                 :append-icon="show_pwd1 ? 'mdi-eye' : 'mdi-eye-off'"
                 outlined
                 @click:append="show_pwd1 = !show_pwd1"
-              />
-            </p>
-            <v-btn type="submit" block x-large color="success" dark>
-              ログインする
-            </v-btn>
-          </form>
-          <p>
-            <NuxtLink to="/reminder">
-              パスワードを忘れた方はこちらから
-            </NuxtLink>
-          </p>
-
-          <h3 class="subtitle mb-3">
-            2019年度ロケッツクラブ会員で更新の方は以下よりログインしてください。
-          </h3>
-
-          <form @submit.prevent="login">
-            <p>
-              <v-text-field
-                v-model="form.email"
-                label="メールアドレス"
-                type="email"
-                outlined
-              />
-            </p>
-            <p>
-              <v-text-field
-                v-model="form.password"
-                label="パスワード"
-                :type="show_pwd2 ? 'text' : 'password'"
-                :append-icon="show_pwd2 ? 'mdi-eye' : 'mdi-eye-off'"
-                outlined
-                @click:append="show_pwd2 = !show_pwd2"
               />
             </p>
             <v-btn type="submit" block x-large color="success" dark>
@@ -313,7 +283,9 @@ export default {
         const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
         let group_idnms = ""
         Object.keys(group_ids).forEach(function (key) {
-          group_idnms += " " + group_ids[key]
+          if (key == 114 || key == 113 || key == 111 || key == 110) {
+            group_idnms += " " + group_ids[key]
+          }
         })
         return group_idnms
       } else {

@@ -156,7 +156,9 @@ export default {
         const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
         let group_idnms = ""
         Object.keys(group_ids).forEach(function (key) {
-          group_idnms += " " + group_ids[key]
+          if (key == 114 || key == 113 || key == 111 || key == 110) {
+            group_idnms += " " + group_ids[key]
+          }
         })
         return this.$auth.user.name1 + "さん" + group_idnms
       } else {

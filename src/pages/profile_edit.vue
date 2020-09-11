@@ -14,7 +14,33 @@
       <v-container fluid>
         <v-row>
           <v-col cols="4">
-            <v-subheader>郵便番号</v-subheader>
+            <v-subheader>
+              お名前
+            </v-subheader>
+          </v-col>
+          <v-col cols="4">
+            <p v-html="name1" />
+          </v-col>
+          <v-col cols="4">
+            <p v-html="name2" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4">
+            <v-subheader>
+              お名前(フリガナ)
+            </v-subheader>
+          </v-col>
+          <v-col cols="4">
+            <p v-html="namekana1" />
+          </v-col>
+          <v-col cols="4">
+            <p v-html="namekana2" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4">
+            <v-subheader><span style="color: red;">*</span>郵便番号</v-subheader>
           </v-col>
           <v-col cols="8">
             <v-text-field
@@ -31,12 +57,13 @@
 
         <v-row>
           <v-col cols="4">
-            <v-subheader>都道府県</v-subheader>
+            <v-subheader><span style="color: red;">*</span>都道府県</v-subheader>
           </v-col>
           <v-col cols="8">
             <v-select
               v-model="tdfk_cd"
               :items="arrTdfk_cd"
+              :rules="[rules.required]"
               item-text="name"
               item-value="code"
               menu-props="auto"
@@ -49,7 +76,7 @@
         </v-row>
         <v-row>
           <v-col cols="4">
-            <v-subheader>市区町村</v-subheader>
+            <v-subheader><span style="color: red;">*</span>市区町村</v-subheader>
           </v-col>
           <v-col cols="8">
             <v-text-field
@@ -62,7 +89,7 @@
         </v-row>
         <v-row>
           <v-col cols="4">
-            <v-subheader>番地</v-subheader>
+            <v-subheader><span style="color: red;">*</span>番地</v-subheader>
           </v-col>
           <v-col cols="8">
             <v-text-field
@@ -87,7 +114,7 @@
         </v-row>
         <v-row>
           <v-col cols="4">
-            <v-subheader>電話番号</v-subheader>
+            <v-subheader><span style="color: red;">*</span>電話番号</v-subheader>
           </v-col>
           <v-col cols="8">
             <v-text-field
@@ -138,13 +165,7 @@
             </v-subheader>
           </v-col>
           <v-col cols="8">
-            <v-text-field
-              v-model="email"
-              label="第１メールアドレス"
-              :rules="[rules.required]"
-              type="email"
-              outlined
-            />
+            <p v-html="email" />
           </v-col>
         </v-row>
         <v-row>
@@ -175,6 +196,20 @@
               hint="最低8文字以上の英数混合のパスワードを設定ください。"
               counter
               @click:append="password_show = !password_show"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4">
+            <v-subheader>
+              <span style="color: red;">*</span>メールマガジン配信
+            </v-subheader>
+          </v-col>
+          <v-col cols="8">
+            <v-checkbox
+              v-model="mailmaga_flg"
+              class="mx-2"
+              label="希望する"
             />
           </v-col>
         </v-row>
