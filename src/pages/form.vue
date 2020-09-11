@@ -161,6 +161,10 @@
               NECロケッツクラブ会員　情報登録
             </h2>
           </header>
+          <p>
+            NECグループ社員の方はNECイントラネット環境にてNECスポーツ後援会へお申込ください。
+            <span style="color: red;">*</span>は必須入力項目です。
+          </p>
           <v-form
             ref="form2"
             v-model="valid"
@@ -170,7 +174,9 @@
             <v-container fluid>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>お名前</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>お名前
+                  </v-subheader>
                 </v-col>
                 <v-col cols="4">
                   <v-text-field
@@ -192,7 +198,9 @@
 
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>お名前(フリガナ)</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>お名前(フリガナ)
+                  </v-subheader>
                 </v-col>
                 <v-col cols="4">
                   <v-text-field
@@ -214,7 +222,9 @@
 
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>性別</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>性別
+                  </v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-radio-group v-model="sex" row :rules="[rules.required]">
@@ -226,7 +236,9 @@
 
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>生年月日</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>生年月日
+                  </v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-menu
@@ -262,7 +274,9 @@
 
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>郵便番号</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>郵便番号
+                  </v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-text-field
@@ -279,7 +293,9 @@
 
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>都道府県</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>都道府県
+                  </v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-select
@@ -298,7 +314,9 @@
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>市区町村</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>市区町村
+                  </v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-text-field
@@ -311,7 +329,9 @@
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>番地</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>番地
+                  </v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-text-field
@@ -336,7 +356,9 @@
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>電話番号</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>電話番号
+                  </v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-text-field
@@ -387,13 +409,7 @@
                   </v-subheader>
                 </v-col>
                 <v-col cols="8">
-                  <v-text-field
-                    v-model="email"
-                    label="第１メールアドレス"
-                    :rules="[rules.required]"
-                    type="email"
-                    outlined
-                  />
+                  <p v-html="email" />
                 </v-col>
               </v-row>
               <v-row>
@@ -402,16 +418,19 @@
                 </v-col>
                 <v-col cols="8">
                   <v-text-field
-                    v-model="email2"
+                    v-model="subemail"
                     label="第２メールアドレス"
                     type="email"
                     outlined
+                    autocomplete="off"
                   />
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>パスワード</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>パスワード
+                  </v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-text-field
@@ -428,10 +447,16 @@
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>メール配信許可</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>メールマガジン配信
+                  </v-subheader>
                 </v-col>
                 <v-col cols="8">
-                  <v-checkbox v-model="mailmaga_flg" class="mx-2" label="許可する"></v-checkbox>
+                  <v-checkbox
+                    v-model="mailmaga_flg"
+                    class="mx-2"
+                    label="許可する"
+                  />
                 </v-col>
               </v-row>
               <v-row>
@@ -447,7 +472,7 @@
         <v-stepper-content step="4">
           <header>
             <h2>
-              社外会員登録 決済情報登録
+              NECロケッツクラブ　会員種別・支払い方法登録
             </h2>
           </header>
           <v-form
@@ -459,25 +484,26 @@
             <v-container fluid>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>料金プラン</v-subheader>
+                  <v-subheader>会員種別</v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-radio-group v-model="product_id">
                     <v-radio
-                      label="NECグリーンロケッツ ロケッツ会員"
-                      value="41201"
-                    />
-                    <v-radio
-                      label="NECグリーンロケッツ スター会員"
-                      value="41203"
-                    />
-                    <v-radio
-                      label="NECレッドロケッツ ロケッツ会員"
+                      label="NECレッドロケッツ ロケッツ会員（年会費¥1,000）"
                       value="41204"
                     />
                     <v-radio
-                      label="NECレッドロケッツ スター会員"
+                      label="NECレッドロケッツ スター会員（年会費¥5,000）"
                       value="41202"
+                    />
+                    <v-spacer />
+                    <v-radio
+                      label="NECグリーンロケッツ ロケッツ会員（年会費¥1,000）"
+                      value="41201"
+                    />
+                    <v-radio
+                      label="NECグリーンロケッツ スター会員（年会費¥5,000）"
+                      value="41203"
                     />
                   </v-radio-group>
                 </v-col>
@@ -488,15 +514,15 @@
                 </v-col>
                 <v-col cols="8">
                   <v-radio-group v-model="ec_payment_id">
-                    <v-radio label="カード決済" value="58" />
-                    <v-radio label="銀行振り込み" value="60" />
+                    <v-radio label="クレジットカード決済" value="58" />
+                    <v-radio label="銀行振りこみ" value="60" />
                     <v-radio label="コンビニ決済" value="59" />
                   </v-radio-group>
                   <p v-if="ec_payment_id == '60'" class="body-1">
-                    振込先がメールで送信されますので、そちらで振込先をご確認ください。
+                    銀行振込先の口座名、振込方法がメールにて送信されますので、ご確認ください。
                   </p>
                   <p v-if="ec_payment_id == '59'" class="body-1">
-                    コンビニ決済用のメールが送信されますので、そちらの案内にそってお支払いをお願いいたします。
+                    コンビニ決済方法に関する詳細をメールにて送信いたしますので、そちらのご案内をご確認のうえ、お支払いをお願いいたします。
                   </p>
                   <div v-if="ec_payment_id == '58'" class="card-wrapper">
                     <v-text-field
@@ -530,7 +556,7 @@
                             { value: '12', text: '12月' },
                           ]"
                           menu-props="auto"
-                          label="月"
+                          label="有効期限(月)"
                           hide-details
                           single-line
                           outlined
@@ -548,7 +574,7 @@
                             { value: '25', text: '2025年' },
                           ]"
                           menu-props="auto"
-                          label="年"
+                          label="有効期限(年)"
                           hide-details
                           single-line
                           outlined
@@ -558,7 +584,7 @@
                         <v-text-field
                           id="cardCvv"
                           v-model="cardCvv"
-                          label="CVV"
+                          label="セキュリティコード(CVV)"
                           outlined
                         />
                       </v-col>
@@ -604,7 +630,7 @@ export default {
       fax: "",
       tel: "",
       m_tel: "",
-      email2: "",
+      subemail: "",
       name1: "",
       name2: "",
       namekana1: "",
@@ -616,7 +642,7 @@ export default {
       address3: "",
       birth: "",
       sex: "",
-      mailmaga_flg:false,
+      mailmaga_flg: false,
       menu: false,
       arrTdfk_cd: [
         { code: "01", name: "北海道" },
@@ -669,7 +695,8 @@ export default {
         { code: "99", name: "海外" },
       ],
       ec_payment_id: "58",
-      product_id: "41201",
+      product_id: "41204",
+      product_id2: "",
       cardName: "",
       cardNumber: "",
       cardMonth: "",
@@ -777,7 +804,7 @@ export default {
             m_tel: this.m_tel,
             fax: this.fax,
             email: this.email,
-            email2: this.email2,
+            email2: this.subemail,
             login_pwd: this.login_pwd,
           })
           .then(function (response) {
@@ -799,6 +826,18 @@ export default {
     purchase() {
       if (this.$refs.form4.validate()) {
         let self = this
+
+        if (this.ec_payment_id != 58) {
+          if (self.product_id == "41201") {
+            self.product_id2 = "41209"
+          } else if (self.product_id == "41202") {
+            self.product_id2 = "41208"
+          } else if (self.product_id == "41203") {
+            self.product_id2 = "41210"
+          } else if (self.product_id == "41204") {
+            self.product_id2 = "41207"
+          }
+        }
 
         if (this.ec_payment_id == 58) {
           let paygentToken = new PaygentToken()
@@ -855,7 +894,7 @@ export default {
               "/rcms-api/1/ec/purchase",
               {
                 ec_payment_id: parseInt(self.ec_payment_id),
-                product_id: parseInt(self.product_id),
+                product_id: parseInt(self.product_id2),
                 quantity: 1,
               },
               { withCredentials: true }
@@ -887,4 +926,5 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+</style>

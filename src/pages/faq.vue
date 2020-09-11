@@ -3,7 +3,7 @@
     <h2>よくある質問</h2>
     <v-list>
       <v-list-group
-        v-for="item in items"
+        v-for="item in category_items"
         :key="item.title"
         v-model="item.active"
         :prepend-icon="item.action"
@@ -15,9 +15,12 @@
           </v-list-item-content>
         </template>
 
-        <v-list-item v-for="subItem in item.items" :key="subItem.title">
+        <v-list-item v-for="subItem in item.items" :key="subItem.subject">
           <v-list-item-content>
-            <v-list-item-title v-text="subItem.title" />
+            <v-list-item-title v-text="subItem.subject" />
+            <v-list-item-subtitle>
+              <div v-html="subItem.contents" />
+            </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list-group>
@@ -30,51 +33,66 @@ export default {
   auth: false,
   data() {
     return {
-      items: [
+      category_items: [
         {
-          action: "チケット関連",
+          action: "NECロケッツクラブについて",
           title: "試合のチケットや払い戻し、利用方法などに関するご質問はこちら",
           active: false,
-          items: [{ title: "List Item" }],
+          items: [],
+          category_id: 19,
         },
         {
-          action: "入会関連",
+          action: "入会・更新・退会について",
           title: "入会や退会などに関するご質問はこちら",
           active: false,
-          items: [
-            { title: "Breakfast & brunch" },
-            { title: "New American" },
-            { title: "Sushi" },
-          ],
+          items: [],
+          category_id: 23,
         },
         {
           action: "グッズ関連",
           title: "グッズの購入や発送などに関するご質問はこちら",
           active: false,
-          items: [{ title: "List Item" }],
+          items: [],
+          category_id: 24,
         },
         {
           action: "サイトの利用方法",
           title: "当サイトの利用方法に関するご質問はこちら",
           active: false,
-          items: [{ title: "List Item" }],
+          items: [],
+          category_id: 25,
+        },
+        {
+          action: "会員情報設定について",
+          title: "",
+          active: false,
+          items: [],
+          category_id: 28,
         },
         {
           action: "その他",
           title: "その他のご質問はこちら",
           active: false,
-          items: [{ title: "List Item" }],
+          items: [],
+          category_id: 26,
         },
       ],
     }
   },
-  computed: {
-    user() {
-      return this.$auth.user
-    },
-    auth() {
-      return this.$store.$auth
-    },
+  mounted() {
+    let self = this
+    this.$auth.ctx.$axios.get("/rcms-api/1/qanda").then(function (response) {
+      Object.keys(response.data.list).forEach(function (key) {
+        Object.keys(self.category_items).forEach(function (key2) {
+          if (
+            self.category_items[key2].category_id ==
+            response.data.list[key].contents_type
+          ) {
+            self.category_items[key2].items.push(response.data.list[key])
+          }
+        })
+      })
+    })
   },
 }
 </script>

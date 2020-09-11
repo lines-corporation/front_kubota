@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <no-ssr>
+    <client-only>
       <div v-if="!auth.loggedIn">
         <form @submit.prevent="login">
           <h3 class="subtitle mb-3">
@@ -281,9 +281,8 @@
           </v-col>
         </v-row>
       </div>
-    </no-ssr>
+    </client-only>
   </div>
-  </no-ssr>
 </template>
 
 <script>

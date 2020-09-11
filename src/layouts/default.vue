@@ -120,17 +120,8 @@ export default {
           to: "/",
         },
         {
-          icon: "mdi-lightbulb",
+          icon: "mdi-ticket",
           title: "チケット(近日公開!)",
-        },
-        {
-          icon: "mdi-cart",
-          title: "グッズ(近日公開!)",
-        },
-        {
-          icon: "mdi-compass",
-          title: "ご利用方法",
-          to: "/how_to_use",
         },
         {
           icon: "mdi-help",
