@@ -172,10 +172,18 @@
                 <v-col cols="4">
                   <v-subheader>お名前</v-subheader>
                 </v-col>
-                <v-col cols="8">
+                <v-col cols="4">
                   <v-text-field
-                    v-model="name"
-                    label="お名前"
+                    v-model="name1"
+                    label="姓"
+                    :rules="[rules.required]"
+                    outlined
+                  />
+                </v-col>
+                <v-col cols="4">
+                  <v-text-field
+                    v-model="name2"
+                    label="名"
                     :rules="[rules.required]"
                     outlined
                   />
@@ -186,10 +194,18 @@
                 <v-col cols="4">
                   <v-subheader>お名前(フリガナ)</v-subheader>
                 </v-col>
-                <v-col cols="8">
+                <v-col cols="4">
                   <v-text-field
-                    v-model="nameKana"
-                    label="お名前(フリガナ)"
+                    v-model="namekana1"
+                    label="セイ"
+                    :rules="[rules.required]"
+                    outlined
+                  />
+                </v-col>
+                <v-col cols="4">
+                  <v-text-field
+                    v-model="namekana2"
+                    label="メイ"
                     :rules="[rules.required]"
                     outlined
                   />
@@ -201,7 +217,7 @@
                   <v-subheader>性別</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                  <v-radio-group v-model="sex" row>
+                  <v-radio-group v-model="sex" row :rules="[rules.required]">
                     <v-radio label="男性" value="m" />
                     <v-radio label="女性" value="f" />
                   </v-radio-group>
@@ -227,6 +243,7 @@
                         label="生年月日"
                         prepend-icon="mdi-calendar"
                         readonly
+                        :rules="[rules.required]"
                         v-bind="attrs"
                         v-on="on"
                       />
@@ -249,7 +266,7 @@
                 </v-col>
                 <v-col cols="8">
                   <v-text-field
-                    v-model="zip"
+                    v-model="zip_code"
                     label="郵便番号"
                     type="number"
                     :rules="[rules.required, rules.zip_length]"
@@ -268,6 +285,7 @@
                   <v-select
                     v-model="tdfk_cd"
                     :items="arrTdfk_cd"
+                    :rules="[rules.required]"
                     item-text="name"
                     item-value="code"
                     menu-props="auto"
@@ -410,10 +428,10 @@
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>第２メールアドレス</v-subheader>
+                  <v-subheader>メール配信許可</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                  <v-checkbox v-model="disabled" class="mx-2" label="Disabled"></v-checkbox>
+                  <v-checkbox v-model="mailmaga_flg" class="mx-2" label="許可する"></v-checkbox>
                 </v-col>
               </v-row>
               <v-row>
@@ -587,15 +605,18 @@ export default {
       tel: "",
       m_tel: "",
       email2: "",
-      name: "",
-      nameKana: "",
-      zip: "",
+      name1: "",
+      name2: "",
+      namekana1: "",
+      namekana2: "",
+      zip_code: "",
       tdfk_cd: "",
       address1: "",
       address2: "",
       address3: "",
       birth: "",
       sex: "",
+      mailmaga_flg:false,
       menu: false,
       arrTdfk_cd: [
         { code: "01", name: "北海道" },
@@ -727,17 +748,27 @@ export default {
               self.e1 = 2
             }
           })
+          .catch(function (error) {
+            self.$store.dispatch(
+              "snackbar/setError",
+              error.response.data.errors?.[0]
+            )
+            self.$store.dispatch("snackbar/snackOn")
+          })
       }
     },
     regist() {
       if (this.$refs.form2.validate()) {
+        let self = this
         this.$auth.ctx.$axios
           .post("/rcms-api/1/member/regist", {
-            name1: this.name,
-            namekana1: this.nameKana,
+            name1: this.name1,
+            name2: this.name2,
+            namekana1: this.namekana1,
+            namekana2: this.namekana2,
             sex: this.sex,
             birth: this.birth,
-            zip_code: this.zip,
+            zip_code: this.zip_code,
             tdfk_cd: this.tdfk_cd,
             address1: this.address1,
             address2: this.address2,
@@ -750,11 +781,18 @@ export default {
             login_pwd: this.login_pwd,
           })
           .then(function (response) {
-            if (response.data.code == "200") {
+            if (response.data.errors.length === 0) {
               self.$store.dispatch("snackbar/setMessage", "会員登録しました")
               self.$store.dispatch("snackbar/snackOn")
               self.e1 = 4
             }
+          })
+          .catch(function (error) {
+            self.$store.dispatch(
+              "snackbar/setError",
+              error.response.data.errors?.[0]
+            )
+            self.$store.dispatch("snackbar/snackOn")
           })
       }
     },
@@ -800,6 +838,7 @@ export default {
                       "snackbar/setError",
                       error.response.data.errors?.[0]
                     )
+                    self.$store.dispatch("snackbar/snackOn")
                   })
               } else {
                 self.$store.dispatch(
@@ -834,6 +873,7 @@ export default {
                 "snackbar/setError",
                 error.response.data.errors?.[0]
               )
+              self.$store.dispatch("snackbar/snackOn")
             })
         }
         self.loader = false
