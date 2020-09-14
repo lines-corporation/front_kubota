@@ -40,11 +40,31 @@
         </v-row>
         <v-row>
           <v-col cols="4">
+            <v-subheader>
+              性別
+            </v-subheader>
+          </v-col>
+          <v-col cols="8">
+            <p v-html="sex" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4">
+            <v-subheader>
+              生年月日
+            </v-subheader>
+          </v-col>
+          <v-col cols="8">
+            <p v-html="birth" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4">
             <v-subheader><span style="color: red;">*</span>郵便番号</v-subheader>
           </v-col>
           <v-col cols="8">
             <v-text-field
-              v-model="zip"
+              v-model="zip_code"
               label="郵便番号"
               type="number"
               :rules="[rules.required, rules.zip_length]"
@@ -174,9 +194,10 @@
           </v-col>
           <v-col cols="8">
             <v-text-field
-              v-model="email2"
+              v-model="subemail"
               label="第２メールアドレス"
               type="email"
+              autocomplete="off"
               outlined
             />
           </v-col>
@@ -241,15 +262,19 @@ export default {
       fax: "",
       tel: "",
       m_tel: "",
-      email2: "",
-      name: "",
-      nameKana: "",
-      zip: "",
+      subemail: "",
+      name1: "",
+      name2: "",
+      namekana1: "",
+      namekana2: "",
+      zip_code: "",
       tdfk_cd: "",
       address1: "",
       address2: "",
       address3: "",
       birth: "",
+      sex: "",
+      mailmaga_flg: false,
       menu: false,
       arrTdfk_cd: [
         { code: "01", name: "北海道" },
@@ -336,24 +361,37 @@ export default {
   },
   methods: {
     regist() {
+      this.loading = true
+      let self = this
+
       this.$auth.ctx.$axios
         .post("/rcms-api/1/member/update", {
-          zip_code: this.zip,
-          tdfk_cd: this.tdfk_cd,
-          address1: this.address1,
-          address2: this.address2,
-          address3: this.address3,
-          tel: this.tel,
-          m_tel: this.m_tel,
-          fax: this.fax,
-          email: this.email,
-          email2: this.email2,
-          login_pwd: this.login_pwd,
+            zip_code: this.zip_code,
+            tdfk_cd: this.tdfk_cd,
+            address1: this.address1,
+            address2: this.address2,
+            address3: this.address3,
+            tel: this.tel,
+            m_tel: this.m_tel,
+            fax: this.fax,
+            email: this.email,
+            email2: this.subemail,
+            login_pwd: this.login_pwd,
         })
         .then(function (response) {
-          if (response.data.code == "200") {
-            console.log(response.data.columns)
+          if (response.data.errors.length === 0) {
+            self.$store.dispatch("snackbar/setMessage", "会員情報変更しました")
+            self.$store.dispatch("snackbar/snackOn")
           }
+          self.loading = false
+        })
+        .catch(function (error) {
+          self.$store.dispatch(
+            "snackbar/setError",
+            error.response.data.errors?.[0]
+          )
+          self.$store.dispatch("snackbar/snackOn")
+          self.loading = false
         })
     },
     save(birth) {

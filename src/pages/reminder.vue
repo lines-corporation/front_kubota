@@ -38,6 +38,7 @@
                         v-model="email"
                         label="メールアドレス"
                         type="email"
+                        autocomplete="off"
                         outlined
                       />
                     </p>
@@ -51,8 +52,7 @@
                       x-large
                       color="success"
                       dark
-                      :loading="loading"
-                      :disabled="loading"
+                      :loading="loading1"
                     >
                       送信する
                     </v-btn>
@@ -132,8 +132,7 @@
                       x-large
                       color="success"
                       dark
-                      :loading="loading"
-                      :disabled="loading"
+                      :loading="loading2"
                     >
                       登録する
                     </v-btn>
@@ -162,7 +161,8 @@ export default {
       password_show2: false,
       login_pwd2: "",
       temp_pwd: "",
-      loading: false,
+      loading1: false,
+      loading2: false,
       rules: {
         required: (value) => !!value || "この項目は必須入力です",
         password_min: (v) => v.length >= 8 || "最低8文字以上を入力してください",
@@ -183,6 +183,7 @@ export default {
   },
   methods: {
     async reminder() {
+      this.loading1 = true
       let self = this
       this.$store.$auth.ctx.$axios
         .post("/rcms-api/1/reminder", {
@@ -196,6 +197,7 @@ export default {
             )
             self.$store.dispatch("snackbar/snackOn")
           }
+          self.loading1 = false
         })
         .catch(function (error) {
           self.$store.dispatch(
@@ -203,10 +205,13 @@ export default {
             error.response.data.errors?.[0]
           )
           self.$store.dispatch("snackbar/snackOn")
+          self.loading1 = false
         })
+      
     },
     async set_password() {
       if (this.$refs.form2.validate() && this.token) {
+        this.loading2 = true
         let self = this
         self.$auth.ctx.$axios
           .post("/rcms-api/1/reminder", {
@@ -221,6 +226,7 @@ export default {
             )
             self.$store.dispatch("snackbar/snackOn")
             self.$router.push("/")
+            self.loading2 = false
           })
           .catch(function (error) {
             self.$store.dispatch(
@@ -228,6 +234,7 @@ export default {
               error.response.data.errors?.[0]
             )
             self.$store.dispatch("snackbar/snackOn")
+            self.loading2 = false
           })
       }
     },

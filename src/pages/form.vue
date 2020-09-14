@@ -140,7 +140,7 @@
                     outlined
                   />
                 </p>
-                <v-btn type="submit" block x-large color="success" dark>
+                <v-btn type="submit" block x-large color="success" dark :loading="loading1">
                   同意して送信する
                 </v-btn>
               </v-form>
@@ -463,7 +463,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12">
-                  <v-btn type="submit" block x-large color="success" dark>
+                  <v-btn type="submit" block x-large color="success" dark :loading="loading2">
                     登録する
                   </v-btn>
                 </v-col>
@@ -602,8 +602,7 @@
                     x-large
                     color="success"
                     dark
-                    :loading="loading"
-                    :disabled="loading"
+                    :loading="loading3"
                   >
                     登録する
                   </v-btn>
@@ -704,13 +703,15 @@ export default {
       cardMonth: "",
       cardYear: "",
       cardCvv: "",
-      loading: false,
+      loading1: false,
+      loading2: false,
+      loading3: false,
       rules: {
         required: (value) => !!value || "この項目は必須入力です",
         password_min: (v) => v.length >= 8 || "最低8文字以上を入力してください",
         zip_length: (v) => v.length == 7 || "7文字の半角数字で入力してください",
         tel: (v) =>
-          /^0[0-9]{9,10}$/.test(v) || "ハイフンなしの半角数字をご入力ください",
+          v.length == 0 || /^0[0-9]{9,10}$/.test(v) || "ハイフンなしの半角数字をご入力ください",
       },
     }
   },
@@ -766,6 +767,7 @@ export default {
   methods: {
     send_email() {
       if (this.$refs.form1.validate()) {
+        this.loading1 = true
         let self = this
 
         this.$auth.ctx.$axios
@@ -778,6 +780,7 @@ export default {
               self.$store.dispatch("snackbar/snackOn")
               self.e1 = 2
             }
+            self.loading1 = false
           })
           .catch(function (error) {
             self.$store.dispatch(
@@ -785,11 +788,13 @@ export default {
               error.response.data.errors?.[0]
             )
             self.$store.dispatch("snackbar/snackOn")
+            self.loading1 = false
           })
       }
     },
     regist() {
       if (this.$refs.form2.validate()) {
+        this.loading2 = true
         let self = this
         this.$auth.ctx.$axios
           .post("/rcms-api/1/member/regist", {
@@ -817,6 +822,7 @@ export default {
               self.$store.dispatch("snackbar/snackOn")
               self.e1 = 4
             }
+            self.loading2 = false
           })
           .catch(function (error) {
             self.$store.dispatch(
@@ -824,11 +830,13 @@ export default {
               error.response.data.errors?.[0]
             )
             self.$store.dispatch("snackbar/snackOn")
+            self.loading2 = false
           })
       }
     },
     purchase() {
       if (this.$refs.form4.validate()) {
+        this.loading3 = true
         let self = this
 
         if (this.ec_payment_id != 58) {
@@ -875,6 +883,7 @@ export default {
                     )
                     self.$store.dispatch("snackbar/snackOn")
                     self.$router.push("/")
+                    self.loading3 = false
                   })
                   .catch(function (error) {
                     self.$store.dispatch(
@@ -882,6 +891,7 @@ export default {
                       error.response.data.errors?.[0]
                     )
                     self.$store.dispatch("snackbar/snackOn")
+                    self.loading3 = false
                   })
               } else {
                 self.$store.dispatch(
@@ -889,6 +899,7 @@ export default {
                   "カード入力内容に不備があります。再度、入力内容をご確認ください"
                 )
                 self.$store.dispatch("snackbar/snackOn")
+                self.loading3 = false
               }
             }
           )
@@ -910,6 +921,7 @@ export default {
               )
               self.$store.dispatch("snackbar/snackOn")
               self.$router.push("/")
+              self.loading3 = false
             })
             .catch(function (error) {
               self.$store.dispatch(
@@ -917,9 +929,9 @@ export default {
                 error.response.data.errors?.[0]
               )
               self.$store.dispatch("snackbar/snackOn")
+              self.loading3 = false
             })
         }
-        self.loader = false
       }
     },
     save(birth) {

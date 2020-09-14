@@ -39,7 +39,7 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <v-btn type="submit" block x-large color="success" dark>
+            <v-btn type="submit" block x-large color="success" dark :loading="loading">
               送信する
             </v-btn>
           </v-col>
@@ -59,10 +59,12 @@ export default {
       name: "",
       body: "",
       member_no:"",
+      loading: false,
     }
   },
   methods: {
     inquiry() {
+      this.loading = true
       let self = this
       this.$store.$auth.ctx.$axios
         .post("/rcms-api/1/inquiry/6", {
@@ -81,6 +83,7 @@ export default {
             self.$router.push("/")
           }
         })
+      this.loading = false
     },
   },
 }

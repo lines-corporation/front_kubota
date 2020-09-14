@@ -20,7 +20,7 @@
             <v-radio-group v-if="green_team" v-model="product_id">
               <v-radio label="NECグリーンロケッツ スター会員" value="41203" />
               <v-radio
-                v-if="green_rockets"
+                v-if="!green_rockets"
                 label="NECグリーンロケッツ ロケッツ会員"
                 value="41201"
               />
@@ -28,7 +28,7 @@
             <v-radio-group v-if="red_team" v-model="product_id">
               <v-radio label="NECレッドロケッツ スター会員" value="41202" />
               <v-radio
-                v-if="red_rockets"
+                v-if="!red_rockets"
                 label="NECレッドロケッツ ロケッツ会員"
                 value="41204"
               />
@@ -128,7 +128,6 @@
               color="success"
               dark
               :loading="loading"
-              :disabled="loading"
             >
               登録する
             </v-btn>
@@ -150,6 +149,7 @@ export default {
       green_rockets: false,
       red_rockets: false,
       product_id: null,
+      product_id2: null,
       present: "1",
       ec_payment_id: "58",
       token: "",
@@ -164,7 +164,7 @@ export default {
           "16桁から18桁の数字で入力してください",
       },
       cardName: "",
-      cardNumber: "4242424242424242",
+      cardNumber: "",
       cardMonth: "",
       cardYear: "",
       cardCvv: "",
@@ -200,6 +200,7 @@ export default {
     purchase() {
       if (this.$refs.form3.validate()) {
         let self = this
+        this.loading = true
 
         if (this.ec_payment_id == 58) {
           let paygentToken = new PaygentToken()
@@ -224,7 +225,6 @@ export default {
                       quantity: 1,
                       card_token: response.tokenizedCardObject.token,
                     },
-                    { withCredentials: true }
                   )
                   .then(function (response) {
                     self.$store.dispatch(
@@ -233,12 +233,14 @@ export default {
                     )
                     self.$store.dispatch("snackbar/snackOn")
                     self.$router.push("/")
+                    self.loading = false
                   })
                   .catch(function (error) {
                     self.$store.dispatch(
                       "snackbar/setError",
                       error.response.data.errors?.[0]
                     )
+                    self.$store.dispatch("snackbar/snackOn")
                   })
               } else {
                 self.$store.dispatch(
@@ -246,19 +248,30 @@ export default {
                   "カード入力内容に不備があります。再度、入力内容をご確認ください"
                 )
                 self.$store.dispatch("snackbar/snackOn")
+                self.loading = false
               }
             }
           )
         } else {
+          if (this.ec_payment_id != 58) {
+            if (self.product_id == "41201") {
+              self.product_id2 = "41209"
+            } else if (self.product_id == "41202") {
+              self.product_id2 = "41208"
+            } else if (self.product_id == "41203") {
+              self.product_id2 = "41210"
+            } else if (self.product_id == "41204") {
+              self.product_id2 = "41207"
+            }
+          }
           self.$auth.ctx.$axios
             .post(
               "/rcms-api/1/ec/purchase",
               {
                 ec_payment_id: parseInt(self.ec_payment_id),
-                product_id: parseInt(self.product_id),
+                product_id: parseInt(self.product_id2),
                 quantity: 1,
               },
-              { withCredentials: true }
             )
             .then(function (response) {
               self.$store.dispatch(
@@ -267,12 +280,15 @@ export default {
               )
               self.$store.dispatch("snackbar/snackOn")
               self.$router.push("/")
+              self.loading = false
             })
             .catch(function (error) {
               self.$store.dispatch(
                 "snackbar/setError",
                 error.response.data.errors?.[0]
               )
+              self.$store.dispatch("snackbar/snackOn")
+              self.loading = false
             })
         }
         self.loader = false
