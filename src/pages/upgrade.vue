@@ -43,7 +43,6 @@
             <v-radio-group v-model="ec_payment_id">
               <v-radio label="カード決済" value="58" />
               <v-radio label="銀行振り込み" value="60" />
-              <v-radio label="コンビニ決済" value="59" />
             </v-radio-group>
             <p v-if="ec_payment_id == '60'" class="body-1">
               振込先がメールで送信されますので、そちらで振込先をご確認ください。
@@ -198,9 +197,9 @@ export default {
   },
   methods: {
     purchase() {
+      this.loading = true
       if (this.$refs.form3.validate()) {
         let self = this
-        this.loading = true
 
         if (this.ec_payment_id == 58) {
           let paygentToken = new PaygentToken()
@@ -217,15 +216,12 @@ export default {
             function (response) {
               if (response.result == "0000") {
                 self.$auth.ctx.$axios
-                  .post(
-                    "/rcms-api/1/ec/purchase",
-                    {
-                      ec_payment_id: parseInt(self.ec_payment_id),
-                      product_id: parseInt(self.product_id),
-                      quantity: 1,
-                      card_token: response.tokenizedCardObject.token,
-                    },
-                  )
+                  .post("/rcms-api/1/ec/purchase", {
+                    ec_payment_id: parseInt(self.ec_payment_id),
+                    product_id: parseInt(self.product_id),
+                    quantity: 1,
+                    card_token: response.tokenizedCardObject.token,
+                  })
                   .then(function (response) {
                     self.$store.dispatch(
                       "snackbar/setMessage",
@@ -265,14 +261,11 @@ export default {
             }
           }
           self.$auth.ctx.$axios
-            .post(
-              "/rcms-api/1/ec/purchase",
-              {
-                ec_payment_id: parseInt(self.ec_payment_id),
-                product_id: parseInt(self.product_id2),
-                quantity: 1,
-              },
-            )
+            .post("/rcms-api/1/ec/purchase", {
+              ec_payment_id: parseInt(self.ec_payment_id),
+              product_id: parseInt(self.product_id2),
+              quantity: 1,
+            })
             .then(function (response) {
               self.$store.dispatch(
                 "snackbar/setMessage",
@@ -291,7 +284,8 @@ export default {
               self.loading = false
             })
         }
-        self.loader = false
+      } else {
+        this.loading = false
       }
     },
   },

@@ -61,7 +61,7 @@
           <v-col cols="12" sm="3">
             <v-card class="mx-auto" outlined>
               <v-card-text>
-                <p>名前：{{ user.name1 }}</p>
+                <p>名前：{{ user.name1 }} {{ user.name2 }}</p>
                 <p>会員番号：{{ user.member_no }}</p>
                 <p>会員種別：{{ group_nm }}</p>
               </v-card-text>
@@ -260,7 +260,6 @@ export default {
   middleware: "auth",
   auth: false,
   data: () => ({
-    can_upgrade: true,
     topics_list6: [],
     topics_list5: [],
     topics_list1: [],
@@ -278,15 +277,35 @@ export default {
     auth() {
       return this.$store.$auth
     },
+    can_upgrade() {
+      if (this.$auth.loggedIn) {
+        self.can_upgrade = true
+        const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
+        Object.keys(group_ids).forEach(function (key) {
+          if (["114", "111"].indexOf(key) !== -1) {
+            self.can_upgrade = false
+          }
+        })
+        return self.can_upgrade
+      }
+      return false
+    },
     group_nm() {
       if (this.$store.$auth.loggedIn) {
         const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
         let group_idnms = ""
         Object.keys(group_ids).forEach(function (key) {
-          if (key == 114 || key == 113 || key == 111 || key == 110) {
+          if (key == 114 || key == 111) {
             group_idnms += " " + group_ids[key]
           }
         })
+        if (!group_idnms) {
+          Object.keys(group_ids).forEach(function (key) {
+            if (key == 110 || key == 113) {
+              group_idnms += " " + group_ids[key]
+            }
+          })
+        }
         return group_idnms
       } else {
         return ""
@@ -296,13 +315,6 @@ export default {
   mounted() {
     if (this.$auth.loggedIn) {
       let self = this
-      self.can_upgrade = true
-      const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
-      Object.keys(group_ids).forEach(function (key) {
-        if (["114", "111"].indexOf(key) !== -1) {
-          self.can_upgrade = false
-        }
-      })
 
       this.$auth.ctx.$axios.get("/rcms-api/1/infos").then(function (response) {
         self.topics_list1 = response.data.list
@@ -318,7 +330,7 @@ export default {
   methods: {
     async login() {
       await this.$auth
-        .loginWith("local", { data: this.form, withCredentials: true })
+        .loginWith("local", { data: this.form })
         .then((response) => {
           this.$store.dispatch("snackbar/setMessage", "ログインしました")
           this.$store.dispatch("snackbar/snackOn")

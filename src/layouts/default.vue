@@ -156,10 +156,17 @@ export default {
         const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
         let group_idnms = ""
         Object.keys(group_ids).forEach(function (key) {
-          if (key == 114 || key == 113 || key == 111 || key == 110) {
+          if (key == 114 || key == 111) {
             group_idnms += " " + group_ids[key]
           }
         })
+        if (!group_idnms) {
+          Object.keys(group_ids).forEach(function (key) {
+            if (key == 110 || key == 113) {
+              group_idnms += " " + group_ids[key]
+            }
+          })
+        }
         return this.$auth.user.name1 + "さん" + group_idnms
       } else {
         return ""

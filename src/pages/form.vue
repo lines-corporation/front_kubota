@@ -140,7 +140,14 @@
                     outlined
                   />
                 </p>
-                <v-btn type="submit" block x-large color="success" dark :loading="loading1">
+                <v-btn
+                  type="submit"
+                  block
+                  x-large
+                  color="success"
+                  dark
+                  :loading="loading1"
+                >
                   同意して送信する
                 </v-btn>
               </v-form>
@@ -463,7 +470,14 @@
               </v-row>
               <v-row>
                 <v-col cols="12">
-                  <v-btn type="submit" block x-large color="success" dark :loading="loading2">
+                  <v-btn
+                    type="submit"
+                    block
+                    x-large
+                    color="success"
+                    dark
+                    :loading="loading2"
+                  >
                     登録する
                   </v-btn>
                 </v-col>
@@ -518,7 +532,6 @@
                   <v-radio-group v-model="ec_payment_id">
                     <v-radio label="クレジットカード決済" value="58" />
                     <v-radio label="銀行振りこみ" value="60" />
-                    <v-radio label="コンビニ決済" value="59" />
                   </v-radio-group>
                   <p v-if="ec_payment_id == '60'" class="body-1">
                     銀行振込先の口座名、振込方法がメールにて送信されますので、ご確認ください。
@@ -711,7 +724,9 @@ export default {
         password_min: (v) => v.length >= 8 || "最低8文字以上を入力してください",
         zip_length: (v) => v.length == 7 || "7文字の半角数字で入力してください",
         tel: (v) =>
-          v.length == 0 || /^0[0-9]{9,10}$/.test(v) || "ハイフンなしの半角数字をご入力ください",
+          v.length == 0 ||
+          /^0[0-9]{9,10}$/.test(v) ||
+          "ハイフンなしの半角数字をご入力ください",
       },
     }
   },
@@ -766,8 +781,8 @@ export default {
   },
   methods: {
     send_email() {
+      this.loading1 = true
       if (this.$refs.form1.validate()) {
-        this.loading1 = true
         let self = this
 
         this.$auth.ctx.$axios
@@ -790,11 +805,13 @@ export default {
             self.$store.dispatch("snackbar/snackOn")
             self.loading1 = false
           })
+      } else {
+        this.loading1 = false
       }
     },
     regist() {
+      this.loading2 = true
       if (this.$refs.form2.validate()) {
-        this.loading2 = true
         let self = this
         this.$auth.ctx.$axios
           .post("/rcms-api/1/member/regist", {
@@ -814,6 +831,7 @@ export default {
             fax: this.fax,
             email: this.email,
             email2: this.subemail,
+            email_send_ng_flg: this.mailmaga_flg ? 0 : 1,
             login_pwd: this.login_pwd,
           })
           .then(function (response) {
@@ -832,11 +850,13 @@ export default {
             self.$store.dispatch("snackbar/snackOn")
             self.loading2 = false
           })
+      } else {
+        this.loading2 = false
       }
     },
     purchase() {
+      this.loading3 = true
       if (this.$refs.form4.validate()) {
-        this.loading3 = true
         let self = this
 
         if (this.ec_payment_id != 58) {
@@ -932,6 +952,8 @@ export default {
               self.loading3 = false
             })
         }
+      } else {
+        this.loading3 = false
       }
     },
     save(birth) {
@@ -942,5 +964,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>
