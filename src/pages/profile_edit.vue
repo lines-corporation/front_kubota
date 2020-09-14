@@ -6,7 +6,7 @@
       </h2>
     </header>
     <v-form
-      ref="form3"
+      ref="form1"
       v-model="valid"
       lazy-validation
       @submit.prevent="regist"
@@ -60,7 +60,9 @@
         </v-row>
         <v-row>
           <v-col cols="4">
-            <v-subheader><span style="color: red;">*</span>郵便番号</v-subheader>
+            <v-subheader>
+              <span style="color: red;">*</span>郵便番号
+            </v-subheader>
           </v-col>
           <v-col cols="8">
             <v-text-field
@@ -77,7 +79,9 @@
 
         <v-row>
           <v-col cols="4">
-            <v-subheader><span style="color: red;">*</span>都道府県</v-subheader>
+            <v-subheader>
+              <span style="color: red;">*</span>都道府県
+            </v-subheader>
           </v-col>
           <v-col cols="8">
             <v-select
@@ -96,7 +100,9 @@
         </v-row>
         <v-row>
           <v-col cols="4">
-            <v-subheader><span style="color: red;">*</span>市区町村</v-subheader>
+            <v-subheader>
+              <span style="color: red;">*</span>市区町村
+            </v-subheader>
           </v-col>
           <v-col cols="8">
             <v-text-field
@@ -134,14 +140,16 @@
         </v-row>
         <v-row>
           <v-col cols="4">
-            <v-subheader><span style="color: red;">*</span>電話番号</v-subheader>
+            <v-subheader>
+              <span style="color: red;">*</span>電話番号
+            </v-subheader>
           </v-col>
           <v-col cols="8">
             <v-text-field
               v-model="tel"
               label="電話番号"
               type="tel"
-              :rules="[rules.required]"
+              :rules="[rules.required, rules.tel]"
               hint="ハイフンなしの半角数字をご入力ください"
               counter
               outlined
@@ -157,6 +165,7 @@
               v-model="m_tel"
               label="携帯電話番号"
               type="tel"
+              :rules="[rules.tel]"
               hint="ハイフンなしの半角数字をご入力ください"
               counter
               outlined
@@ -172,6 +181,7 @@
               v-model="fax"
               label="FAX番号"
               type="tel"
+              :rules="[rules.tel]"
               hint="ハイフンなしの半角数字をご入力ください"
               counter
               outlined
@@ -210,7 +220,7 @@
             <v-text-field
               v-model="password"
               :append-icon="password_show ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[rules.required, rules.password_min]"
+              :rules="[rules.password_min]"
               :type="password_show ? 'text' : 'password'"
               name="password"
               label="パスワード"
@@ -227,11 +237,7 @@
             </v-subheader>
           </v-col>
           <v-col cols="8">
-            <v-checkbox
-              v-model="mailmaga_flg"
-              class="mx-2"
-              label="希望する"
-            />
+            <v-checkbox v-model="mailmaga_flg" class="mx-2" label="希望する" />
           </v-col>
         </v-row>
         <v-row>
@@ -328,8 +334,13 @@ export default {
       ],
       rules: {
         required: (value) => !!value || "この項目は必須入力です",
-        password_min: (v) => v.length >= 8 || "最低8文字以上を入力してください",
-        zip_length: (v) => v.length > 7 || "7文字の半角数字で入力してください",
+        password_min: (v) =>
+          v.length == 0 || v.length >= 8 || "最低8文字以上を入力してください",
+        zip_length: (v) => v.length == 7 || "7文字の半角数字で入力してください",
+        tel: (v) =>
+          v.length == 0 ||
+          /^0[0-9]{9,10}$/.test(v) ||
+          "ハイフンなしの半角数字をご入力ください",
       },
     }
   },
@@ -359,13 +370,42 @@ export default {
       })
     },
   },
+  mounted() {
+    if (this.$auth.loggedIn) {
+      let self = this
+      this.$auth.ctx.$axios
+        .get("/rcms-api/1/members/" + this.$auth.user.member_id)
+        .then(function (response) {
+          console.log(response)
+          self.email = response.data.details.email
+          self.name1 = response.data.details.name1
+          self.name2 = response.data.details.name2
+          self.namekana1 = response.data.details.namekana1
+          self.namekana2 = response.data.details.namekana2
+          self.sex = response.data.details.sex.label
+          self.birth = response.data.details.birth
+          self.email = response.data.details.email
+          self.subemail = response.data.details.email2
+          self.zip_code = response.data.details.zip_code
+          self.tdfk_cd = response.data.details.tdfk_cd
+          self.address1 = response.data.details.address1
+          self.address2 = response.data.details.address2
+          self.address3 = response.data.details.address3
+          self.tel = response.data.details.tel
+          self.fax = response.data.details.fax
+          self.m_tel = response.data.details.m_tel
+          self.mailmaga_flg = !response.data.details.email_send_ng_flg
+        })
+    }
+  },
   methods: {
     regist() {
       this.loading = true
       let self = this
 
-      this.$auth.ctx.$axios
-        .post("/rcms-api/1/member/update", {
+      if (this.$refs.form1.validate()) {
+        this.$auth.ctx.$axios
+          .post("/rcms-api/1/member/update", {
             zip_code: this.zip_code,
             tdfk_cd: this.tdfk_cd,
             address1: this.address1,
@@ -374,25 +414,31 @@ export default {
             tel: this.tel,
             m_tel: this.m_tel,
             fax: this.fax,
-            email: this.email,
             email2: this.subemail,
             login_pwd: this.login_pwd,
-        })
-        .then(function (response) {
-          if (response.data.errors.length === 0) {
-            self.$store.dispatch("snackbar/setMessage", "会員情報変更しました")
+            email_send_ng_flg: this.mailmaga_flg ? 0 : 1,
+          })
+          .then(function (response) {
+            if (response.data.errors.length === 0) {
+              self.$store.dispatch(
+                "snackbar/setMessage",
+                "会員情報変更しました"
+              )
+              self.$store.dispatch("snackbar/snackOn")
+              self.loading = false
+              self.$router.push("/")
+            }
+            self.loading = false
+          })
+          .catch(function (error) {
+            self.$store.dispatch(
+              "snackbar/setError",
+              error.response.data.errors?.[0]
+            )
             self.$store.dispatch("snackbar/snackOn")
-          }
-          self.loading = false
-        })
-        .catch(function (error) {
-          self.$store.dispatch(
-            "snackbar/setError",
-            error.response.data.errors?.[0]
-          )
-          self.$store.dispatch("snackbar/snackOn")
-          self.loading = false
-        })
+            self.loading = false
+          })
+      }
     },
     save(birth) {
       this.$refs.menu.save(birth)
