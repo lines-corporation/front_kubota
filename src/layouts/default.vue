@@ -70,9 +70,6 @@
         <v-btn color="white" text rounded class="my-2" to="/faq">
           よくある質問
         </v-btn>
-        <v-btn color="white" text rounded class="my-2" to="/privacy">
-          プライバシーポリシー
-        </v-btn>
         <v-btn color="white" text rounded class="my-2" to="/tokutei">
           特定商取引法に基づく表示
         </v-btn>

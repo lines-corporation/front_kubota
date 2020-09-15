@@ -30,10 +30,6 @@ export default {
           to: "/kiyaku_nec",
         },
         {
-          title: "プライバシーポリシー",
-          to: "/privacy",
-        },
-        {
           title: "特定商取引法に基づく表示",
           to: "/tokutei",
         },
