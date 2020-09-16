@@ -30,7 +30,14 @@
                 @click:append="show_pwd1 = !show_pwd1"
               />
             </p>
-            <v-btn type="submit" block x-large color="success" dark>
+            <v-btn
+              type="submit"
+              block
+              x-large
+              color="success"
+              dark
+              :loading="loading"
+            >
               ログインする
             </v-btn>
           </form>
@@ -263,6 +270,7 @@ export default {
     topics_list6: [],
     topics_list5: [],
     topics_list1: [],
+    loading: false,
     show_pwd1: false,
     show_pwd2: false,
     form: {
@@ -329,16 +337,32 @@ export default {
   },
   methods: {
     async login() {
+      this.loading = true
       await this.$auth
         .loginWith("local", { data: this.form })
         .then((response) => {
+          const group_ids = JSON.parse(
+            JSON.stringify(this.$auth.user.group_ids)
+          )
+          let upgraded_flg = false
+          Object.keys(group_ids).forEach(function (key) {
+            if (key == 114 || key == 111 || key == 110 || key == 113) {
+              upgraded_flg = true
+            }
+          })
+          if (!upgraded_flg) {
+            this.$router.push("/upgrade")
+          } else {
+            this.$router.push("/")
+          }
           this.$store.dispatch("snackbar/setMessage", "ログインしました")
           this.$store.dispatch("snackbar/snackOn")
-          this.$router.push("/")
+          this.loading = false
         })
         .catch((error) => {
           this.$store.dispatch("snackbar/setError", "ログインに失敗しました")
           this.$store.dispatch("snackbar/snackOn")
+          this.loading = false
         })
     },
   },

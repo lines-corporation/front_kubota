@@ -452,7 +452,8 @@
                     ]"
                     :type="password_show ? 'text' : 'password'"
                     label="パスワード"
-                    hint="最低8文字以上の英数混合のパスワードを設定ください。記号は-_&=+%#@$*.!:のみ利用可能です"
+                    hint="8文字以上の半角英数字混在でご入力ください。記号を利用する場合は -_&=+%#@$*.!: が利用可能です。"
+                    persistent-hint
                     counter
                     @click:append="password_show = !password_show"
                   />
@@ -509,20 +510,20 @@
                 <v-col cols="8">
                   <v-radio-group v-model="product_id">
                     <v-radio
-                      label="NECレッドロケッツ ロケッツ会員（年会費¥1,000）"
+                      label="NECレッド・ロケッツ会員（年会費¥1,000）"
                       value="41204"
                     />
                     <v-radio
-                      label="NECレッドロケッツ スター会員（年会費¥5,000）"
+                      label="NECレッド・スター会員（年会費¥5,000）"
                       value="41202"
                     />
                     <v-spacer />
                     <v-radio
-                      label="NECグリーンロケッツ ロケッツ会員（年会費¥1,000）"
+                      label="NECグリーン・ロケッツ会員（年会費¥1,000）"
                       value="41201"
                     />
                     <v-radio
-                      label="NECグリーンロケッツ スター会員（年会費¥5,000）"
+                      label="NECグリーン・スター会員（年会費¥5,000）"
                       value="41203"
                     />
                   </v-radio-group>
@@ -591,6 +592,11 @@
                             { value: '23', text: '2023年' },
                             { value: '24', text: '2024年' },
                             { value: '25', text: '2025年' },
+                            { value: '26', text: '2026年' },
+                            { value: '27', text: '2027年' },
+                            { value: '28', text: '2028年' },
+                            { value: '29', text: '2029年' },
+                            { value: '30', text: '2030年' },
                           ]"
                           menu-props="auto"
                           label="有効期限(年)"
@@ -710,7 +716,6 @@ export default {
         { code: "45", name: "宮崎県" },
         { code: "46", name: "鹿児島県" },
         { code: "47", name: "沖縄県" },
-        { code: "99", name: "海外" },
       ],
       ec_payment_id: "58",
       product_id: "41204",

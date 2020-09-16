@@ -223,7 +223,8 @@
               :rules="[rules.password_min, rules.password]"
               :type="password_show ? 'text' : 'password'"
               label="パスワード"
-              hint="最低8文字以上の英数混合のパスワードを設定ください。記号は-_&=+%#@$*.!:のみ利用可能です"
+              hint="8文字以上の半角英数字混在でご入力ください。記号を利用する場合は -_&=+%#@$*.!: が利用可能です。"
+              persistent-hint
               counter
               @click:append="password_show = !password_show"
             />
@@ -338,7 +339,6 @@ export default {
         { code: "45", name: "宮崎県" },
         { code: "46", name: "鹿児島県" },
         { code: "47", name: "沖縄県" },
-        { code: "99", name: "海外" },
       ],
       rules: {
         required: (value) => !!value || "この項目は必須入力です",

@@ -77,7 +77,7 @@ export default {
     ignoreNotFoundWarnings: true,
   },
   router: {
-    middleware: ["auth"],
+    middleware: ["auth", "upgrade"],
   },
   axios: {
     //baseURL: 'http://127.0.0.1',
@@ -112,7 +112,6 @@ export default {
             method: "post",
           },
         },
-        tokenType: false,
         tokenRequired: false,
         autoFetchUser: true,
       },

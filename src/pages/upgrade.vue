@@ -1,8 +1,11 @@
 <template>
   <div>
     <header>
-      <h2>
-        アップグレード
+      <h2 v-if="!temp_user">
+        NECロケッツクラブ　アップグレード
+      </h2>
+      <h2 v-if="temp_user">
+        NECロケッツクラブ　会員種別・支払い方法登録
       </h2>
     </header>
     <v-form
@@ -17,19 +20,25 @@
             <v-subheader>料金プラン</v-subheader>
           </v-col>
           <v-col cols="8">
-            <v-radio-group v-if="green_team" v-model="product_id">
-              <v-radio label="NECグリーンロケッツ スター会員" value="41203" />
+            <v-radio-group v-model="product_id" :rules="[rules.required]">
               <v-radio
-                v-if="!green_rockets"
-                label="NECグリーンロケッツ ロケッツ会員"
+                v-if="green_star"
+                label="NECグリーン・スター会員"
+                value="41203"
+              />
+              <v-radio
+                v-if="green_rockets"
+                label="NECグリーン・ロケッツ会員"
                 value="41201"
               />
-            </v-radio-group>
-            <v-radio-group v-if="red_team" v-model="product_id">
-              <v-radio label="NECレッドロケッツ スター会員" value="41202" />
               <v-radio
-                v-if="!red_rockets"
-                label="NECレッドロケッツ ロケッツ会員"
+                v-if="red_star"
+                label="NECレッド・スター会員"
+                value="41202"
+              />
+              <v-radio
+                v-if="red_rockets"
+                label="NECレッド・ロケッツ会員"
                 value="41204"
               />
             </v-radio-group>
@@ -98,6 +107,11 @@
                       { value: '23', text: '2023年' },
                       { value: '24', text: '2024年' },
                       { value: '25', text: '2025年' },
+                      { value: '26', text: '2026年' },
+                      { value: '27', text: '2027年' },
+                      { value: '28', text: '2028年' },
+                      { value: '29', text: '2029年' },
+                      { value: '30', text: '2030年' },
                     ]"
                     menu-props="auto"
                     label="年"
@@ -143,10 +157,11 @@ export default {
   data() {
     return {
       valid: true,
-      red_team: false,
-      green_team: false,
+      red_star: false,
+      green_star: false,
       green_rockets: false,
       red_rockets: false,
+      temp_user: false,
       product_id: null,
       product_id2: null,
       present: "1",
@@ -178,21 +193,26 @@ export default {
     const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
     Object.keys(group_ids).forEach(function (key) {
       if (["113"].indexOf(key) !== -1) {
-        self.green_team = true
-        self.green_rockets = true
-        self.product_id = "41202"
+        self.green_star = true
+        self.green_rockets = false
+        self.product_id = "41203"
       }
       if (["110"].indexOf(key) !== -1) {
-        self.red_team = true
-        self.red_rockets = true
-        self.product_id = "41203"
+        self.red_star = true
+        self.red_rockets = false
+        self.product_id = "41202"
       }
       if (["111", "114"].indexOf(key) !== -1) {
         self.$router.push("/")
       }
     })
+
     if (!self.product_id && !self.green_rockets && !self.red_rockets) {
-      self.$router.push("/")
+      self.green_star = true
+      self.green_rockets = true
+      self.red_star = true
+      self.red_rockets = true
+      self.temp_user = true
     }
   },
   methods: {
@@ -228,8 +248,11 @@ export default {
                       "アップグレードのお申し込みが完了しました"
                     )
                     self.$store.dispatch("snackbar/snackOn")
-                    self.$router.push("/")
-                    self.loading = false
+
+                    self.$auth.fetchUser().then(function (data) {
+                      self.$router.push("/")
+                      self.loading = false
+                    })
                   })
                   .catch(function (error) {
                     self.$store.dispatch(
@@ -237,6 +260,7 @@ export default {
                       error.response.data.errors?.[0]
                     )
                     self.$store.dispatch("snackbar/snackOn")
+                    self.loading = false
                   })
               } else {
                 self.$store.dispatch(
