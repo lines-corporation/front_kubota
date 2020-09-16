@@ -445,10 +445,14 @@
                   <v-text-field
                     v-model="login_pwd"
                     :append-icon="password_show ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[rules.required, rules.password_min]"
+                    :rules="[
+                      rules.required,
+                      rules.password_min,
+                      rules.password,
+                    ]"
                     :type="password_show ? 'text' : 'password'"
                     label="パスワード"
-                    hint="最低8文字以上の英数混合のパスワードを設定ください。"
+                    hint="最低8文字以上の英数混合のパスワードを設定ください。記号は-_&=+%#@$*.!:のみ利用可能です"
                     counter
                     @click:append="password_show = !password_show"
                   />
@@ -722,6 +726,10 @@ export default {
       rules: {
         required: (value) => !!value || "この項目は必須入力です",
         password_min: (v) => v.length >= 8 || "最低8文字以上を入力してください",
+        password: (v) =>
+          v.length == 0 ||
+          /^[a-zA-Z0-9\-_&=+%#@$*.!:]+$/.test(v) ||
+          "半角英数字と記号(-_&=+%#@$*.!:)でご入力ください",
         zip_length: (v) => v.length == 7 || "7文字の半角数字で入力してください",
         tel: (v) =>
           v.length == 0 ||

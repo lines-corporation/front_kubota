@@ -9,7 +9,7 @@
       ref="form1"
       v-model="valid"
       lazy-validation
-      @submit.prevent="regist"
+      @submit.prevent="update"
     >
       <v-container fluid>
         <v-row>
@@ -218,13 +218,12 @@
           </v-col>
           <v-col cols="8">
             <v-text-field
-              v-model="password"
+              v-model="login_pwd"
               :append-icon="password_show ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[rules.password_min]"
+              :rules="[rules.password_min, rules.password]"
               :type="password_show ? 'text' : 'password'"
-              name="password"
               label="パスワード"
-              hint="最低8文字以上の英数混合のパスワードを設定ください。"
+              hint="最低8文字以上の英数混合のパスワードを設定ください。記号は-_&=+%#@$*.!:のみ利用可能です"
               counter
               @click:append="password_show = !password_show"
             />
@@ -242,7 +241,14 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <v-btn type="submit" block x-large color="success" dark>
+            <v-btn
+              type="submit"
+              block
+              x-large
+              color="success"
+              dark
+              :loading="loading"
+            >
               変更する
             </v-btn>
           </v-col>
@@ -281,7 +287,9 @@ export default {
       birth: "",
       sex: "",
       mailmaga_flg: false,
+      login_pwd: "",
       menu: false,
+      loading: false,
       arrTdfk_cd: [
         { code: "01", name: "北海道" },
         { code: "02", name: "青森県" },
@@ -336,6 +344,10 @@ export default {
         required: (value) => !!value || "この項目は必須入力です",
         password_min: (v) =>
           v.length == 0 || v.length >= 8 || "最低8文字以上を入力してください",
+        password: (v) =>
+          v.length == 0 ||
+          /^[a-zA-Z0-9\-_&=+%#@$*.!:]+$/.test(v) ||
+          "半角英数字と記号(-_&=+%#@$*.!:)でご入力ください",
         zip_length: (v) => v.length == 7 || "7文字の半角数字で入力してください",
         tel: (v) =>
           v.length == 0 ||
@@ -399,7 +411,7 @@ export default {
     }
   },
   methods: {
-    regist() {
+    update() {
       this.loading = true
       let self = this
 
