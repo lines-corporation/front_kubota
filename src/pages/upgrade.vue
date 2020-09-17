@@ -22,14 +22,9 @@
           <v-col cols="8">
             <v-radio-group v-model="product_id" :rules="[rules.required]">
               <v-radio
-                v-if="green_star"
-                label="NECグリーン・スター会員"
-                value="41203"
-              />
-              <v-radio
-                v-if="green_rockets"
-                label="NECグリーン・ロケッツ会員"
-                value="41201"
+                v-if="red_rockets"
+                label="NECレッド・ロケッツ会員"
+                value="41204"
               />
               <v-radio
                 v-if="red_star"
@@ -37,9 +32,14 @@
                 value="41202"
               />
               <v-radio
-                v-if="red_rockets"
-                label="NECレッド・ロケッツ会員"
-                value="41204"
+                v-if="green_rockets"
+                label="NECグリーン・ロケッツ会員"
+                value="41201"
+              />
+              <v-radio
+                v-if="green_star"
+                label="NECグリーン・スター会員"
+                value="41203"
               />
             </v-radio-group>
           </v-col>

@@ -1,9 +1,570 @@
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
 .v-application{
-  font-family: 'Hiragino Kaku Gothic Pro', 'Hiragino Sans', 'Yu Gothic Medium', '游ゴシック Medium', Meiryo, sans-serif !important;
+  font-family:  Meiryo, 'Hiragino Kaku Gothic Pro', 'Hiragino Sans', 'Yu Gothic Medium', '游ゴシック Medium',sans-serif !important;
+}
+.theme--light.v-application{
+	background: transparent url(../assets/images/63430169.jpg) 50% bottom  no-repeat !important;
+	background-size: cover !important;
+	background-attachment: fixed !important;
+	/*padding-top: 50px !important;*/
+	color: #222;
+}
+.v-main__wrap{
+	padding-bottom: 60px !important;
 }
 .page-enter-active, .page-leave-active {
   transition: opacity .5s;
 }
 .page-enter, .page-leave-to {
   opacity: 0;
+}
+/*----------------------------------------------------*/
+/*共通設定*/
+
+h2,h3,h4.h5{
+	font-family: "M PLUS Rounded 1c";
+}
+
+.fnt-s{
+	font-size: 0.85rem;
+}
+.clr-red{
+	color: #F00;
+}
+.col-xl, .col-xl-auto, .col-xl-12, .col-xl-11, .col-xl-10, .col-xl-9, .col-xl-8, .col-xl-7, .col-xl-6, .col-xl-5, .col-xl-4, .col-xl-3, .col-xl-2, .col-xl-1, .col-lg, .col-lg-auto, .col-lg-12, .col-lg-11, .col-lg-10, .col-lg-9, .col-lg-8, .col-lg-7, .col-lg-6, .col-lg-5, .col-lg-4, .col-lg-3, .col-lg-2, .col-lg-1, .col-md, .col-md-auto, .col-md-12, .col-md-11, .col-md-10, .col-md-9, .col-md-8, .col-md-7, .col-md-6, .col-md-5, .col-md-4, .col-md-3, .col-md-2, .col-md-1, .col-sm, .col-sm-auto, .col-sm-12, .col-sm-11, .col-sm-10, .col-sm-9, .col-sm-8, .col-sm-7, .col-sm-6, .col-sm-5, .col-sm-4, .col-sm-3, .col-sm-2, .col-sm-1, .col, .col-auto, .col-12, .col-11, .col-10, .col-9, .col-8, .col-7, .col-6, .col-5, .col-4, .col-3, .col-2, .col-1 {
+    width: 100%;
+    padding: 7px;
+}
+br.spbr{
+	display: none;
+}
+
+/*----------------------------------------------------*/
+/*デフォルト設定変更*/
+.container{
+	max-width: 1400px !important;
+	padding: 20px 12px !important;
+
+}
+header h2.form-ttl{
+	margin-bottom: 0.5em;
+	font-family: "M PLUS Rounded 1c";
+    color: #1414A0;	
+    font-size: 1.8rem;
+    font-weight: 900;
+}
+.v-toolbar__title{
+	font-size: 0.8rem !important;
+}
+
+
+.v-footer--padless{
+	padding: 10px;
+}
+footer .no-gutters > .col{
+	font-size: 0.70rem;
+}
+footer .no-gutters{
+	padding: 10px 0;
+}
+/*----------------------------------------------------*/
+/*登録関連*/
+
+.v-stepper__header{
+	background: #E3E3F4;
+}
+.v-stepper__content{
+	padding: 1em 2.5em !important;
+}
+.v-stepper__content .success{
+    background: linear-gradient(to bottom, #FFF100, #CEC700) !important; 
+    border-color: none !important;
+	margin: 0 auto;     
+    margin-bottom: 0.8em;
+    min-width: 400px !important;
+    max-width: 400px !important;
+}
+.v-application .success .v-btn__content{
+    color: #1414A0;
+    font-weight: bold !important;
+}
+.v-application .success .v-snack__btn .v-btn__content {
+    color: #fff;
+}
+.v-application .overflow-y-auto{
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
+	font-size: 0.85rem;
+	background: #F6F6F6;
+}
+
+.v-application .form-page .success{
+    background: linear-gradient(to bottom, #FFF100, #CEC700) !important; 
+    border-color: none !important;
+	margin: 0 auto;     
+    margin-bottom: 0.8em;
+    min-width: 400px !important;
+    max-width: 400px !important;
+}
+.v-application .form-page .success .v-btn__content{
+    color: #1414A0;
+    font-weight: bold !important;
+}
+.v-subheader{
+	font-weight: bold !important;
+}
+.theme--light.v-subheader{
+    color: #1414A0 !important;
+    font-size: 1rem;
+}
+
+.form-page .row-none .row{
+	display: block;
+}
+.container--fluid .row:nth-child(1) .col{	
+	border: none;
+}
+.container--fluid .row:nth-last-child(1) .col{	
+	border: none;
+}
+.form-page .col{
+	border-top: 1px solid #DDD;
+}
+
+/*----------------------------------------------------*/
+/*ログイン関連*/
+.login-page{
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	max-width: 1300px;
+	margin: 0 auto;
+}
+.login-screen{
+	width: calc((100% - 40px) / 2);
+    min-height: 300px;
+    margin: 10px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.login-screen.lgn-right .inner {
+    padding-top: 148px;
+}
+
+
+.login-screen h3{
+	background: #1414A0;
+	padding: 0.5em 1.5em;
+	color: #FFF;
+	font-family: "M PLUS Rounded 1c";
+	border-radius: 0.7em 0.7em 0 0;	
+	font-size: 1.4rem;
+
+}
+.v-application .login-page{
+
+}
+.v-application .login-page .success{
+    background: linear-gradient(to bottom, #FFF100, #CEC700) !important; 
+    border-color: none !important;
+	margin: 0 auto;     
+    margin-bottom: 0.8em;
+    min-width: 400px !important;
+    max-width: 400px !important;
+
+}
+.v-application .login-page .success .v-btn__content{
+    color: #1414A0;
+    font-weight: bold !important;
+}
+.v-application .login-screen .mb-3{
+	margin-bottom: 0 !important;
+}
+.lgn-left h3{
+	background: #FF622D;
+}
+.lgn-right h3{
+	background: #2EC454;
+}
+.login-screen .inner{
+	border: 1px solid #CCC;
+	border-top: none;
+	border-radius: 0 0 0.7em 0.7em;
+	padding: 1.5em 2em;
+	background: #FFF;
+	height: 100%;
+	text-align: center;
+}
+.lgn-right .inner{
+
+}
+.login-screen .inner .nec-btn a,
+.login-screen .inner .new-btn a{
+	background: #0055FF;
+	color: #FFF;
+	text-decoration: none;
+	font: inherit;
+	font-family: 'Hiragino Kaku Gothic Pro', 'Hiragino Sans', 'Yu Gothic Medium', '游ゴシック Medium', Meiryo, sans-serif !important;
+	padding: 1em 1.5em;
+	border-radius: 0.5em;
+	max-width: 400px;
+	margin: 0 auto;
+	display: block;
+
+}
+.login-screen .inner .new-btn a{
+	background: #0055FF;
+	margin-bottom: 2em;
+}
+.login-screen .inner .nec-btn a:before,
+.login-screen .inner .new-btn a:before{
+    content: "\F0142";
+}
+.login-screen .inner .nec-btn a:before,
+.login-screen .inner .new-btn a:before {
+    display: inline-block;
+    font: normal normal normal 24px/1 "Material Design Icons";
+    font-size: inherit;
+    text-rendering: auto;
+    line-height: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.login-screen .inner .nec-btn a{
+	background: #999;
+
+}
+/*----------------------------------------*/
+/*マイページ関連*/
+.v-card__text{
+	padding: 10px !important;
+}
+.theme--light.v-sheet--outlined {
+    margin: 0 0 1em;
+}
+.theme--light.v-card > .v-card__text{
+	color: #222 !important;
+}
+.v-card__text h3{
+	background: #D3D3ED;
+	border-bottom: 3px solid #1414A0;
+	padding: 0.6em 1.2em;
+	color: #1414A0;
+	font-size: 1.2rem;
+	margin-bottom: 0em;
+}
+.v-application .deep-purple--text.text--accent-4 {
+    width: 100% !important;
+    white-space: normal;
+}
+.v-application .deep-purple--text.text--accent-4 .v-btn__content{
+    background: linear-gradient(to bottom, #FFF100, #CEC700) !important; 
+    border-color: none !important;
+	margin: 0 auto;     
+    margin-bottom: 0.8em;
+    padding: 7px 13px;
+    color: #1414A0;
+    font-weight: bold;
+    border-radius: 4px;
+    width: 100% !important;
+    display: block !important;
+    text-align: center;
+	box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+.v-card__text p.ug-p{
+	padding: 10px 8px 0 !important;
+}
+.v-card__text p.ug-p a{
+    background: linear-gradient(to bottom, #FF8000, #C66300) !important; 
+    border-color: none !important;
+	margin: 0 auto;     
+    margin-bottom: 0.8em;
+    padding: 7px 13px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    font-size: 0.8rem !important;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+    display: block;
+	box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+.col-sm-6 .v-card__text h3{
+	background: #1414A0;
+	border-bottom: 0;
+	padding: 0.6em 1.2em;
+	color: #ffec00;
+	font-size: 1.2rem;
+	margin-bottom: 0em;
+}
+.col-sm-3 .v-card__text h3{
+	padding: 0.6em 1.2em;
+	font-size: 1.0rem;
+	margin-bottom: 0em;
+}
+.v-sheet.v-card {
+    border-radius: 8px !important;
+}
+.article-page{
+	background: #FFF;
+	padding: 1em 2.5em;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);	
+}
+.theme--light.v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+    color: #000 !important;
+    background: #F3F3F3;
+}
+.theme--light.v-sheet--outlined {
+    border: 2px solid #1414A0 !important;
+}
+
+.v-card__text .pro-inner p{
+	margin-bottom: 5px;
+	display: table;
+	width: 100%;
+}
+
+.v-card__text .pro-inner p strong,
+.v-card__text .pro-inner p span{
+	display: table-cell;
+	padding: 0.2em 0.3em;
+	font-size: 0.8rem;
+}
+.v-card__text .pro-inner p strong{
+	width: 30%;
+	background: #D3D3ED;
+	text-align: center;
+}
+.v-card__text .pro-inner p span{
+	display: table-cell;
+}
+.mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td.date{
+	font-size: 0.75rem;
+	white-space: nowrap;
+}
+.mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td.arw{
+	width: 20px;
+	white-space: nowrap;
+}
+.mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td.arw .v-btn--icon.v-size--default{
+
+}
+/*----------------------------------------*/
+/*よくあるご質問　規約　ご利用方法*/
+.howto .v-list{
+	padding: 0;
+}
+.howto .v-list-group{
+	border: 1px solid #1414A0;
+	margin-bottom: -1px;
+}
+.howto .v-list-group .v-list-group__header{
+	background: #E8E8F6;
+}
+.howto .v-list-item__icon i{
+	font-weight: bold;
+	color: #1414A0 !important;
+	font-size: 1.2rem !important;
+	font-style: normal;
+}
+.howto .v-list-item{
+	background: #FFF;
+}
+.howto .v-list-group__header .v-list-item__title{
+	font-size: 0.75rem;
+}
+.howto  .v-list-item__content .v-list-item__subtitle{
+	color: #222 !important;
+}
+.howto  .v-list-item__content .v-list-item__title{
+	font-weight: bold;
+}
+.howto .v-list-group--no-action > .v-list-group__items > .v-list-item{
+	padding-left: 20px !important;
+}
+.kiyaku .v-list-item{
+	border: 1px solid #1414A0;
+	margin-bottom: -1px;
+	background: #E8E8F6;
+}
+.kiyaku .v-list-item .v-list-item__title{
+	color: #1414A0 !important;	
+}
+/*----------------------------------------*/
+
+@media screen and (max-width: 980px){
+	main.v-main{
+		padding-top: 28px !important;
+		padding-bottom: 60px !important;
+	}
+	header.v-toolbar .v-toolbar__title {
+	    font-size: 1.25rem;
+	    line-height: 1.5;
+	    overflow: visible !important;
+	    text-overflow: ellipsis;
+	    white-space: normal;
+	}
+	header.v-toolbar .v-toolbar__title:nth-child(3){
+		display: none;
+	}
+	br.spbr{
+		display: inline;
+	}
+	.container {
+	    padding: 5px 5px !important;
+	}
+	.v-toolbar__content{
+		padding: 4px 10px !important;
+	}
+	.v-toolbar__content .v-toolbar__title a img{
+		height: 44px !important;
+		padding-left: 0 !important;
+	}
+	.v-toolbar__content .v-btn.v-btn--icon.v-size--default{
+		height: 36px !important;
+		width: 36px !important;
+	}
+	main.v-main{
+		/*padding-bottom: 60px !important;*/
+	}
+	.theme--light.v-application{
+		padding-top: 20px !important;
+	}
+
+	.v-stepper__content{
+		padding: 10px 10px !important;
+	}
+
+	.v-snack:not(.v-snack--absolute){
+		height: auto;
+	}
+	header h2.form-ttl{
+	    font-size: 1.4rem;
+	}
+	header h2{
+		font-size: 1.3rem;
+	}
+	footer .no-gutters a{
+		display: none;
+	}
+	/*フォーム関連*/
+	.form-page{
+		padding: 5px;
+	}
+	.form-page .col,.form-page .col-4,.form-page .col-8{
+		display: block;
+		width: 100%;
+		max-width: 100%;
+		flex: 100%;
+	}
+	.form-page .v-subheader{
+		padding: 0;
+		height: auto;
+	}
+	.form-page .v-application p{
+		margin-bottom: 0;
+	}
+	.form-page .col{
+		border: none;
+		padding: 5px 10px;
+	}
+	.form-page .v-subheader{
+		padding-bottom: 5px;
+		border-bottom: 1px solid #DDD;
+	}
+
+	/*ログイン関連*/
+	.v-application .login-screen p{
+		margin-bottom: 0;
+	}
+	.v-application .login-screen p.pm{
+		margin-bottom: 0.5em;
+	}	
+	.login-screen {
+	    width: 100%;
+	    min-height: 0;
+	    margin: 0;
+	    margin-bottom: 20px;
+	}
+
+	.login-screen h3 {
+	    font-size: 1rem;
+	}
+
+	.login-screen .inner {
+		height: auto;
+		padding:15px
+	}
+	.login-screen.lgn-right .inner {
+	    padding-top: 25px;
+	}
+
+	.login-screen .inner .new-btn a {
+	    font-size: 14px;
+	    padding: 16px 12px;
+	}
+	.login-screen .inner .nec-btn a {
+	    font-size: 	14px;
+	    padding: 16px 12px;
+	}
+	/*利用方法　規約関連*/
+	.howto .v-list-item__icon i{
+		font-size: 1rem !important;
+	}
+	.howto .v-list-group__header .v-list-item__title{
+		text-indent: -9999px;
+	}
+
+	.v-application--is-ltr .howto .v-list-group--no-action > .v-list-group__items > .v-list-item {
+		padding-left: 10px !important;
+	}
+	.howto  .v-list-item__content .v-list-item__subtitle{
+		white-space: normal;
+	}
+	
+
+	.tokutei .theme--light.v-stepper{
+		font-size: 0.85rem;
+	}
+	/*マイページ*/
+	.mypage .v-card__text h3{
+		padding: 0.5em;
+	}	
+	.mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td{
+		padding: 0 5px;
+	}
+	.mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td.date{
+		font-size: 0.65rem;
+		white-space: nowrap;
+	}
+	
+	/*お知らせ*/
+	.article-page{
+		padding: 10px;
+	}
+
+}
+
+
+@media screen and (max-width: 480px){
+	.v-stepper__content .success{
+	    min-width: 90% !important;
+	    max-width: 90% !important;
+	}
+
+	.v-application .form-page .success{
+	    min-width: 90% !important;
+	    max-width: 90% !important;
+	}
+
+	.v-application .login-page .success{
+	    min-width: 90% !important;
+	    max-width: 90% !important;
+
+	}
 }

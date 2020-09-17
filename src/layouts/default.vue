@@ -4,7 +4,7 @@
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
-      color="#003D7A"
+      color="#333"
       dark
       fixed
       app
@@ -33,7 +33,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" color="#003D7A" dense dark fixed app>
+    <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark fixed app>
       <v-toolbar-title>
         <a href="/">
           <img
@@ -62,7 +62,7 @@
       </v-container>
     </v-main>
 
-    <v-footer color="#003D7A" padless app absolute inset>
+    <v-footer color="#1414A0" padless app absolute inset>
       <v-row justify="center" no-gutters>
         <v-btn color="white" text rounded class="my-2" to="/inquiry">
           お問い合わせ
@@ -73,13 +73,13 @@
         <v-btn color="white" text rounded class="my-2" to="/tokutei">
           特定商取引法に基づく表示
         </v-btn>
-        <v-col class="#003D7A text-center white--text" cols="12">
+        <v-col class="#1414A0 text-center white--text" cols="12">
           <img
             src="@/assets/images/logo.svg"
-            style="height: 40px; padding: 10px;"
+            style="height: 50px; padding: 10px;"
           />
         </v-col>
-        <v-col class="#003D7A text-center white--text" cols="12">
+        <v-col class="#1414A0 text-center white--text" cols="12">
           <span>Copyright NEC Corporation. All rights reserved.</span>
         </v-col>
       </v-row>
@@ -117,7 +117,7 @@ export default {
           to: "/",
         },
         {
-          icon: "mdi-ticket",
+          icon: "mdi-lightbulb",
           title: "チケット(近日公開!)",
         },
         {
