@@ -1,10 +1,16 @@
 <template>
   <div class="container">
-    <h2>{{ item.subject }}</h2>
-    <p>
-      {{ item.ymd }}
-    </p>
-    <p v-html="item.contents" />
+    <div class="article-page">
+      <header>
+        <h2 class="form-ttl">
+          {{ item.subject }}
+        </h2>
+      </header>
+      <p>
+        {{ item.ymd }}
+      </p>
+      <p v-html="item.contents" />
+    </div>
   </div>
 </template>
 

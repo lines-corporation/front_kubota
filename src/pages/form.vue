@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="form-page">
     <header>
-      <h2>
+      <h2 class="form-ttl">
         NECロケッツクラブ会員登録
       </h2>
     </header>
@@ -120,39 +120,41 @@
               </dl>
             </v-row>
           </v-container>
-          <v-container>
-            <v-row>
-              <v-form
-                ref="form1"
-                v-model="valid"
-                lazy-validation
-                @submit.prevent="send_email"
-              >
-                <p>
-                  ご登録いただくメールアドレスを入力して送信をしてください。
-                </p>
-                <p>
-                  <v-text-field
-                    v-model="email"
-                    label="メールアドレス"
-                    type="email"
-                    :rules="[rules.required]"
-                    outlined
-                  />
-                </p>
-                <v-btn
-                  type="submit"
-                  block
-                  x-large
-                  color="success"
-                  dark
-                  :loading="loading1"
+          <div class="row-none">
+            <v-container>
+              <v-row>
+                <v-form
+                  ref="form1"
+                  v-model="valid"
+                  lazy-validation
+                  @submit.prevent="send_email"
                 >
-                  同意して送信する
-                </v-btn>
-              </v-form>
-            </v-row>
-          </v-container>
+                  <p>
+                    ご登録いただくメールアドレスを入力して送信をしてください。
+                  </p>
+                  <p>
+                    <v-text-field
+                      v-model="email"
+                      label="メールアドレス"
+                      type="email"
+                      :rules="[rules.required]"
+                      outlined
+                    />
+                  </p>
+                  <v-btn
+                    type="submit"
+                    block
+                    x-large
+                    color="success"
+                    dark
+                    :loading="loading1"
+                  >
+                    同意して送信する
+                  </v-btn>
+                </v-form>
+              </v-row>
+            </v-container>
+          </div>
         </v-stepper-content>
 
         <v-stepper-content step="2">

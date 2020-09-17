@@ -2,7 +2,7 @@
   <v-layout>
     <v-flex>
       <header>
-        <h2>パスワードの再設定</h2>
+        <h2 class="form-ttl">パスワードの再設定</h2>
       </header>
       <v-stepper v-model="e1">
         <v-stepper-header>

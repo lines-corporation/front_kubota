@@ -2,75 +2,78 @@
   <div class="container">
     <client-only>
       <div v-if="!auth.loggedIn">
-        <form @submit.prevent="login">
-          <h3 class="subtitle mb-3">
-            NECロケッツクラブ　会員ログイン
-          </h3>
-
-          <form @submit.prevent="login">
-            <p>メールアドレスとパスワードを入力してください。</p>
-            <p>
-              ◆NECスポーツ後援会ログイン画面とは異なりますのでご注意ください◆
-            </p>
-            <p>
-              <v-text-field
-                v-model="form.email"
-                label="メールアドレス"
-                type="email"
-                outlined
-              />
-            </p>
-            <p>
-              <v-text-field
-                v-model="form.password"
-                label="パスワード"
-                :type="show_pwd1 ? 'text' : 'password'"
-                :append-icon="show_pwd1 ? 'mdi-eye' : 'mdi-eye-off'"
-                outlined
-                @click:append="show_pwd1 = !show_pwd1"
-              />
-            </p>
-            <v-btn
-              type="submit"
-              block
-              x-large
-              color="success"
-              dark
-              :loading="loading"
-            >
-              ログインする
-            </v-btn>
-          </form>
-          <p>
-            <NuxtLink to="/reminder">
-              パスワードを忘れた方はこちらから
-            </NuxtLink>
-          </p>
-
-          <h3 class="subtitle mb-3">
-            NECロケッツクラブ新規入会はこちら
-          </h3>
-          <p class="body-1">
-            <NuxtLink to="/form">
-              NECロケッツクラブ会員新規入会登録
-            </NuxtLink>
-          </p>
-          <p class="body-1">
-            <NuxtLink to="/inquiry">
-              社内の方はお問い合わせください
-            </NuxtLink>
-          </p>
+      
+      	
+        <form @submit.prevent="login" class="login-page">
+          <div class="login-screen lgn-left">
+	          <h3 class="subtitle mb-3">
+	            NECロケッツクラブ　会員ログイン
+	          </h3>
+	          <div class="inner">
+		          <form @submit.prevent="login">
+		            <p class="pm"><strong>メールアドレスとパスワードを<br class="spbr">入力してください。</strong></p>
+		            <p class="fnt-s clr-red pm">
+		              ◆NECスポーツ後援会ログイン画面とは<br class="spbr">異なりますのでご注意ください
+		            </p>
+		            <p>
+		              <v-text-field
+		                v-model="form.email"
+		                label="メールアドレス"
+		                type="email"
+		                outlined
+		              />
+		            </p>
+		            <p>
+		              <v-text-field
+		                v-model="form.password"
+		                label="パスワード"
+		                :type="show_pwd1 ? 'text' : 'password'"
+		                :append-icon="show_pwd1 ? 'mdi-eye' : 'mdi-eye-off'"
+		                outlined
+		                @click:append="show_pwd1 = !show_pwd1"
+		              />
+		            </p>
+		            <v-btn type="submit" block x-large color="success" dark :loading="loading">
+		              ログインする
+		            </v-btn>
+		          </form>
+		          <p>
+		            <NuxtLink to="/reminder">
+		              パスワードを忘れた方はこちらから
+		            </NuxtLink>
+		          </p>
+	          </div>
+          </div>
+          <div class="login-screen lgn-right">
+	          <h3 class="subtitle mb-3">
+	            NECロケッツクラブ新規入会はこちら
+	          </h3>
+	          <div class="inner">
+		          <p class="body-1 new-btn">
+		            <NuxtLink to="/form">
+		              NECロケッツクラブ会員新規入会登録
+		            </NuxtLink>
+		          </p>
+		          <p class="body-1 nec-btn">
+		            <NuxtLink to="/inquiry">
+		              社内の方はお問い合わせください
+		            </NuxtLink>
+		          </p>
+	          </div>
+          </div>
         </form>
       </div>
 
-      <div v-else>
+      <div v-else class="mypage">
         <v-row>
           <v-col cols="12" sm="3">
             <v-card class="mx-auto" outlined>
               <v-card-text>
-                <p>名前：{{ user.name1 }} {{ user.name2 }}</p>
-                <p>会員番号：{{ user.member_no }}</p>
-                <p>会員種別：{{ group_nm }}</p>
+              	<div class="pro-inner">
+	                <p><strong>名前</strong><span>{{ user.name1 }} {{ user.name2 }}</span></p>
+	                <p><strong>会員番号</strong><span>{{ user.member_no }}</span></p>
+	                <p><strong>会員種別</strong><span>{{ group_nm }}</span></p>
+                </div>
               </v-card-text>
               <v-card-actions>
                 <v-btn text color="deep-purple accent-4" to="/profile_edit">
@@ -82,7 +85,7 @@
             <v-card v-if="can_upgrade" class="mx-auto" outlined>
               <v-card-text>
                 <h3>アップグレードのご案内</h3>
-                <p class="body-1">
+                <p class="body-1 ug-p">
                   <NuxtLink to="/upgrade">
                     スタ―会員への種別変更はこちら
                   </NuxtLink>
@@ -104,11 +107,11 @@
                         :to="'/info/' + item.topics_id"
                         tag="tr"
                       >
-                        <td>{{ item.ymd }}</td>
+                        <td class="date">{{ item.ymd }}</td>
                         <td>{{ item.subject }}</td>
-                        <td>
+                        <td class="arw">
                           <v-btn icon :to="'/info/' + item.topics_id" nuxt>
-                            <v-icon>mdi-forward</v-icon>
+                            <v-icon>mdi-chevron-right</v-icon>
                           </v-btn>
                         </td>
                       </router-link>
@@ -141,11 +144,11 @@
                         :to="'/ticket/' + item.topics_id"
                         tag="tr"
                       >
-                        <td>{{ item.ymd }}</td>
+                        <td class="date">{{ item.ymd }}</td>
                         <td>{{ item.subject }}</td>
-                        <td>
+                        <td class="arw">
                           <v-btn icon :to="'/ticket/' + item.topics_id" nuxt>
-                            <v-icon>mdi-forward</v-icon>
+                            <v-icon>mdi-chevron-right</v-icon>
                           </v-btn>
                         </td>
                       </router-link>
@@ -178,11 +181,11 @@
                         :to="'/event/' + item.topics_id"
                         tag="tr"
                       >
-                        <td>{{ item.ymd }}</td>
+                        <td class="date">{{ item.ymd }}</td>
                         <td>{{ item.subject }}</td>
-                        <td>
+                        <td class="arw">
                           <v-btn icon :to="'/event/' + item.topics_id" nuxt>
-                            <v-icon>mdi-forward</v-icon>
+                            <v-icon>mdi-chevron-right</v-icon>
                           </v-btn>
                         </td>
                       </router-link>
@@ -216,7 +219,7 @@
                         :to="'/event/' + item.topics_id"
                         tag="tr"
                       >
-                        <td>{{ item.ymd }}</td>
+                        <td class="date">{{ item.ymd }}</td>
                         <td>{{ item.subject }}</td>
                       </router-link>
                     </tbody>
@@ -247,7 +250,7 @@
                         :to="'/ticket/' + item.topics_id"
                         tag="tr"
                       >
-                        <td>{{ item.ymd }}</td>
+                        <td class="date">{{ item.ymd }}</td>
                         <td>{{ item.subject }}</td>
                       </router-link>
                     </tbody>

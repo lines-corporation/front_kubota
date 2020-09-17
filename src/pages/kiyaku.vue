@@ -1,7 +1,9 @@
 <template>
   <v-layout>
-    <v-flex class="text-left">
-      <h2>規約</h2>
+    <v-flex class="text-left container howto kiyaku">
+    	<header>
+    		<h2 class="form-ttl">規約</h2>
+		</header>  
       <v-list>
         <v-list-item
           v-for="(item, i) in items"

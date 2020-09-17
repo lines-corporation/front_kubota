@@ -1,261 +1,271 @@
 <template>
-  <div>
+  <div class="form-page">
     <header>
-      <h2>
+      <h2 class="form-ttl">
         プロフィール編集
       </h2>
     </header>
-    <v-form
-      ref="form1"
-      v-model="valid"
-      lazy-validation
-      @submit.prevent="update"
-    >
-      <v-container fluid>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>
-              お名前
-            </v-subheader>
-          </v-col>
-          <v-col cols="4">
-            <p v-html="name1" />
-          </v-col>
-          <v-col cols="4">
-            <p v-html="name2" />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>
-              お名前(フリガナ)
-            </v-subheader>
-          </v-col>
-          <v-col cols="4">
-            <p v-html="namekana1" />
-          </v-col>
-          <v-col cols="4">
-            <p v-html="namekana2" />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>
-              性別
-            </v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <p v-html="sex" />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>
-              生年月日
-            </v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <p v-html="birth" />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>
-              <span style="color: red;">*</span>郵便番号
-            </v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              v-model="zip_code"
-              label="郵便番号"
-              type="number"
-              :rules="[rules.required, rules.zip_length]"
-              hint="ハイフンなしの半角数字7桁をご入力ください"
-              counter
-              outlined
-            />
-          </v-col>
-        </v-row>
+    <div class="theme--light v-stepper">
+      <div class="v-stepper__content">
+        <v-form
+          ref="form1"
+          v-model="valid"
+          lazy-validation
+          @submit.prevent="update"
+        >
+          <v-container fluid>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>
+                  お名前
+                </v-subheader>
+              </v-col>
+              <v-col cols="4">
+                <p v-html="name1" />
+              </v-col>
+              <v-col cols="4">
+                <p v-html="name2" />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>
+                  お名前(フリガナ)
+                </v-subheader>
+              </v-col>
+              <v-col cols="4">
+                <p v-html="namekana1" />
+              </v-col>
+              <v-col cols="4">
+                <p v-html="namekana2" />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>
+                  性別
+                </v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <p v-html="sex" />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>
+                  生年月日
+                </v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <p v-html="birth" />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>
+                  <span style="color: red;">*</span>郵便番号
+                </v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="zip_code"
+                  label="郵便番号"
+                  type="number"
+                  :rules="[rules.required, rules.zip_length]"
+                  hint="ハイフンなしの半角数字7桁をご入力ください"
+                  counter
+                  outlined
+                />
+              </v-col>
+            </v-row>
 
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>
-              <span style="color: red;">*</span>都道府県
-            </v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-select
-              v-model="tdfk_cd"
-              :items="arrTdfk_cd"
-              :rules="[rules.required]"
-              item-text="name"
-              item-value="code"
-              menu-props="auto"
-              label="都道府県を選択してください"
-              hide-details
-              single-line
-              outlined
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>
-              <span style="color: red;">*</span>市区町村
-            </v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              v-model="address1"
-              label="市区町村"
-              :rules="[rules.required]"
-              outlined
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader><span style="color: red;">*</span>番地</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              v-model="address2"
-              label="番地"
-              :rules="[rules.required]"
-              outlined
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>建物名／部屋番号</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              v-model="address3"
-              label="建物名／部屋番号"
-              outlined
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>
-              <span style="color: red;">*</span>電話番号
-            </v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              v-model="tel"
-              label="電話番号"
-              type="tel"
-              :rules="[rules.required, rules.tel]"
-              hint="ハイフンなしの半角数字をご入力ください"
-              counter
-              outlined
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>携帯電話番号</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              v-model="m_tel"
-              label="携帯電話番号"
-              type="tel"
-              :rules="[rules.tel]"
-              hint="ハイフンなしの半角数字をご入力ください"
-              counter
-              outlined
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>FAX番号</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              v-model="fax"
-              label="FAX番号"
-              type="tel"
-              :rules="[rules.tel]"
-              hint="ハイフンなしの半角数字をご入力ください"
-              counter
-              outlined
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>
-              第１メールアドレス(ログイン時のIDになります)
-            </v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <p v-html="email" />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>第２メールアドレス</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              v-model="subemail"
-              label="第２メールアドレス"
-              type="email"
-              autocomplete="off"
-              outlined
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>パスワード</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              v-model="login_pwd"
-              :append-icon="password_show ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[rules.password_min, rules.password]"
-              :type="password_show ? 'text' : 'password'"
-              label="パスワード"
-              hint="8文字以上の半角英数字混在でご入力ください。記号を利用する場合は -_&=+%#@$*.!: が利用可能です。"
-              persistent-hint
-              counter
-              @click:append="password_show = !password_show"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>
-              <span style="color: red;">*</span>メールマガジン配信
-            </v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-checkbox v-model="mailmaga_flg" class="mx-2" label="希望する" />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <v-btn
-              type="submit"
-              block
-              x-large
-              color="success"
-              dark
-              :loading="loading"
-            >
-              変更する
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-form>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>
+                  <span style="color: red;">*</span>都道府県
+                </v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <v-select
+                  v-model="tdfk_cd"
+                  :items="arrTdfk_cd"
+                  :rules="[rules.required]"
+                  item-text="name"
+                  item-value="code"
+                  menu-props="auto"
+                  label="都道府県を選択してください"
+                  hide-details
+                  single-line
+                  outlined
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>
+                  <span style="color: red;">*</span>市区町村
+                </v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="address1"
+                  label="市区町村"
+                  :rules="[rules.required]"
+                  outlined
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>
+                  <span style="color: red;">*</span>番地
+                </v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="address2"
+                  label="番地"
+                  :rules="[rules.required]"
+                  outlined
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>建物名／部屋番号</v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="address3"
+                  label="建物名／部屋番号"
+                  outlined
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>
+                  <span style="color: red;">*</span>電話番号
+                </v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="tel"
+                  label="電話番号"
+                  type="tel"
+                  :rules="[rules.required, rules.tel]"
+                  hint="ハイフンなしの半角数字をご入力ください"
+                  counter
+                  outlined
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>携帯電話番号</v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="m_tel"
+                  label="携帯電話番号"
+                  type="tel"
+                  :rules="[rules.tel]"
+                  hint="ハイフンなしの半角数字をご入力ください"
+                  counter
+                  outlined
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>FAX番号</v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="fax"
+                  label="FAX番号"
+                  type="tel"
+                  :rules="[rules.tel]"
+                  hint="ハイフンなしの半角数字をご入力ください"
+                  counter
+                  outlined
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>
+                  第１メールアドレス(ログイン時のIDになります)
+                </v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <p v-html="email" />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>第２メールアドレス</v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="subemail"
+                  label="第２メールアドレス"
+                  type="email"
+                  autocomplete="off"
+                  outlined
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>パスワード</v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="login_pwd"
+                  :append-icon="password_show ? 'mdi-eye' : 'mdi-eye-off'"
+                  :rules="[rules.password_min, rules.password]"
+                  :type="password_show ? 'text' : 'password'"
+                  label="パスワード"
+                  hint="8文字以上の半角英数字混在でご入力ください。記号を利用する場合は -_&=+%#@$*.!: が利用可能です。"
+                  persistent-hint
+                  counter
+                  @click:append="password_show = !password_show"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>
+                  <span style="color: red;">*</span>メールマガジン配信
+                </v-subheader>
+              </v-col>
+              <v-col cols="8">
+                <v-checkbox
+                  v-model="mailmaga_flg"
+                  class="mx-2"
+                  label="希望する"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12">
+                <v-btn
+                  type="submit"
+                  block
+                  x-large
+                  color="success"
+                  dark
+                  :loading="loading"
+                >
+                  変更する
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </div>
+    </div>
   </div>
 </template>
 
