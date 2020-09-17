@@ -1,51 +1,67 @@
 <template>
-  <div>
-    <div class="container">
-      <h2>お問い合わせ</h2>
+  <div class="form-page">
+    <header>
+      <h2 class="form-ttl">
+        お問い合わせ
+      </h2>
+    </header>
+
+    <div class="theme--light v-stepper">
+      <form class="v-stepper__content" @submit.prevent="inquiry">
+        <v-container fluid>
+          <v-row>
+            <v-col cols="4">
+              <v-subheader>会員番号</v-subheader>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field v-model="member_no" label="会員番号" outlined />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4">
+              <v-subheader>お名前</v-subheader>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field v-model="name" label="お名前" outlined />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4">
+              <v-subheader>メールアドレス</v-subheader>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field
+                v-model="from_mail"
+                label="メールアドレス"
+                outlined
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4">
+              <v-subheader>問い合わせ内容</v-subheader>
+            </v-col>
+            <v-col cols="8">
+              <v-textarea v-model="body" label="お問い合わせ内容" outlined />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <v-btn
+                type="submit"
+                block
+                x-large
+                color="success"
+                dark
+                :loading="loading"
+              >
+                送信する
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </form>
     </div>
-    <form @submit.prevent="inquiry">
-      <v-container fluid>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>会員番号</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field v-model="member_no" label="会員番号" outlined />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>お名前</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field v-model="name" label="お名前" outlined />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>メールアドレス</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field v-model="from_mail" label="メールアドレス" outlined />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>問い合わせ内容</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-textarea v-model="body" label="お問い合わせ内容" outlined />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <v-btn type="submit" block x-large color="success" dark :loading="loading">
-              送信する
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </form>
   </div>
 </template>
 
@@ -58,7 +74,7 @@ export default {
       from_mail: "",
       name: "",
       body: "",
-      member_no:"",
+      member_no: "",
       loading: false,
     }
   },
