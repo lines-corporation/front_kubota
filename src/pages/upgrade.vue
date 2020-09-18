@@ -166,6 +166,7 @@ export default {
       green_rockets: false,
       red_rockets: false,
       temp_user: false,
+      success_message: "",
       product_id: null,
       product_id2: null,
       present: "1",
@@ -225,11 +226,17 @@ export default {
       if (this.$refs.form3.validate()) {
         let self = this
 
+        if (self.temp_user) {
+          self.success_message = "会員登録のお申し込みが完了しました"
+        } else {
+          self.success_message = "アップグレードのお申し込みが完了しました"
+        }
+
         if (this.ec_payment_id == 58) {
           let paygentToken = new PaygentToken()
           paygentToken.createToken(
-            "40508",
-            "test_rJ2o0DcPx35l3fg1Hvwe1lfb",
+            "48238",
+            "live_vO1TesLtsK1518FbmG2IyDM9",
             {
               card_number: self.cardNumber,
               expire_year: self.cardYear,
@@ -249,7 +256,7 @@ export default {
                   .then(function (response) {
                     self.$store.dispatch(
                       "snackbar/setMessage",
-                      "アップグレードのお申し込みが完了しました"
+                      self.success_message
                     )
                     self.$store.dispatch("snackbar/snackOn")
 
@@ -297,7 +304,8 @@ export default {
             .then(function (response) {
               self.$store.dispatch(
                 "snackbar/setMessage",
-                "アップグレードのお申し込みが完了しました。メールをご確認の上、決済手続きをお願いいたします。"
+                self.success_message +
+                  "メールをご確認の上、決済手続きをお願いいたします。"
               )
               self.$store.dispatch("snackbar/snackOn")
               self.$router.push("/")

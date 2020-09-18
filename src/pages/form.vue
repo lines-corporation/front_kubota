@@ -889,8 +889,8 @@ export default {
         if (this.ec_payment_id == 58) {
           let paygentToken = new PaygentToken()
           paygentToken.createToken(
-            "40508",
-            "test_rJ2o0DcPx35l3fg1Hvwe1lfb",
+            "48238",
+            "live_vO1TesLtsK1518FbmG2IyDM9",
             {
               card_number: self.cardNumber,
               expire_year: self.cardYear,

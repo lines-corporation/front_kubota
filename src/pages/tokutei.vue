@@ -1,14 +1,12 @@
 <template>
-  <div>
+  <div class="form-page tokutei">
     <header class="bg-white shadow-sm">
-      <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-lg leading-6 font-semibold text-gray-900">
-          特定商取引法に基づく表示
-        </h1>
-      </div>
+      <h2 class="form-ttl">
+        特定商取引法に基づく表示
+      </h2>
     </header>
     <div
-      class="mt-1 max-w-7xl text-sm leading-5 text-gray-900 py-4 px-4 sm:px-6 lg:px-8"
+      class="mt-1 max-w-7xl text-sm leading-5 text-gray-900 py-4 px-4 sm:px-6 lg:px-8 theme--light v-stepper"
     >
       <dt>■販売業者：</dt>
       <dd class="px-3 py-2">

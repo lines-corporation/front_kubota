@@ -38,7 +38,7 @@
         <a href="/">
           <img
             src="@/assets/images/logo.svg"
-            style="height: 50px; padding: 10px;"
+            style="width:240px; height: 50px; padding: 10px;"
           />
         </a>
       </v-toolbar-title>

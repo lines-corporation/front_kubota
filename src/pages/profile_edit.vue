@@ -460,6 +460,8 @@ export default {
             self.$store.dispatch("snackbar/snackOn")
             self.loading = false
           })
+      } else {
+        this.loading = false
       }
     },
     save(birth) {

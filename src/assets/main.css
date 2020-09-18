@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
 .v-application{
-  font-family:  Meiryo, 'Hiragino Kaku Gothic Pro', 'Hiragino Sans', 'Yu Gothic Medium', '游ゴシック Medium',sans-serif !important;
+  font-family:  'Meiryo', 'Hiragino Kaku Gothic Pro', 'Hiragino Sans', 'Yu Gothic Medium', '游ゴシック Medium',sans-serif !important;
+  -ms-font-feature-settings: 'normal';
 }
 .theme--light.v-application{
 	background: transparent url(../assets/images/63430169.jpg) 50% bottom  no-repeat !important;
@@ -18,11 +19,21 @@
 .page-enter, .page-leave-to {
   opacity: 0;
 }
+.theme--light.v-stepper {
+    background: #FFFFFF;
+}
+.v-stepper {
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
 /*----------------------------------------------------*/
 /*共通設定*/
 
 h2,h3,h4.h5{
-	font-family: "M PLUS Rounded 1c";
+	font-family: 'M PLUS Rounded 1c';
+	-ms-font-feature-settings: 'normal';
 }
 
 .fnt-s{
@@ -48,7 +59,8 @@ br.spbr{
 }
 header h2.form-ttl{
 	margin-bottom: 0.5em;
-	font-family: "M PLUS Rounded 1c";
+	font-family: 'M PLUS Rounded 1c';
+	-ms-font-feature-settings: 'normal';
     color: #1414A0;	
     font-size: 1.8rem;
     font-weight: 900;
@@ -206,6 +218,7 @@ footer .no-gutters{
 	text-decoration: none;
 	font: inherit;
 	font-family: 'Hiragino Kaku Gothic Pro', 'Hiragino Sans', 'Yu Gothic Medium', '游ゴシック Medium', Meiryo, sans-serif !important;
+	-ms-font-feature-settings: "normal";
 	padding: 1em 1.5em;
 	border-radius: 0.5em;
 	max-width: 400px;
@@ -224,7 +237,7 @@ footer .no-gutters{
 .login-screen .inner .nec-btn a:before,
 .login-screen .inner .new-btn a:before {
     display: inline-block;
-    font: normal normal normal 24px/1 "Material Design Icons";
+    font: normal normal normal 24px/1 'Material Design Icons';
     font-size: inherit;
     text-rendering: auto;
     line-height: inherit;
@@ -347,13 +360,23 @@ footer .no-gutters{
 	font-size: 0.75rem;
 	white-space: nowrap;
 }
+.mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td.arw .v-size--default.v-btn--icon {
+    height: 26px;
+    width: 26px;
+}
 .mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td.arw{
-	width: 20px;
+	width: 26px;
 	white-space: nowrap;
 }
 .mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td.arw .v-btn--icon.v-size--default{
 
 }
+.mypage .v-data-table__wrapper {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+
 /*----------------------------------------*/
 /*よくあるご質問　規約　ご利用方法*/
 .howto .v-list{
@@ -476,6 +499,10 @@ footer .no-gutters{
 	.form-page .v-subheader{
 		padding-bottom: 5px;
 		border-bottom: 1px solid #DDD;
+	}
+	.form-page .row {
+	    margin-right: -5px;
+	    margin-left: -5px;
 	}
 
 	/*ログイン関連*/

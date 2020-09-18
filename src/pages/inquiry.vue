@@ -98,8 +98,16 @@ export default {
             self.$store.dispatch("snackbar/snackOn")
             self.$router.push("/")
           }
+          self.loading = false
         })
-      this.loading = false
+        .catch(function (error) {
+          self.$store.dispatch(
+            "snackbar/setError",
+            error.response.data.errors?.[0]
+          )
+          self.$store.dispatch("snackbar/snackOn")
+          self.loading = false
+        })
     },
   },
 }
