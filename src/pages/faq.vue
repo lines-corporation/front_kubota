@@ -1,8 +1,10 @@
 <template>
   <div class="container howto">
-	<header>
-    	<h2 class="form-ttl">よくある質問</h2>
-	</header>    
+    <header>
+      <h2 class="form-ttl">
+        よくある質問
+      </h2>
+    </header>
     <v-list>
       <v-list-group
         v-for="item in category_items"
@@ -21,6 +23,7 @@
           <v-list-item-content>
             <v-list-item-title v-text="subItem.subject" />
             <v-list-item-subtitle>
+              // eslint-disable-next-line vue/no-v-html
               <div v-html="subItem.contents" />
             </v-list-item-subtitle>
           </v-list-item-content>

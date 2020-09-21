@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt-ts",
-    "build": "nuxt-ts build",
+    "dev": "nuxt",
+    "build": "nuxt build",
     "build:copy:ssr": "rimraf functions/ssr && mkdirp functions/ssr && cp -R .nuxt/dist functions/ssr/dist",
-    "start": "nuxt-ts start",
-    "export": "nuxt-ts export",
-    "serve": "nuxt-ts serve",
+    "start": "nuxt start",
+    "export": "nuxt export",
+    "serve": "nuxt serve",
     "test": "jest",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."

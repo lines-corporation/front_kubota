@@ -2,7 +2,9 @@
   <v-layout>
     <v-flex>
       <header>
-        <h2 class="form-ttl">パスワードの再設定</h2>
+        <h2 class="form-ttl">
+          パスワードの再設定
+        </h2>
       </header>
       <v-stepper v-model="e1">
         <v-stepper-header>
@@ -207,7 +209,6 @@ export default {
           self.$store.dispatch("snackbar/snackOn")
           self.loading1 = false
         })
-      
     },
     async set_password() {
       if (this.$refs.form2.validate() && this.token) {
@@ -219,7 +220,7 @@ export default {
             login_pwd: this.login_pwd,
             temp_pwd: this.temp_pwd,
           })
-          .then(function (response) {
+          .then(() => {
             self.$store.dispatch(
               "snackbar/setMessage",
               "パスワードを更新しました。"

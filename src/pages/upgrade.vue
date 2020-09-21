@@ -2,10 +2,10 @@
   <div class="form-page">
     <header>
       <h2 v-if="!temp_user" class="form-ttl">
-        NECロケッツクラブ　アップグレード
+        NECロケッツクラブ アップグレード
       </h2>
       <h2 v-if="temp_user" class="form-ttl">
-        NECロケッツクラブ　会員種別・支払い方法登録
+        NECロケッツクラブ 会員種別・支払い方法登録
       </h2>
     </header>
     <div class="theme--light v-stepper">
@@ -233,6 +233,7 @@ export default {
         }
 
         if (this.ec_payment_id == 58) {
+          // eslint-disable-next-line no-undef
           let paygentToken = new PaygentToken()
           paygentToken.createToken(
             "48238",
@@ -253,14 +254,14 @@ export default {
                     quantity: 1,
                     card_token: response.tokenizedCardObject.token,
                   })
-                  .then(function (response) {
+                  .then(() => {
                     self.$store.dispatch(
                       "snackbar/setMessage",
                       self.success_message
                     )
                     self.$store.dispatch("snackbar/snackOn")
 
-                    self.$auth.fetchUser().then(function (data) {
+                    self.$auth.fetchUser().then(() => {
                       self.$router.push("/")
                       self.loading = false
                     })
@@ -276,7 +277,9 @@ export default {
               } else {
                 self.$store.dispatch(
                   "snackbar/setError",
-                  "カード入力内容に不備があります。再度、入力内容をご確認ください"
+                  "カード入力内容に不備があります。再度、入力内容をご確認ください[code:" +
+                    response.result +
+                    "]"
                 )
                 self.$store.dispatch("snackbar/snackOn")
                 self.loading = false
@@ -301,7 +304,7 @@ export default {
               product_id: parseInt(self.product_id2),
               quantity: 1,
             })
-            .then(function (response) {
+            .then(() => {
               self.$store.dispatch(
                 "snackbar/setMessage",
                 self.success_message +

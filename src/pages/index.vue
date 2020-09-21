@@ -3,9 +3,21 @@
     <client-only>
       <div v-if="!auth.loggedIn">
         <form class="login-page" @submit.prevent="login">
+          <p>
+            <strong>2020年 ロケッツクラブが新しくなりました。<br />
+              今シーズンは以前ご入会されていた方も改めて新規入会が必要になりますので、必ず新規入会のお手続きをお願い致します。<br />
+              詳しくは下記をご確認ください。</strong><br />
+            <br />
+            <a href="https://w-volley.necsports.net/topics_detail1/id=1919"
+              >NECレッドロケッツから新しいNECロケッツクラブのご案内</a
+            ><br />
+            <a href="https://rugby.necsports.net/topics_detail1/id=1946"
+              >NECグリーンロケッツから新しいNECロケッツクラブのご案内</a
+            ><br />
+          </p>
           <div class="login-screen lgn-left">
             <h3 class="subtitle mb-3">
-              NECロケッツクラブ　会員ログイン
+              NECロケッツクラブ 会員ログイン
             </h3>
             <div class="inner">
               <form @submit.prevent="login">
@@ -80,8 +92,7 @@
               <v-card-text>
                 <div class="pro-inner">
                   <p>
-                    <strong>名前</strong
-                    ><span>{{ user.name1 }} {{ user.name2 }}</span>
+                    <strong>名前</strong><span>{{ user.name1 }} {{ user.name2 }}</span>
                   </p>
                   <p>
                     <strong>会員番号</strong><span>{{ user.member_no }}</span>
@@ -138,153 +149,8 @@
                 </v-simple-table>
               </v-card-text>
             </v-card>
-            <v-card class="mx-auto" outlined>
-              <v-card-text>
-                <h3>購入済みのチケット</h3>
-
-                <v-simple-table :fixed-header="false">
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left">
-                          購入日
-                        </th>
-                        <th class="text-left">
-                          チケット名
-                        </th>
-                        <th class="text-left" />
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <router-link
-                        v-for="item in topics_list5"
-                        :key="item.topics_id"
-                        :to="'/ticket/' + item.topics_id"
-                        tag="tr"
-                      >
-                        <td class="date">
-                          {{ item.ymd }}
-                        </td>
-                        <td>{{ item.subject }}</td>
-                        <td class="arw">
-                          <v-btn icon :to="'/ticket/' + item.topics_id" nuxt>
-                            <v-icon>mdi-chevron-right</v-icon>
-                          </v-btn>
-                        </td>
-                      </router-link>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-              </v-card-text>
-            </v-card>
-            <v-card class="mx-auto" outlined>
-              <v-card-text>
-                <h3>今後の試合</h3>
-
-                <v-simple-table :fixed-header="false">
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left">
-                          年月日
-                        </th>
-                        <th class="text-left">
-                          試合
-                        </th>
-                        <th class="text-left" />
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <router-link
-                        v-for="item in topics_list"
-                        :key="item.topics_id"
-                        :to="'/event/' + item.topics_id"
-                        tag="tr"
-                      >
-                        <td class="date">
-                          {{ item.ymd }}
-                        </td>
-                        <td>{{ item.subject }}</td>
-                        <td class="arw">
-                          <v-btn icon :to="'/event/' + item.topics_id" nuxt>
-                            <v-icon>mdi-chevron-right</v-icon>
-                          </v-btn>
-                        </td>
-                      </router-link>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-              </v-card-text>
-            </v-card>
           </v-col>
-          <v-col cols="12" sm="3">
-            <v-card class="mx-auto" outlined>
-              <v-card-text>
-                <h3>来場履歴</h3>
-
-                <v-simple-table :fixed-header="false">
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left">
-                          年月日
-                        </th>
-                        <th class="text-left">
-                          イベント
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <router-link
-                        v-for="item in topics_list"
-                        :key="item.topics_id"
-                        :to="'/event/' + item.topics_id"
-                        tag="tr"
-                      >
-                        <td class="date">
-                          {{ item.ymd }}
-                        </td>
-                        <td>{{ item.subject }}</td>
-                      </router-link>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-              </v-card-text>
-            </v-card>
-            <v-card class="mx-auto" outlined>
-              <v-card-text>
-                <h3>グッズ購入履歴</h3>
-
-                <v-simple-table :fixed-header="false">
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left">
-                          購入日
-                        </th>
-                        <th class="text-left">
-                          グッズ
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <router-link
-                        v-for="item in topics_list"
-                        :key="item.topics_id"
-                        :to="'/ticket/' + item.topics_id"
-                        tag="tr"
-                      >
-                        <td class="date">
-                          {{ item.ymd }}
-                        </td>
-                        <td>{{ item.subject }}</td>
-                      </router-link>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-              </v-card-text>
-            </v-card>
-          </v-col>
+          <v-col cols="12" sm="3" />
         </v-row>
       </div>
     </client-only>
@@ -369,7 +235,7 @@ export default {
       this.loading = true
       await this.$auth
         .loginWith("local", { data: this.form })
-        .then((response) => {
+        .then(() => {
           const group_ids = JSON.parse(
             JSON.stringify(this.$auth.user.group_ids)
           )
@@ -388,7 +254,7 @@ export default {
           this.$store.dispatch("snackbar/snackOn")
           this.loading = false
         })
-        .catch((error) => {
+        .catch(() => {
           this.$store.dispatch("snackbar/setError", "ログインに失敗しました")
           this.$store.dispatch("snackbar/snackOn")
           this.loading = false

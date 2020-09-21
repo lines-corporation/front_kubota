@@ -18,8 +18,8 @@ export default {
     htmlAttrs: {
       lang: "ja",
     },
-    titleTemplate: "%s - " + process.env.npm_package_name,
-    title: process.env.npm_package_name || "NECロケッツクラブ",
+    titleTemplate: "%s - ",
+    title: "NECロケッツクラブ",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -32,7 +32,8 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     script: [
       {
-        src: "https://sandbox.paygent.co.jp/js/PaygentToken.js",
+        src: "https://token.paygent.co.jp/js/PaygentToken.js",
+        //src: "https://sandbox.paygent.co.jp/js/PaygentToken.js",
       },
     ],
   },
@@ -53,7 +54,7 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ["@nuxt/typescript-build", "@nuxtjs/vuetify"],
+  buildModules: ["@nuxtjs/vuetify"],
   /*
    ** Nuxt.js modules
    */

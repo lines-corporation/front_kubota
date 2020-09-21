@@ -21,10 +21,10 @@
                 </v-subheader>
               </v-col>
               <v-col cols="4">
-                <p v-html="name1" />
+                <p v-text="name1" />
               </v-col>
               <v-col cols="4">
-                <p v-html="name2" />
+                <p v-text="name2" />
               </v-col>
             </v-row>
             <v-row>
@@ -34,10 +34,10 @@
                 </v-subheader>
               </v-col>
               <v-col cols="4">
-                <p v-html="namekana1" />
+                <p v-text="namekana1" />
               </v-col>
               <v-col cols="4">
-                <p v-html="namekana2" />
+                <p v-text="namekana2" />
               </v-col>
             </v-row>
             <v-row>
@@ -47,7 +47,7 @@
                 </v-subheader>
               </v-col>
               <v-col cols="8">
-                <p v-html="sex" />
+                <p v-text="sex" />
               </v-col>
             </v-row>
             <v-row>
@@ -57,7 +57,7 @@
                 </v-subheader>
               </v-col>
               <v-col cols="8">
-                <p v-html="birth" />
+                <p v-text="birth" />
               </v-col>
             </v-row>
             <v-row>
@@ -199,7 +199,7 @@
                 </v-subheader>
               </v-col>
               <v-col cols="8">
-                <p v-html="email" />
+                <p v-text="email" />
               </v-col>
             </v-row>
             <v-row>

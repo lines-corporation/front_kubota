@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
 .v-application{
   font-family:  'Meiryo', 'Hiragino Kaku Gothic Pro', 'Hiragino Sans', 'Yu Gothic Medium', '游ゴシック Medium',sans-serif !important;
   -ms-font-feature-settings: 'normal';
@@ -32,7 +32,7 @@
 /*共通設定*/
 
 h2,h3,h4.h5{
-	font-family: 'M PLUS Rounded 1c';
+	font-family: 'Kosugi Maru';
 	-ms-font-feature-settings: 'normal';
 }
 
@@ -59,11 +59,11 @@ br.spbr{
 }
 header h2.form-ttl{
 	margin-bottom: 0.5em;
-	font-family: 'M PLUS Rounded 1c';
+	font-family: 'Kosugi Maru';
 	-ms-font-feature-settings: 'normal';
     color: #1414A0;	
     font-size: 1.8rem;
-    font-weight: 900;
+    font-weight: bold;
 }
 .v-toolbar__title{
 	font-size: 0.8rem !important;
@@ -169,7 +169,7 @@ footer .no-gutters{
 	background: #1414A0;
 	padding: 0.5em 1.5em;
 	color: #FFF;
-	font-family: "M PLUS Rounded 1c";
+	font-family: 'Kosugi Maru';
 	border-radius: 0.7em 0.7em 0 0;	
 	font-size: 1.4rem;
 
@@ -276,7 +276,7 @@ footer .no-gutters{
     border-color: none !important;
 	margin: 0 auto;     
     margin-bottom: 0.8em;
-    padding: 7px 13px;
+    padding: 8px 13px;
     color: #1414A0;
     font-weight: bold;
     border-radius: 4px;
@@ -406,6 +406,8 @@ footer .no-gutters{
 }
 .howto  .v-list-item__content .v-list-item__title{
 	font-weight: bold;
+	white-space: initial;
+	overflow: auto;
 }
 .howto .v-list-group--no-action > .v-list-group__items > .v-list-item{
 	padding-left: 20px !important;
@@ -422,7 +424,7 @@ footer .no-gutters{
 
 @media screen and (max-width: 980px){
 	main.v-main{
-		padding-top: 28px !important;
+		padding-top: 34px !important;
 		padding-bottom: 60px !important;
 	}
 	header.v-toolbar .v-toolbar__title {
@@ -446,6 +448,7 @@ footer .no-gutters{
 	}
 	.v-toolbar__content .v-toolbar__title a img{
 		height: 44px !important;
+		width: 195px !important;
 		padding-left: 0 !important;
 	}
 	.v-toolbar__content .v-btn.v-btn--icon.v-size--default{
@@ -568,6 +571,12 @@ footer .no-gutters{
 	.mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td.date{
 		font-size: 0.65rem;
 		white-space: nowrap;
+	}
+	.mypage .col-sm-6 {
+		padding: 0 8px 0;
+	}
+	.mypage .col-sm-3{
+		padding: 0px 8px 0;
 	}
 	
 	/*お知らせ*/
