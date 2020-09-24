@@ -23,6 +23,10 @@
               </v-col>
               <v-col cols="8">
                 <v-radio-group v-model="product_id" :rules="[rules.required]">
+                  <img
+                    src="@/assets/images/RR.png"
+                    style="width: 240px; padding: 10px;"
+                  />
                   <v-radio
                     v-if="red_rockets"
                     label="NECレッド・ロケッツ会員"
@@ -32,6 +36,11 @@
                     v-if="red_star"
                     label="NECレッド・スター会員"
                     value="41202"
+                  />
+                  <v-spacer />
+                  <img
+                    src="@/assets/images/GR.png"
+                    style="width: 240px; padding: 10px;"
                   />
                   <v-radio
                     v-if="green_rockets"
@@ -236,8 +245,8 @@ export default {
           // eslint-disable-next-line no-undef
           let paygentToken = new PaygentToken()
           paygentToken.createToken(
-            "48238",
-            "live_vO1TesLtsK1518FbmG2IyDM9",
+            process.env.paygent_merchant_id,
+            process.env.paygent_token,
             {
               card_number: self.cardNumber,
               expire_year: self.cardYear,

@@ -614,6 +614,10 @@
                 </v-col>
                 <v-col cols="8">
                   <v-radio-group v-model="product_id">
+                    <img
+                      src="@/assets/images/RR.png"
+                      style="width: 240px; padding: 10px;"
+                    />
                     <v-radio
                       label="NECレッド・ロケッツ会員（年会費¥1,000）"
                       value="41204"
@@ -623,6 +627,10 @@
                       value="41202"
                     />
                     <v-spacer />
+                    <img
+                      src="@/assets/images/GR.png"
+                      style="width: 240px; padding: 10px;"
+                    />
                     <v-radio
                       label="NECグリーン・ロケッツ会員（年会費¥1,000）"
                       value="41201"
@@ -992,8 +1000,8 @@ export default {
         if (this.ec_payment_id == 58) {
           let paygentToken = new PaygentToken()
           paygentToken.createToken(
-            "48238",
-            "live_vO1TesLtsK1518FbmG2IyDM9",
+            process.env.paygent_merchant_id,
+            process.env.paygent_token,
             {
               card_number: self.cardNumber,
               expire_year: self.cardYear,

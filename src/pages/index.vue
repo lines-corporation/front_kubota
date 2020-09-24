@@ -224,6 +224,13 @@ export default {
       })
 
       this.$auth.ctx.$axios
+        .get("/rcms-api/1/product_list5")
+        .then(function (response) {
+          console.log(response.data.list)
+          self.topics_list5 = response.data.list
+        })
+
+      this.$auth.ctx.$axios
         .get("/rcms-api/1/tickets")
         .then(function (response) {
           self.topics_list5 = response.data.list

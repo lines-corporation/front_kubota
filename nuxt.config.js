@@ -1,4 +1,16 @@
 export default {
+  env: {
+    paygent_js: "https://sandbox.paygent.co.jp/js/PaygentToken.js",
+    paygent_merchant_id: "40508",
+    paygent_token: "test_rJ2o0DcPx35l3fg1Hvwe1lfb",
+    //paygent_merchant_id: "48238",
+    //paygent_token: "live_vO1TesLtsK1518FbmG2IyDM9",
+    //paygent_js: "https://token.paygent.co.jp/js/PaygentToken.js",
+    //apiUrl: 'http://127.0.0.1',
+    apiUrl: "https://dev-necsports.a.kuroco.app",
+    //apiUrl: "https://kuroco.necsports.net",
+    //apiUrl: 'https://member-necsports.g.kuroco.app',
+  },
   /*
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
@@ -32,8 +44,7 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     script: [
       {
-        src: "https://token.paygent.co.jp/js/PaygentToken.js",
-        //src: "https://sandbox.paygent.co.jp/js/PaygentToken.js",
+        src: process.env.paygent_js,
       },
     ],
   },
@@ -84,9 +95,7 @@ export default {
     middleware: ["auth", "upgrade"],
   },
   axios: {
-    //baseURL: 'http://127.0.0.1',
-    baseURL: "https://kuroco.necsports.net",
-    //baseURL: 'https://member-necsports.g.kuroco.app',
+    baseURL: process.env.apiUrl,
     credentials: true,
   },
   auth: {
