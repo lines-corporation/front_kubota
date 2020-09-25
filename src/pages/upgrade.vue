@@ -25,6 +25,7 @@
                 <v-radio-group v-model="product_id" :rules="[rules.required]">
                   <img
                     src="@/assets/images/RR.png"
+                    v-if="red_star || red_rockets"
                     style="width: 240px; padding: 10px;"
                   />
                   <v-radio
@@ -40,6 +41,7 @@
                   <v-spacer />
                   <img
                     src="@/assets/images/GR.png"
+                    v-if="green_star || green_rockets"
                     style="width: 240px; padding: 10px;"
                   />
                   <v-radio
@@ -245,8 +247,8 @@ export default {
           // eslint-disable-next-line no-undef
           let paygentToken = new PaygentToken()
           paygentToken.createToken(
-            process.env.paygent_merchant_id,
-            process.env.paygent_token,
+            process.env.PAYGENT_MERCHANT_ID,
+            process.env.PAYGENT_TOKEN,
             {
               card_number: self.cardNumber,
               expire_year: self.cardYear,

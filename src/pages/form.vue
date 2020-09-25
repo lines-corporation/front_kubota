@@ -1000,8 +1000,8 @@ export default {
         if (this.ec_payment_id == 58) {
           let paygentToken = new PaygentToken()
           paygentToken.createToken(
-            process.env.paygent_merchant_id,
-            process.env.paygent_token,
+            process.env.PAYGENT_MERCHANT_ID,
+            process.env.PAYGENT_TOKEN,
             {
               card_number: self.cardNumber,
               expire_year: self.cardYear,

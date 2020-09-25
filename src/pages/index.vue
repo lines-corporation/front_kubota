@@ -149,6 +149,35 @@
                 </v-simple-table>
               </v-card-text>
             </v-card>
+            <v-card class="mx-auto" outlined>
+              <v-card-text>
+                <h3>チケット</h3>
+
+                <v-simple-table :fixed-header="false">
+                  <template v-slot:default>
+                    <tbody>
+                      <router-link
+                        v-for="item in topics_list5"
+                        :key="item.topics_id"
+                        :to="'/ticket/' + item.product_id"
+                        tag="tr"
+                      >
+                        <td class="date">
+                          {{ item.ymd }}
+                        </td>
+                        <td>{{ item.topics_name }}</td>
+                        <td>{{ item.subject }}</td>
+                        <td class="arw">
+                          <v-btn icon :to="'/ticket/' + item.product_id" nuxt>
+                            <v-icon>mdi-chevron-right</v-icon>
+                          </v-btn>
+                        </td>
+                      </router-link>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-card-text>
+            </v-card>
           </v-col>
           <v-col cols="12" sm="3" />
         </v-row>
@@ -225,13 +254,6 @@ export default {
 
       this.$auth.ctx.$axios
         .get("/rcms-api/1/product_list5")
-        .then(function (response) {
-          console.log(response.data.list)
-          self.topics_list5 = response.data.list
-        })
-
-      this.$auth.ctx.$axios
-        .get("/rcms-api/1/tickets")
         .then(function (response) {
           self.topics_list5 = response.data.list
         })

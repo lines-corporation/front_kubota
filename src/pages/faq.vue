@@ -23,7 +23,6 @@
           <v-list-item-content>
             <v-list-item-title v-text="subItem.subject" />
             <v-list-item-subtitle>
-              // eslint-disable-next-line vue/no-v-html
               <div v-html="subItem.contents" />
             </v-list-item-subtitle>
           </v-list-item-content>
