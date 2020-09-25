@@ -151,14 +151,67 @@
             </v-card>
             <v-card class="mx-auto" outlined>
               <v-card-text>
+                <h3>購入済みのチケット</h3>
+
+                <v-simple-table :fixed-header="false">
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">
+                          購入日
+                        </th>
+                        <th class="text-left">
+                          チケット名
+                        </th>
+                        <th class="text-left" />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <router-link
+                        v-for="item in topics_list5"
+                        :key="item.product_id"
+                        :to="'/ticket/' + item.product_id"
+                        tag="tr"
+                      >
+                        <td class="date">
+                          {{ item.ymd }}
+                        </td>
+                        <td>{{ item.subject }}</td>
+                        <td class="arw">
+                          <v-btn icon :to="'/ticket/' + item.product_id" nuxt>
+                            <v-icon>mdi-chevron-right</v-icon>
+                          </v-btn>
+                        </td>
+                      </router-link>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-card-text>
+            </v-card>
+            <v-card class="mx-auto" outlined>
+              <v-card-text>
                 <h3>チケット</h3>
 
                 <v-simple-table :fixed-header="false">
                   <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">
+                          日付
+                        </th>
+                        <th class="text-left">
+                          チケット名
+                        </th>
+                        <th class="text-left">
+                          席種
+                        </th>
+                        <th class="text-left" />
+                      </tr>
+                    </thead>
                     <tbody>
                       <router-link
                         v-for="item in topics_list5"
-                        :key="item.topics_id"
+                        :key="item.product_id"
                         :to="'/ticket/' + item.product_id"
                         tag="tr"
                       >
@@ -245,21 +298,26 @@ export default {
     },
   },
   mounted() {
-    if (this.$auth.loggedIn) {
-      let self = this
-
-      this.$auth.ctx.$axios.get("/rcms-api/1/infos").then(function (response) {
-        self.topics_list1 = response.data.list
-      })
-
-      this.$auth.ctx.$axios
-        .get("/rcms-api/1/product_list5")
-        .then(function (response) {
-          self.topics_list5 = response.data.list
-        })
-    }
+    this.getInfo()
   },
   methods: {
+    getInfo() {
+      if (this.$auth.loggedIn) {
+        let self = this
+
+        this.$auth.ctx.$axios
+          .get("/rcms-api/1/infos")
+          .then(function (response) {
+            self.topics_list1 = response.data.list
+          })
+
+        this.$auth.ctx.$axios
+          .get("/rcms-api/1/product_list5")
+          .then(function (response) {
+            self.topics_list5 = response.data.list
+          })
+      }
+    },
     async login() {
       this.loading = true
       await this.$auth
@@ -277,6 +335,7 @@ export default {
           if (!upgraded_flg) {
             this.$router.push("/upgrade")
           } else {
+            this.getInfo()
             this.$router.push("/")
           }
           this.$store.dispatch("snackbar/setMessage", "ログインしました")

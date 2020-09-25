@@ -118,7 +118,8 @@ export default {
         },
         {
           icon: "mdi-lightbulb",
-          title: "チケット(近日公開!)",
+          title: "チケット",
+          to: "/tickets",
         },
         {
           icon: "mdi-help",
@@ -185,7 +186,6 @@ export default {
   methods: {
     async logout() {
       await this.$auth.logout().then((response) => {
-        console.log(response)
         this.$store.dispatch("snackbar/setMessage", "ログアウトしました")
         this.$store.dispatch("snackbar/snackOn")
         this.$router.push("/")

@@ -23,7 +23,7 @@
                   <v-subheader>会場名</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.data.ext_col_01 }}
+                   {{ item.ext_col_01 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -31,7 +31,7 @@
                   <v-subheader>対戦相手</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.data.ext_col_02 }}
+                   {{ item.ext_col_02 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -39,7 +39,7 @@
                   <v-subheader>イベント概要</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.data.ext_col_03 }}
+                   {{ item.ext_col_03 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -47,7 +47,7 @@
                   <v-subheader>試合詳細</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.data.ext_col_04 }}
+                   {{ item.ext_col_04 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -55,7 +55,7 @@
                   <v-subheader>当日受付時間</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.data.ext_col_05 }}
+                   {{ item.ext_col_05 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -63,7 +63,7 @@
                   <v-subheader>試合会場開場時間</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.data.ext_col_06 }}
+                   {{ item.ext_col_06 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -71,7 +71,7 @@
                   <v-subheader>注意事項</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.data.ext_col_07 }}
+                   {{ item.ext_col_07 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -240,6 +240,7 @@ export default {
     let url = "/rcms-api/1/product/" + this.$route.params.id
     this.$auth.ctx.$axios.get(url).then(function (response) {
       self.item = response.data.details
+      self.item.data = []
       self.product_id = response.data.details.product_id
 
       for (let i = 2; i <= response.data.details.sale_limit; i++) {
