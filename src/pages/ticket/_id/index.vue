@@ -82,6 +82,40 @@
                    {{ item.price_02 }}円
                 </v-col>
               </v-row>
+              </v-container>
+              <v-container fluid v-if="!can_order">
+              <v-row>
+                <v-col cols="4">
+                  <v-subheader>購入済みです</v-subheader>
+                </v-col>
+                <v-col cols="8">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="text-left">
+                          日付
+                        </th>
+                        <th class="text-left">
+                          注文番号
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="order in item.order_list"
+                        :key="order.ec_order_id"
+                      >
+                        <td class="date">
+                          {{ order.inst_ymdhi }}
+                        </td>
+                        <td>{{ order.ec_order_id }}</td>
+                      </tr>
+                      </tbody>
+                      </table>
+                </v-col>
+              </v-row>
+              </v-container>
+              <v-container fluid v-if="can_order">
               <v-row>
                 <v-col cols="4">
                   <v-subheader><span style="color: red;">*</span>チケット枚数</v-subheader>
@@ -217,6 +251,7 @@ export default {
   data: () => ({
     item: [],
     valid: true,
+    can_order: false,
     temp_user: false,
     success_message: "",
     product_id: null,
@@ -247,7 +282,7 @@ export default {
     this.$auth.ctx.$axios.get(url).then(function (response) {
       self.item = response.data.details
       self.product_id = response.data.details.product_id
-
+      self.can_order = response.data.details.order_list.length ? false : true
       for (let i = 2; i <= response.data.details.sale_limit; i++) {
         self.quantity_list.push({ value: i, text: i + "枚" })
       }

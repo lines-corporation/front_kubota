@@ -171,7 +171,7 @@
                     </thead>
                     <tbody>
                       <router-link
-                        v-for="item in topics_list5"
+                        v-for="item in my_order_list5"
                         :key="item.product_id"
                         :to="'/ticket/' + item.product_id"
                         tag="tr"
@@ -250,6 +250,8 @@ export default {
   data: () => ({
     topics_list6: [],
     topics_list5: [],
+    my_order_list5: [],
+    my_order_list6: [],
     topics_list1: [],
     loading: false,
     show_pwd1: false,
@@ -313,6 +315,12 @@ export default {
           .get("/rcms-api/1/infos")
           .then(function (response) {
             self.topics_list1 = response.data.list
+          })
+
+        this.$auth.ctx.$axios
+          .get("/rcms-api/1/product_list5?my_order_flg=1")
+          .then(function (response) {
+            self.my_order_list5 = response.data.list
           })
 
         this.$auth.ctx.$axios
