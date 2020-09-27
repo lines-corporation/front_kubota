@@ -158,10 +158,13 @@
                     <thead>
                       <tr>
                         <th class="text-left">
-                          購入日
+                          日付
                         </th>
                         <th class="text-left">
                           チケット名
+                        </th>
+                        <th class="text-left">
+                          席種
                         </th>
                         <th class="text-left" />
                       </tr>
@@ -174,8 +177,9 @@
                         tag="tr"
                       >
                         <td class="date">
-                          {{ item.ymd }}
+                          {{ item.product_data.ymd }}
                         </td>
+                        <td>{{ item.topics_name }}</td>
                         <td>{{ item.subject }}</td>
                         <td class="arw">
                           <v-btn icon :to="'/ticket/' + item.product_id" nuxt>
@@ -216,7 +220,7 @@
                         tag="tr"
                       >
                         <td class="date">
-                          {{ item.ymd }}
+                          {{ item.product_data.ymd }}
                         </td>
                         <td>{{ item.topics_name }}</td>
                         <td>{{ item.subject }}</td>

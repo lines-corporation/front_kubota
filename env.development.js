@@ -1,4 +1,5 @@
 module.exports = {
+  META_TITLE: "【開発】NECロケッツクラブ",
   BASE_URL: "https://dev-necsports.a.kuroco.app",
   PAYGENT_JS: "https://sandbox.paygent.co.jp/js/PaygentToken.js",
   PAYGENT_MERCHANT_ID: "40508",

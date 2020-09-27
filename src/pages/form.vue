@@ -663,12 +663,14 @@
                       v-model="cardNumber"
                       label="クレジットカード番号"
                       outlined
+                      :rules="[rules.required]"
                     />
                     <v-text-field
                       id="cardName"
                       v-model="cardName"
                       label="お名前（ローマ字）"
                       outlined
+                      :rules="[rules.required]"
                     />
                     <v-row dense>
                       <v-col cols="4">
@@ -693,6 +695,7 @@
                           hide-details
                           single-line
                           outlined
+                          :rules="[rules.required]"
                         />
                       </v-col>
                       <v-col cols="4">
@@ -716,6 +719,7 @@
                           hide-details
                           single-line
                           outlined
+                          :rules="[rules.required]"
                         />
                       </v-col>
                       <v-col cols="4">
@@ -724,6 +728,7 @@
                           v-model="cardCvv"
                           label="セキュリティコード(CVV)"
                           outlined
+                          :rules="[rules.required]"
                         />
                       </v-col>
                     </v-row>

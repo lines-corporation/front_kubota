@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="article-page">
+    <div class="article-page" v-if="product_id">
       <header>
         <h2 class="form-ttl">
           {{ item.topics_name }} {{ item.subject }}
@@ -9,7 +9,7 @@
       <div class="theme--light v-stepper">
         <div class="v-stepper__content">
           <p>
-            {{ item.ymd }}
+            {{ item.product_data.ymd }}
           </p>
           <v-form
             ref="form3"
@@ -23,7 +23,7 @@
                   <v-subheader>会場名</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.ext_col_01 }}
+                   {{ item.product_data.ext_col_01 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -31,7 +31,7 @@
                   <v-subheader>対戦相手</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.ext_col_02 }}
+                   {{ item.product_data.ext_col_02 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -39,7 +39,7 @@
                   <v-subheader>イベント概要</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.ext_col_03 }}
+                   {{ item.product_data.ext_col_03 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -47,7 +47,7 @@
                   <v-subheader>試合詳細</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.ext_col_04 }}
+                   {{ item.product_data.ext_col_04 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -55,7 +55,7 @@
                   <v-subheader>当日受付時間</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.ext_col_05 }}
+                   {{ item.product_data.ext_col_05 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -63,7 +63,7 @@
                   <v-subheader>試合会場開場時間</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.ext_col_06 }}
+                   {{ item.product_data.ext_col_06 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -71,7 +71,7 @@
                   <v-subheader>注意事項</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.ext_col_07 }}
+                   {{ item.product_data.ext_col_07 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -79,12 +79,12 @@
                   <v-subheader>チケット単価</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.price }}円
+                   {{ item.price_02 }}円
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>チケット枚数</v-subheader>
+                  <v-subheader><span style="color: red;">*</span>チケット枚数</v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-select
@@ -95,12 +95,13 @@
                     hide-details
                     single-line
                     outlined
+                    :rules="[rules.required]"
                   />
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>支払方法</v-subheader>
+                  <v-subheader><span style="color: red;">*</span>支払方法</v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-radio-group v-model="ec_payment_id">
@@ -116,12 +117,14 @@
                       v-model="cardNumber"
                       label="クレジットカード番号"
                       outlined
+                      :rules="[rules.required]"
                     />
                     <v-text-field
                       id="cardName"
                       v-model="cardName"
                       label="お名前（ローマ字）"
                       outlined
+                      :rules="[rules.required]"
                     />
                     <v-row dense>
                       <v-col cols="4">
@@ -146,6 +149,7 @@
                           hide-details
                           single-line
                           outlined
+                          :rules="[rules.required]"
                         />
                       </v-col>
                       <v-col cols="4">
@@ -169,6 +173,7 @@
                           hide-details
                           single-line
                           outlined
+                          :rules="[rules.required]"
                         />
                       </v-col>
                       <v-col cols="4">
@@ -177,6 +182,7 @@
                           v-model="cardCvv"
                           label="CVV"
                           outlined
+                          :rules="[rules.required]"
                         />
                       </v-col>
                     </v-row>
@@ -240,7 +246,6 @@ export default {
     let url = "/rcms-api/1/product/" + this.$route.params.id
     this.$auth.ctx.$axios.get(url).then(function (response) {
       self.item = response.data.details
-      self.item.data = []
       self.product_id = response.data.details.product_id
 
       for (let i = 2; i <= response.data.details.sale_limit; i++) {
