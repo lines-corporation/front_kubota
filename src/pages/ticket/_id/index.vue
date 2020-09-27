@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <div class="article-page" v-if="product_id">
+    <div v-if="product_id" class="article-page">
       <header>
         <h2 class="form-ttl">
-          {{ item.topics_name }} {{ item.subject }}
-        </h2>
+{{ item.topics_name }} {{ item.subject }}
+</h2>
       </header>
       <div class="theme--light v-stepper">
         <div class="v-stepper__content">
@@ -23,7 +23,7 @@
                   <v-subheader>会場名</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.product_data.ext_col_01 }}
+                  {{ item.product_data.ext_col_01 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -31,7 +31,7 @@
                   <v-subheader>対戦相手</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.product_data.ext_col_02 }}
+                  {{ item.product_data.ext_col_02 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -39,7 +39,7 @@
                   <v-subheader>イベント概要</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.product_data.ext_col_03 }}
+                  {{ item.product_data.ext_col_03 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -47,7 +47,7 @@
                   <v-subheader>試合詳細</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.product_data.ext_col_04 }}
+                  {{ item.product_data.ext_col_04 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -55,7 +55,7 @@
                   <v-subheader>当日受付時間</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.product_data.ext_col_05 }}
+                  {{ item.product_data.ext_col_05 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -63,7 +63,7 @@
                   <v-subheader>試合会場開場時間</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.product_data.ext_col_06 }}
+                  {{ item.product_data.ext_col_06 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -71,7 +71,7 @@
                   <v-subheader>注意事項</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.product_data.ext_col_07 }}
+                  {{ item.product_data.ext_col_07 }}
                 </v-col>
               </v-row>
               <v-row>
@@ -79,11 +79,11 @@
                   <v-subheader>チケット単価</v-subheader>
                 </v-col>
                 <v-col cols="8">
-                   {{ item.price_02 }}円
-                </v-col>
+{{ item.price_02 }}円
+</v-col>
               </v-row>
-              </v-container>
-              <v-container fluid v-if="!can_order">
+            </v-container>
+            <v-container v-if="!can_order" fluid>
               <v-row>
                 <v-col cols="4">
                   <v-subheader>購入済みです</v-subheader>
@@ -98,6 +98,12 @@
                         <th class="text-left">
                           注文番号
                         </th>
+                        <th class="text-left">
+                          ステータス
+                        </th>
+                        <th>
+                          QRコード
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -109,16 +115,27 @@
                           {{ order.inst_ymdhi }}
                         </td>
                         <td>{{ order.ec_order_id }}</td>
+                        <td>{{ order.payment_status }}</td>
+                        <td>
+                          <img
+                            :src="
+                              'http://chart.apis.google.com/chart?cht=qr&chs=200x200&&chl=' +
+                                order.ec_order_id
+                            "
+                          />
+                        </td>
                       </tr>
-                      </tbody>
-                      </table>
+                    </tbody>
+                  </table>
                 </v-col>
               </v-row>
-              </v-container>
-              <v-container fluid v-if="can_order">
+            </v-container>
+            <v-container v-if="can_order" fluid>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader><span style="color: red;">*</span>チケット枚数</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>チケット枚数
+                  </v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-select
@@ -135,7 +152,9 @@
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader><span style="color: red;">*</span>支払方法</v-subheader>
+                  <v-subheader>
+                    <span style="color: red;">*</span>支払方法
+                  </v-subheader>
                 </v-col>
                 <v-col cols="8">
                   <v-radio-group v-model="ec_payment_id">
@@ -257,7 +276,7 @@ export default {
     product_id: null,
     ec_payment_id: "61",
     quantity: 1,
-    quantity_list: [{ value: '1', text: '1枚' }],
+    quantity_list: [{ value: "1", text: "1枚" }],
     token: "",
     rules: {
       required: (value) => !!value || "この項目は必須入力です",
