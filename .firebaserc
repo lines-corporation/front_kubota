@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "kuroco-member-necsports"
+  },
+  "targets": {
+    "kuroco-member-necsports": {
+      "hosting": {
+        "development": [
+          "stg-member-necsports"
+        ],
+        "production": [
+          "member-necsports"
+        ]
+      }
+    }
   }
 }
