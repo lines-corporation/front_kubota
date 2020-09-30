@@ -16,7 +16,6 @@
 
 <script>
 export default {
-  auth: false,
   data: () => ({
     item: [],
   }),
