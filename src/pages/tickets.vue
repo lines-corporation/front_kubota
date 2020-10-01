@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <h2>現在、申し込みできるチケット一覧</h2>
-
+  	<header>
+    	<h2 class="form-ttl">現在、申し込みできるチケット一覧</h2>
+	</header>
     <v-simple-table :fixed-header="false">
       <template v-slot:default>
         <thead>

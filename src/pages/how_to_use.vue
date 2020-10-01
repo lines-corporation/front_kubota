@@ -1,6 +1,8 @@
 <template>
-  <div class="container">
-    <h2>ご利用方法</h2>
+  <div class="container howto">
+	<header>
+    	<h2 class="form-ttl">ご利用方法</h2>
+	</header>
     <v-list>
       <v-list-group
         v-for="item in items"

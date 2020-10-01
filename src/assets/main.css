@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap');
 .v-application{
   font-family:  'Meiryo', 'Hiragino Kaku Gothic Pro', 'Hiragino Sans', 'Yu Gothic Medium', '游ゴシック Medium',sans-serif !important;
   -ms-font-feature-settings: 'normal';
@@ -48,6 +49,10 @@ h2,h3,h4.h5{
 }
 br.spbr{
 	display: none;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+    padding: 10px 16px;
+    transition: height 0.2s cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 /*----------------------------------------------------*/
@@ -321,12 +326,12 @@ footer .no-gutters{
     border-radius: 8px !important;
 }
 .article-page{
-	background: #FFF;
+	/*background: #FFF;*/
 	padding: 1em 2.5em;
     border-radius: 4px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);	
+    /*box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);*/	
 }
 .theme--light.v-data-table > .v-data-table__wrapper > table > thead > tr > th {
     color: #000 !important;
@@ -420,9 +425,31 @@ footer .no-gutters{
 .kiyaku .v-list-item .v-list-item__title{
 	color: #1414A0 !important;	
 }
+/*--------------------------------*/
+/*チケット購入*/
+
+
+.ticket-box .row{
+	border-bottom: 1px solid #DDD;
+}
+.ticket-box .v-subheader{
+	height: 34px;
+}
+.ticket-box .container--fluid:nth-child(2) .row{
+	border-bottom: none;
+}
+.ticket-box .date-t{
+	text-align: center;
+	font-size: 2.2rem !important;
+	margin-bottom: 5px;
+	font-family: 'Rubik';
+	color: #999;
+}
+
 /*----------------------------------------*/
 
 @media screen and (max-width: 980px){
+
 	main.v-main{
 		padding-top: 34px !important;
 		padding-bottom: 60px !important;
@@ -441,7 +468,10 @@ footer .no-gutters{
 		display: inline;
 	}
 	.container {
-	    padding: 5px 5px !important;
+	    padding: 10px !important;
+	}
+	.container>.container{
+		padding: 0px !important;
 	}
 	.v-toolbar__content{
 		padding: 4px 10px !important;
@@ -509,6 +539,9 @@ footer .no-gutters{
 	}
 
 	/*ログイン関連*/
+	.v-application .login-page {
+	    padding: 5px;
+	}	
 	.v-application .login-screen p{
 		margin-bottom: 0;
 	}
@@ -562,28 +595,55 @@ footer .no-gutters{
 		font-size: 0.85rem;
 	}
 	/*マイページ*/
+	.mypage .row {
+	    margin-right: 0px;
+	    margin-left: 0px;
+	}
 	.mypage .v-card__text h3{
 		padding: 0.5em;
 	}	
 	.mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td{
-		padding: 0 5px;
+		padding: 5px 5px;
 	}
 	.mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td.date{
 		font-size: 0.65rem;
 		white-space: nowrap;
 	}
 	.mypage .col-sm-6 {
-		padding: 0 8px 0;
+		padding: 0 0px 0;
 	}
 	.mypage .col-sm-3{
-		padding: 0px 8px 0;
+		padding: 0px 0px 0;
 	}
 	
 	/*お知らせ*/
 	.article-page{
-		padding: 10px;
+		padding: 5px;
 	}
-
+	/*チケット*/
+	.ticket-box .date-t{
+		font-size: 1.8rem !important;
+	}	
+	.ticket-box .row{
+		display: block;
+	}
+	.ticket-box .row .col-4 {
+	    max-width: 100%;
+	    padding: 5px 10px 0 !important;
+	}
+	.ticket-box .row .col-4 .v-subheader {
+	    padding: 0px !important;
+	}
+	.ticket-box .row .col-8 {
+	    max-width: 100%;
+	    padding: 0 10px 10px !important;
+	}
+	.ticket-box .container .container{
+	    padding: 0 !important;	
+	}
+	.ticket-box .container.container--fluid{
+	    padding: 0px 10px 0 !important;
+	}
 }
 
 

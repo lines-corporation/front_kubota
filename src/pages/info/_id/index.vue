@@ -6,10 +6,16 @@
           {{ item.subject }}
         </h2>
       </header>
-      <p>
-        {{ item.ymd }}
-      </p>
-      <p v-html="item.contents" />
+     
+	  <div class="theme--light v-stepper">
+	  	<div class="v-stepper__content">
+	      <p>
+	        {{ item.ymd }}
+	      </p>
+
+	      <p v-html="item.contents" />
+	    </div>
+      </div>
     </div>
   </div>
 </template>

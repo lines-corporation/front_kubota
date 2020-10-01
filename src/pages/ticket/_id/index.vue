@@ -1,14 +1,15 @@
 <template>
   <div class="container">
-    <div v-if="product_id" class="article-page">
+    <div v-if="product_id" class="article-page ticket-box">
       <header>
         <h2 class="form-ttl">
 {{ item.topics_name }} {{ item.subject }}
 </h2>
+
       </header>
       <div class="theme--light v-stepper">
         <div class="v-stepper__content">
-          <p>
+          <p class="date-t">
             {{ item.product_data.ymd }}
           </p>
           <v-form
