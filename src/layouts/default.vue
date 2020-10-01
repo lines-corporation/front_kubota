@@ -117,11 +117,6 @@ export default {
           to: "/",
         },
         {
-          icon: "mdi-lightbulb",
-          title: "チケット",
-          to: "/tickets",
-        },
-        {
           icon: "mdi-help",
           title: "よくある質問",
           to: "/faq",

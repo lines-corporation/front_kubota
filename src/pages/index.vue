@@ -149,9 +149,9 @@
                 </v-simple-table>
               </v-card-text>
             </v-card>
-            <v-card class="mx-auto" outlined>
+            <v-card class="mx-auto" outlined v-if="tester">
               <v-card-text>
-                <h3>購入済みのチケット</h3>
+                <h3>購入済み・予約済みのチケット</h3>
 
                 <v-simple-table :fixed-header="false">
                   <template v-slot:default>
@@ -171,9 +171,9 @@
                     </thead>
                     <tbody>
                       <router-link
-                        v-for="item in my_order_list5"
+                        v-for="item in my_order_ticket_list"
                         :key="item.product_id"
-                        :to="'/ticket/' + item.product_id"
+                        :to="'/ticket/' + item.topics_id"
                         tag="tr"
                       >
                         <td class="date">
@@ -182,7 +182,7 @@
                         <td>{{ item.topics_name }}</td>
                         <td>{{ item.subject }}</td>
                         <td class="arw">
-                          <v-btn icon :to="'/ticket/' + item.product_id" nuxt>
+                          <v-btn icon :to="'/ticket/' + item.topics_id" nuxt>
                             <v-icon>mdi-chevron-right</v-icon>
                           </v-btn>
                         </td>
@@ -192,9 +192,9 @@
                 </v-simple-table>
               </v-card-text>
             </v-card>
-            <v-card class="mx-auto" outlined>
+            <v-card class="mx-auto" outlined v-if="tester">
               <v-card-text>
-                <h3>チケット</h3>
+                <h3>現在販売中のチケット</h3>
 
                 <v-simple-table :fixed-header="false">
                   <template v-slot:default>
@@ -204,28 +204,28 @@
                           日付
                         </th>
                         <th class="text-left">
-                          チケット名
+                          試合名
                         </th>
                         <th class="text-left">
-                          席種
+                          会場
                         </th>
                         <th class="text-left" />
                       </tr>
                     </thead>
                     <tbody>
                       <router-link
-                        v-for="item in topics_list5"
-                        :key="item.product_id"
-                        :to="'/ticket/' + item.product_id"
+                        v-for="item in ticket_list"
+                        :key="item.topics_id"
+                        :to="'/ticket/' + item.topics_id"
                         tag="tr"
                       >
                         <td class="date">
-                          {{ item.product_data.ymd }}
+                          {{ item.ymd }}
                         </td>
-                        <td>{{ item.topics_name }}</td>
                         <td>{{ item.subject }}</td>
+                        <td>{{ item.ext_col_01 }}</td>
                         <td class="arw">
-                          <v-btn icon :to="'/ticket/' + item.product_id" nuxt>
+                          <v-btn icon :to="'/ticket/' + item.topics_id" nuxt>
                             <v-icon>mdi-chevron-right</v-icon>
                           </v-btn>
                         </td>
@@ -248,10 +248,8 @@ export default {
   middleware: "auth",
   auth: false,
   data: () => ({
-    topics_list6: [],
-    topics_list5: [],
-    my_order_list5: [],
-    my_order_list6: [],
+    ticket_list: [],
+    my_order_ticket_list: [],
     topics_list1: [],
     loading: false,
     show_pwd1: false,
@@ -278,6 +276,20 @@ export default {
           }
         })
         return self.can_upgrade
+      }
+      return false
+    },
+    tester() {
+      if (this.$auth.loggedIn) {
+        self.tester = false
+        const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
+        console.log(group_ids)
+        Object.keys(group_ids).forEach(function (key) {
+          if (["102"].indexOf(key) !== -1) {
+            self.tester = true
+          }
+        })
+        return self.tester
       }
       return false
     },
@@ -318,15 +330,15 @@ export default {
           })
 
         this.$auth.ctx.$axios
-          .get("/rcms-api/1/product_list5?my_order_flg=1")
+          .get("/rcms-api/1/product_list?my_order_flg=1")
           .then(function (response) {
-            self.my_order_list5 = response.data.list
+            self.my_order_ticket_list = response.data.list
           })
 
         this.$auth.ctx.$axios
-          .get("/rcms-api/1/product_list5")
+          .get("/rcms-api/1/ticket_list")
           .then(function (response) {
-            self.topics_list5 = response.data.list
+            self.ticket_list = response.data.list
           })
       }
     },

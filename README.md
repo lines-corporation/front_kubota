@@ -24,7 +24,9 @@ $ npm run export-prod
 
 # deploy to Firebase hosting
 $ firebase target:apply hosting production member-necsports
+$ firebase deploy --only hosting:production
 $ firebase target:apply hosting development stg-member-necsports
+$ firebase deploy --only hosting:development
 $ firebase deploy
 ```
 
