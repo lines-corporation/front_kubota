@@ -371,7 +371,7 @@ export default {
       if(ec_payment_id==60){
         rtn += "銀行振り込み"
         if(payment_status == 410){
-          rtn += "(予約中)"
+          rtn += "(予約中・未決済)"
         }else if(payment_status == 450){
           rtn += "(入金確認済み)"
         }else{
@@ -501,3 +501,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.col {
+  white-space: pre-line;
+}
+</style>
