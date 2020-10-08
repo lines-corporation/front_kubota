@@ -289,9 +289,9 @@ export default {
             self.tester = true
           }
         })
-        return self.tester
+        return true
       }
-      return false
+      return true
     },
     group_nm() {
       if (this.$store.$auth.loggedIn) {

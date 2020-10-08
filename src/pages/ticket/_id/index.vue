@@ -79,213 +79,217 @@
                   <v-subheader>申込可能枚数</v-subheader>
                 </v-col>
                 <v-col cols="8">
-お一人様{{ item.ext_col_08 }}枚まで
-</v-col>
-              </v-row>
-            </v-container>
-
-            <v-container fluid>
-
-            <v-container fluid>
-              <v-card class="mx-auto" outlined>
-                <v-card-text>
-                  <h3>購入済み・予約済みのチケット</h3>
-                  <v-simple-table :fixed-header="false">
-                    <template v-slot:default>
-                      <thead>
-                        <tr>
-                        <th class="text-left">
-                          注文番号
-                        </th>
-                        <th class="text-left">
-                          ステータス
-                        </th>
-                        <th class="text-left">
-                          内容
-                        </th>
-                        </tr>
-                      </thead>
-                    <tbody>
-                      <tr
-                        v-for="order in order_list"
-                        :key="order.ec_order_id"
-                      >
-                        <td>{{ order.ec_order_id }}</td>
-                        <td v-text="order_status(order.ec_payment_id,order.payment_status)"></td>
-                        <td>
-                        <table>
-                        <tr
-                          v-for="order_detail in order.order_details"
-                          :key="order_detail.product_id"
-                        >
-                        <td v-text="prodcut_nm(order_detail.product_id)" class="text-left"></td>
-                        <td class="text-left">{{ order_detail.price }}円</td>
-                        <td class="text-left">{{ order_detail.quantity }}枚</td>
-                        </tr>
-                        </table>
-                        </td>
-                        
-                      </tr>
-                    </tbody>
-                  </table>
-                  </v-simple-table>
+                  お一人様{{ item.ext_col_08 }}枚まで
                 </v-col>
               </v-row>
-                </v-card-text>
-              </v-card>
             </v-container>
 
-            <v-container fluid v-if="quantity_list.length > 1">
-              <v-card class="mx-auto" outlined>
-                <v-card-text>
-                  <h3>チケットの購入</h3>
-                  <v-simple-table :fixed-header="false">
-                    <template v-slot:default>
-                      <thead>
-                        <tr>
-                          <th class="text-left">
-                            席種
-                          </th>
-                          <th class="text-left">
-                            チケット単価
-                          </th>
-                          <th class="text-left">
-                            枚数
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="t in product_list" :key="t.product_id">
-                          <td>{{ t.subject }}</td>
-                          <td>{{ t.price_02 }}円</td>
-                          <td>
-                            <v-select
-                              v-if="t.stock > 0"
-                              v-model="order_products[t.product_id]"
-                              :items="quantity_list"
-                              menu-props="auto"
-                              label="枚数"
-                              hide-details
-                              single-line
-                              outlined
-                            />
-                            <p v-if="t.stock == 0">
-                              在庫がありません
-                            </p>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </template>
-                  </v-simple-table>
+            <v-container fluid>
+              <v-container fluid>
+                <v-card class="mx-auto" outlined>
+                  <v-card-text>
+                    <h3>購入済み・予約済みのチケット</h3>
+                    <v-simple-table :fixed-header="false">
+                      <template v-slot:default>
+                        <thead>
+                          <tr>
+                            <th class="text-left">
+                              注文番号
+                            </th>
+                            <th class="text-left">
+                              ステータス
+                            </th>
+                            <th class="text-left">
+                              内容
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="order in order_list"
+                            :key="order.ec_order_id"
+                          >
+                            <td>{{ order.ec_order_id }}</td>
+                            <td v-text="order_status(order.ec_payment_id,order.payment_status)" />
+                            <td>
+                              <table>
+                                <tr
+                                  v-for="order_detail in order.order_details"
+                                  :key="order_detail.product_id"
+                                >
+                                  <td class="text-left" v-text="prodcut_nm(order_detail.product_id)" />
+                                  <td class="text-left">
+                                    {{ order_detail.price }}円
+                                  </td>
+                                  <td class="text-left">
+                                    {{ order_detail.quantity }}枚
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                        </table>
+                      </template>
+                    </v-simple-table>
+                    </v-col>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
+              </v-container>
 
-                  <v-row>
-                    <v-col cols="4">
-                      <v-subheader>
-                        <span style="color: red;">*</span>支払方法
-                      </v-subheader>
-                    </v-col>
-                    <v-col cols="8">
-                      <v-radio-group v-model="ec_payment_id">
-                        <v-radio label="カード決済" value="61" />
-                        <v-radio label="銀行振り込み" value="60" />
-                      </v-radio-group>
-                      <p v-if="ec_payment_id == '60'" class="body-1">
-                        振込先がメールで送信されますので、そちらで振込先をご確認ください。
-                      </p>
-                      <div v-if="ec_payment_id == '61'" class="card-wrapper">
-                        <v-text-field
-                          id="cardNumber"
-                          v-model="cardNumber"
-                          label="クレジットカード番号"
-                          outlined
-                          :rules="[rules.required]"
-                        />
-                        <v-text-field
-                          id="cardName"
-                          v-model="cardName"
-                          label="お名前（ローマ字）"
-                          outlined
-                          :rules="[rules.required]"
-                        />
-                        <v-row dense>
-                          <v-col cols="4">
-                            <v-select
-                              v-model="cardMonth"
-                              :items="[
-                                { value: '1', text: '1月' },
-                                { value: '2', text: '2月' },
-                                { value: '3', text: '3月' },
-                                { value: '4', text: '4月' },
-                                { value: '5', text: '5月' },
-                                { value: '6', text: '6月' },
-                                { value: '7', text: '7月' },
-                                { value: '8', text: '8月' },
-                                { value: '9', text: '9月' },
-                                { value: '10', text: '10月' },
-                                { value: '11', text: '11月' },
-                                { value: '12', text: '12月' },
-                              ]"
-                              menu-props="auto"
-                              label="月"
-                              hide-details
-                              single-line
-                              outlined
-                              :rules="[rules.required]"
-                            />
-                          </v-col>
-                          <v-col cols="4">
-                            <v-select
-                              v-model="cardYear"
-                              :items="[
-                                { value: '20', text: '2020年' },
-                                { value: '21', text: '2021年' },
-                                { value: '22', text: '2022年' },
-                                { value: '23', text: '2023年' },
-                                { value: '24', text: '2024年' },
-                                { value: '25', text: '2025年' },
-                                { value: '26', text: '2026年' },
-                                { value: '27', text: '2027年' },
-                                { value: '28', text: '2028年' },
-                                { value: '29', text: '2029年' },
-                                { value: '30', text: '2030年' },
-                              ]"
-                              menu-props="auto"
-                              label="年"
-                              hide-details
-                              single-line
-                              outlined
-                              :rules="[rules.required]"
-                            />
-                          </v-col>
-                          <v-col cols="4">
-                            <v-text-field
-                              id="cardCvv"
-                              v-model="cardCvv"
-                              label="CVV"
-                              outlined
-                              :rules="[rules.required]"
-                            />
-                          </v-col>
-                        </v-row>
-                      </div>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-btn
-                        type="submit"
-                        block
-                        x-large
-                        color="success"
-                        dark
-                        :loading="loading"
-                      >
-                        購入する
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </v-card-text>
-              </v-card>
+              <v-container v-if="quantity_list.length > 1" fluid>
+                <v-card class="mx-auto" outlined>
+                  <v-card-text>
+                    <h3>チケットの購入</h3>
+                    <v-simple-table :fixed-header="false">
+                      <template v-slot:default>
+                        <thead>
+                          <tr>
+                            <th class="text-left">
+                              席種
+                            </th>
+                            <th class="text-left">
+                              チケット単価
+                            </th>
+                            <th class="text-left">
+                              枚数
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="t in product_list" :key="t.product_id">
+                            <td>{{ t.subject }}</td>
+                            <td>{{ t.price_02 }}円</td>
+                            <td>
+                              <v-select
+                                v-if="t.stock > 0"
+                                v-model="order_products[t.product_id]"
+                                :items="quantity_list"
+                                menu-props="auto"
+                                label="枚数"
+                                hide-details
+                                single-line
+                                outlined
+                              />
+                              <p v-if="t.stock == 0">
+                                完売
+                              </p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
+
+                    <v-row>
+                      <v-col cols="4">
+                        <v-subheader>
+                          <span style="color: red;">*</span>支払方法
+                        </v-subheader>
+                      </v-col>
+                      <v-col cols="8">
+                        <v-radio-group v-model="ec_payment_id">
+                          <v-radio label="カード決済" value="61" />
+                          <v-radio label="銀行振り込み" value="60" />
+                        </v-radio-group>
+                        <p v-if="ec_payment_id == '60'" class="body-1">
+                          振込先がメールで送信されますので、そちらで振込先をご確認ください。
+                        </p>
+                        <div v-if="ec_payment_id == '61'" class="card-wrapper">
+                          <v-text-field
+                            id="cardNumber"
+                            v-model="cardNumber"
+                            label="クレジットカード番号"
+                            outlined
+                            :rules="[rules.required]"
+                          />
+                          <v-text-field
+                            id="cardName"
+                            v-model="cardName"
+                            label="お名前（ローマ字）"
+                            outlined
+                            :rules="[rules.required]"
+                          />
+                          <v-row dense>
+                            <v-col cols="4">
+                              <v-select
+                                v-model="cardMonth"
+                                :items="[
+                                  { value: '1', text: '1月' },
+                                  { value: '2', text: '2月' },
+                                  { value: '3', text: '3月' },
+                                  { value: '4', text: '4月' },
+                                  { value: '5', text: '5月' },
+                                  { value: '6', text: '6月' },
+                                  { value: '7', text: '7月' },
+                                  { value: '8', text: '8月' },
+                                  { value: '9', text: '9月' },
+                                  { value: '10', text: '10月' },
+                                  { value: '11', text: '11月' },
+                                  { value: '12', text: '12月' },
+                                ]"
+                                menu-props="auto"
+                                label="月"
+                                hide-details
+                                single-line
+                                outlined
+                                :rules="[rules.required]"
+                              />
+                            </v-col>
+                            <v-col cols="4">
+                              <v-select
+                                v-model="cardYear"
+                                :items="[
+                                  { value: '20', text: '2020年' },
+                                  { value: '21', text: '2021年' },
+                                  { value: '22', text: '2022年' },
+                                  { value: '23', text: '2023年' },
+                                  { value: '24', text: '2024年' },
+                                  { value: '25', text: '2025年' },
+                                  { value: '26', text: '2026年' },
+                                  { value: '27', text: '2027年' },
+                                  { value: '28', text: '2028年' },
+                                  { value: '29', text: '2029年' },
+                                  { value: '30', text: '2030年' },
+                                ]"
+                                menu-props="auto"
+                                label="年"
+                                hide-details
+                                single-line
+                                outlined
+                                :rules="[rules.required]"
+                              />
+                            </v-col>
+                            <v-col cols="4">
+                              <v-text-field
+                                id="cardCvv"
+                                v-model="cardCvv"
+                                label="CVV"
+                                outlined
+                                :rules="[rules.required]"
+                              />
+                            </v-col>
+                          </v-row>
+                        </div>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-btn
+                          type="submit"
+                          block
+                          x-large
+                          color="success"
+                          dark
+                          :loading="loading"
+                        >
+                          購入する
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
+              </v-container>
             </v-container>
           </v-form>
         </div>
@@ -338,7 +342,7 @@ export default {
         self.product_list = res_p.data.list
       })
 
-      let url_o = "/rcms-api/1/order_list?topics_id=" + self.topics_id
+      let url_o = "/rcms-api/1/order_list?is_canceled=0&without_payment_error=1&topics_id=" + self.topics_id
       self.$auth.ctx.$axios.get(url_o).then(function (res_o) {
         self.order_list = res_o.data.list
         for (const o_list of res_o.data.list) {
@@ -367,7 +371,7 @@ export default {
       return ""
     },
     order_status(ec_payment_id,payment_status){
-      let rtn = "";
+      let rtn = ""
       if(ec_payment_id==60){
         rtn += "銀行振り込み"
         if(payment_status == 410){
@@ -407,7 +411,7 @@ export default {
       if(self.purchase_cnt + order_cnt > parseInt(self.item.ext_col_08)){
         self.$store.dispatch(
           "snackbar/setError",
-          "チケットの購入数が購入可能枚数を超えています"
+          "1試合でご購入いただける合計上限枚数を超えています。"
         )
         self.$store.dispatch("snackbar/snackOn")
         self.loading = false
