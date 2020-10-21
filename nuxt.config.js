@@ -123,4 +123,7 @@ export default {
       },
     },
   },
+  workbox: {
+    offline: false,
+  }
 }

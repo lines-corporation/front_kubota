@@ -138,7 +138,7 @@
                 </v-card>
               </v-container>
 
-              <v-container v-if="quantity_list.length > 1" fluid>
+              <v-container v-if="quantity_list.length > 1 && product_list.length > 0" fluid>
                 <v-card class="mx-auto" outlined>
                   <v-card-text>
                     <h3>チケットの購入</h3>
@@ -339,7 +339,11 @@ export default {
       self.topics_id = self.item.topics_id
       let url_p = "/rcms-api/1/product_list?topics_id=" + self.topics_id
       self.$auth.ctx.$axios.get(url_p).then(function (res_p) {
-        self.product_list = res_p.data.list
+        for (const p_list of res_p.data.list) {
+          if(p_list.open_flg){
+            self.product_list.push(p_list)
+          }
+        }
       })
 
       let url_o = "/rcms-api/1/order_list?is_canceled=0&without_payment_error=1&topics_id=" + self.topics_id
