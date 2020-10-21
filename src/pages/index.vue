@@ -149,7 +149,7 @@
                 </v-simple-table>
               </v-card-text>
             </v-card>
-            <v-card class="mx-auto" outlined v-if="tester">
+            <v-card v-if="tester" class="mx-auto" outlined>
               <v-card-text>
                 <h3>購入済み・予約済みのチケット</h3>
 
@@ -192,7 +192,7 @@
                 </v-simple-table>
               </v-card-text>
             </v-card>
-            <v-card class="mx-auto" outlined v-if="tester">
+            <v-card v-if="tester" class="mx-auto" outlined>
               <v-card-text>
                 <h3>現在販売中のチケット</h3>
 
@@ -335,10 +335,15 @@ export default {
             self.my_order_ticket_list = response.data.list
           })
 
+        self.ticket_list = []
         this.$auth.ctx.$axios
           .get("/rcms-api/1/ticket_list")
           .then(function (response) {
-            self.ticket_list = response.data.list
+            for (const p_list of response.data.list) {
+              if (p_list.product_ids.length > 0) {
+                self.ticket_list.push(p_list)
+              }
+            }
           })
       }
     },
