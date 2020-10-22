@@ -5,11 +5,11 @@
   "targets": {
     "kuroco-member-necsports": {
       "hosting": {
-        "development": [
-          "stg-member-necsports"
-        ],
         "production": [
           "member-necsports"
+        ],
+        "development": [
+          "stg-member-necsports"
         ]
       }
     }
