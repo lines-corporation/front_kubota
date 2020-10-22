@@ -97,9 +97,6 @@
                               注文番号
                             </th>
                             <th class="text-left">
-                              ステータス
-                            </th>
-                            <th class="text-left">
                               内容
                             </th>
                           </tr>
@@ -109,20 +106,23 @@
                             v-for="order in order_list"
                             :key="order.ec_order_id"
                           >
-                            <td>{{ order.ec_order_id }}</td>
-                            <td v-text="order_status(order.ec_payment_id,order.payment_status)" />
+                            <td>
+                              {{ order.ec_order_id }}<br />
+                              [<span v-text="order_status(order.ec_payment_id,order.payment_status)" />]
+                            </td>
                             <td>
                               <table>
                                 <tr
                                   v-for="order_detail in order.order_details"
                                   :key="order_detail.product_id"
                                 >
-                                  <td class="text-left" v-text="prodcut_nm(order_detail.product_id)" />
                                   <td class="text-left">
-                                    {{ order_detail.price }}円
-                                  </td>
-                                  <td class="text-left">
+                                    <br />
+                                    <span v-text="prodcut_nm(order_detail.product_id)" /><br />
+                                    {{ order_detail.price }}円<br />
                                     {{ order_detail.quantity }}枚
+                                  </td><td>
+                                    <vue-qrcode :value="order_detail.ticket_hash" :options="qr_option" tag="img" />
                                   </td>
                                 </tr>
                               </table>
@@ -299,7 +299,12 @@
 </template>
 
 <script>
+import VueQrcode from "@chenfengyuan/vue-qrcode"
+
 export default {
+  components: {
+    VueQrcode
+  },
   data: () => ({
     item: [],
     product_list: [],
@@ -330,6 +335,17 @@ export default {
     cardYear: "",
     cardCvv: "",
     loading: false,
+    option: {
+      errorCorrectionLevel: "M",
+      maskPattern: 0,
+      margin: 10,
+      scale: 2,
+      width: 300,
+      color: {
+        dark: "#000000FF",
+        light: "#FFFFFFFF"
+      }
+    }
   }),
   mounted() {
     let self = this
