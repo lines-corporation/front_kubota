@@ -2,7 +2,7 @@
   <div class="form-page">
     <header>
       <h2 class="form-ttl">
-        NECロケッツクラブ会員登録
+        今治FC 会員登録
       </h2>
     </header>
     <v-stepper v-model="e1">

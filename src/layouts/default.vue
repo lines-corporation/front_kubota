@@ -37,8 +37,8 @@
       <v-toolbar-title>
         <a href="/">
           <img
-            src="@/assets/images/logo.svg"
-            style="width: 240px; height: 50px; padding: 10px;"
+            src="@/assets/images/temp_icon.png"
+            style="width: 133px; height: 107px; padding: 10px;"
           />
         </a>
       </v-toolbar-title>
