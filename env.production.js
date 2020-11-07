@@ -1,5 +1,5 @@
 module.exports = {
-  META_TITLE: "NECロケッツクラブ",
+  META_TITLE: "クボタスピアーズ",
   ROBOTS: "index",
   BASE_URL: "https://kuroco.necsports.net",
   PAYGENT_JS: "https://token.paygent.co.jp/js/PaygentToken.js",

@@ -1,15 +1,12 @@
 {
   "projects": {
-    "default": "kuroco-member-necsports"
+    "default": "dev-l-kubota"
   },
   "targets": {
-    "kuroco-member-necsports": {
+    "dev-l-kubota": {
       "hosting": {
-        "production": [
-          "member-necsports"
-        ],
         "development": [
-          "stg-member-necsports"
+          "dev-l-kubota"
         ]
       }
     }
