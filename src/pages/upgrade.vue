@@ -2,10 +2,10 @@
   <div class="form-page">
     <header>
       <h2 v-if="!temp_user" class="form-ttl">
-        NECロケッツクラブ アップグレード
+        クボタスピアーズ アップグレード
       </h2>
       <h2 v-if="temp_user" class="form-ttl">
-        NECロケッツクラブ 会員種別・支払い方法登録
+        クボタスピアーズ 会員種別・支払い方法登録
       </h2>
     </header>
     <div class="theme--light v-stepper">
@@ -22,6 +22,7 @@
                 <v-subheader>料金プラン</v-subheader>
               </v-col>
               <v-col cols="8">
+                <!--
                 <v-radio-group v-model="product_id" :rules="[rules.required]">
                   <img
                     src="@/assets/images/RR.png"
@@ -55,6 +56,7 @@
                     value="41203"
                   />
                 </v-radio-group>
+              -->
               </v-col>
             </v-row>
             <v-row>

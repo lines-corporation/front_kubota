@@ -27,9 +27,6 @@
                   />入力してください。</strong>
                 </p>
                 <p class="fnt-s clr-red pm">
-                  ◆NECスポーツ後援会ログイン画面とは<br
-                    class="spbr"
-                  />異なりますのでご注意ください
                 </p>
                 <p>
                   <v-text-field

@@ -30,7 +30,7 @@ export default {
     return {
       items: [
         {
-          title: "NECロケッツクラブ会員規約",
+          title: "クボタスピアーズ会員規約",
           to: "/kiyaku_nec",
         },
         {
