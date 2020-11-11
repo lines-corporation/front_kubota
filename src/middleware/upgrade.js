@@ -12,8 +12,10 @@ export default function ({ store, redirect, route }) {
         upgraded_flg = true
       }
     })
+    /* TODO いったんアップグレード外す
     if (!upgraded_flg) {
       return redirect("/upgrade")
     }
+    */
   }
 }

@@ -357,12 +357,13 @@ export default {
               upgraded_flg = true
             }
           })
-          if (!upgraded_flg) {
-            this.$router.push("/upgrade")
-          } else {
+          //if (!upgraded_flg) {
+          // TODO いったんアップグレードなし
+            //this.$router.push("/upgrade")
+          //} else {
             this.getInfo()
             this.$router.push("/")
-          }
+          //}
           this.$store.dispatch("snackbar/setMessage", "ログインしました")
           this.$store.dispatch("snackbar/snackOn")
           this.loading = false
