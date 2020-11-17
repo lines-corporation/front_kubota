@@ -427,7 +427,7 @@
         <v-stepper-content step="4">
           <header>
             <h2>
-              NECロケッツクラブ　会員種別・支払い方法登録
+              クボタスピアーズ　会員種別・支払い方法登録
             </h2>
           </header>
           <v-form
