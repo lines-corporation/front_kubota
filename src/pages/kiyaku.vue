@@ -31,7 +31,7 @@ export default {
       items: [
         {
           title: "クボタスピアーズ会員規約",
-          to: "/kiyaku_nec",
+          to: "/kiyaku_kubota",
         },
         {
           title: "特定商取引法に基づく表示",
