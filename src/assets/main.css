@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
 .v-application{
-  font-family:  'Meiryo', 'Hiragino Kaku Gothic Pro', 'Hiragino Sans', 'Yu Gothic Medium', '游ゴシック Medium',sans-serif !important;
+  font-family: 'Hiragino Kaku Gothic Pro', 'Hiragino Sans', 'Yu Gothic Medium', '游ゴシック Medium','Meiryo',sans-serif !important;
   -ms-font-feature-settings: 'normal';
 }
 .theme--light.v-application{
-	background: transparent url(../assets/images/63430169.jpg) 50% bottom  no-repeat !important;
-	background-size: cover !important;
+	background: #00A8A9 url(../assets/images/bg_img.png) !important;
 	background-attachment: fixed !important;
 	/*padding-top: 50px !important;*/
 	color: #222;
@@ -31,9 +29,10 @@
 }
 /*----------------------------------------------------*/
 /*共通設定*/
-
+header.v-toolbar{
+	border-top: 5px solid #00A8A9 !important;
+}
 h2,h3,h4.h5{
-	font-family: 'Kosugi Maru';
 	-ms-font-feature-settings: 'normal';
 }
 
@@ -51,8 +50,32 @@ br.spbr{
 	display: none;
 }
 .v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
-    padding: 10px 16px;
+    padding: 10px 16px !important;
     transition: height 0.2s cubic-bezier(0.4, 0, 0.6, 1);
+}
+.v-main a{
+	color: #070F3D !important;
+}
+.v-stepper,
+.v-sheet.v-card{
+	border-radius: 0 !important;
+}
+.fnt-w{color: #FFF;}
+.fnt-w a{color: #FFF !important;}
+
+.v-text-field--outlined > .v-input__control > .v-input__slot{
+	background: #FFF !important;
+}
+.theme--dark.v-navigation-drawer{
+	background: #000 !important;
+}
+.col[data-v-2f97087e]{white-space: normal !important;}
+
+.v-application .v-stepper__step--active .primary{
+	background-color: #ED4916 !important;
+    border-color: #ED4916 !important;
+    color: #fff !important;
+    font-weight: bold;
 }
 
 /*----------------------------------------------------*/
@@ -62,18 +85,31 @@ br.spbr{
 	padding: 20px 12px !important;
 
 }
+header.v-app-bar{
+	height: 70px !important;
+}
 header h2.form-ttl{
 	margin-bottom: 0.5em;
-	font-family: 'Kosugi Maru';
 	-ms-font-feature-settings: 'normal';
-    color: #1414A0;	
+    color: #fff;	
     font-size: 1.8rem;
     font-weight: bold;
+}
+.theme--dark.v-sheet .v-toolbar__title{
+	color: #070F3D !important;
+}
+.theme--dark.v-btn.v-btn--icon{
+	color: #070F3D !important;
 }
 .v-toolbar__title{
 	font-size: 0.8rem !important;
 }
-
+.v-toolbar__content{
+	height: 70px !important;		
+}
+main.v-main{
+	padding-top: 70px !important;
+}
 
 .v-footer--padless{
 	padding: 10px;
@@ -88,21 +124,24 @@ footer .no-gutters{
 /*登録関連*/
 
 .v-stepper__header{
-	background: #E3E3F4;
+	background: #D1D2DF;
 }
 .v-stepper__content{
 	padding: 1em 2.5em !important;
 }
 .v-stepper__content .success{
-    background: linear-gradient(to bottom, #FFF100, #CEC700) !important; 
+    background-color: #070F3D !important; 
     border-color: none !important;
 	margin: 0 auto;     
     margin-bottom: 0.8em;
     min-width: 400px !important;
     max-width: 400px !important;
 }
+.v-application button.success{
+    background-color: #ED4916 !important; 
+    color: #FFF !important;
+}
 .v-application .success .v-btn__content{
-    color: #1414A0;
     font-weight: bold !important;
 }
 .v-application .success .v-snack__btn .v-btn__content {
@@ -116,7 +155,7 @@ footer .no-gutters{
 }
 
 .v-application .form-page .success{
-    background: linear-gradient(to bottom, #FFF100, #CEC700) !important; 
+    background-color: #ED4916 !important; 
     border-color: none !important;
 	margin: 0 auto;     
     margin-bottom: 0.8em;
@@ -124,14 +163,14 @@ footer .no-gutters{
     max-width: 400px !important;
 }
 .v-application .form-page .success .v-btn__content{
-    color: #1414A0;
+    color: #fff;
     font-weight: bold !important;
 }
 .v-subheader{
 	font-weight: bold !important;
 }
 .theme--light.v-subheader{
-    color: #1414A0 !important;
+    color: #070F3D !important;
     font-size: 1rem;
 }
 
@@ -149,6 +188,7 @@ footer .no-gutters{
 }
 
 /*----------------------------------------------------*/
+
 /*ログイン関連*/
 .login-page{
 	display: flex;
@@ -159,6 +199,7 @@ footer .no-gutters{
 }
 .login-screen{
 	width: calc((100% - 40px) / 2);
+	
     min-height: 300px;
     margin: 10px;
     margin-bottom: 20px;
@@ -171,11 +212,9 @@ footer .no-gutters{
 
 
 .login-screen h3{
-	background: #1414A0;
-	padding: 0.5em 1.5em;
+	background: #070F3D;
+	padding: 0.25em 1.0em;
 	color: #FFF;
-	font-family: 'Kosugi Maru';
-	border-radius: 0.7em 0.7em 0 0;	
 	font-size: 1.4rem;
 
 }
@@ -183,7 +222,7 @@ footer .no-gutters{
 
 }
 .v-application .login-page .success{
-    background: linear-gradient(to bottom, #FFF100, #CEC700) !important; 
+    background: #ED4916 !important; 
     border-color: none !important;
 	margin: 0 auto;     
     margin-bottom: 0.8em;
@@ -192,24 +231,35 @@ footer .no-gutters{
 
 }
 .v-application .login-page .success .v-btn__content{
-    color: #1414A0;
+    color: #FFF;
     font-weight: bold !important;
 }
 .v-application .login-screen .mb-3{
 	margin-bottom: 0 !important;
+	font-size: 2rem;
+	padding-left: 2em;
+	font-family: 'Oswald','Hiragino Kaku Gothic Pro', 'Hiragino Sans', 'Yu Gothic Medium', '游ゴシック Medium', Meiryo, sans-serif !important;
+}
+.v-application .login-screen .mb-3 span{
+	font-size: 1rem;
+	font-weight: normal;
+	margin-left: 1rem;
+	vertical-align: middle;
 }
 .lgn-left h3{
-	background: #FF622D;
+	background: #00A8A9 url(../assets/images/chara.png) 5px 50% no-repeat;
+	background-size: auto 4rem;
+	color: #FFF;
 }
 .lgn-right h3{
-	background: #2EC454;
+	background: #ED4916 url(../assets/images/chara.png) 5px 50% no-repeat;
+	background-size: auto 4rem;	
 }
 .login-screen .inner{
-	border: 1px solid #CCC;
+	border: none;
 	border-top: none;
-	border-radius: 0 0 0.7em 0.7em;
 	padding: 1.5em 2em;
-	background: #FFF;
+	background: #F0F0F0;
 	height: 100%;
 	text-align: center;
 }
@@ -232,8 +282,9 @@ footer .no-gutters{
 
 }
 .login-screen .inner .new-btn a{
-	background: #0055FF;
+	background: #070F3D;
 	margin-bottom: 2em;
+	color: #FFF !important;
 }
 .login-screen .inner .nec-btn a:before,
 .login-screen .inner .new-btn a:before{
@@ -265,10 +316,9 @@ footer .no-gutters{
 	color: #222 !important;
 }
 .v-card__text h3{
-	background: #D3D3ED;
-	border-bottom: 3px solid #1414A0;
+	background: #00A8A9;
 	padding: 0.6em 1.2em;
-	color: #1414A0;
+	color: #FFF;
 	font-size: 1.2rem;
 	margin-bottom: 0em;
 }
@@ -277,12 +327,12 @@ footer .no-gutters{
     white-space: normal;
 }
 .v-application .deep-purple--text.text--accent-4 .v-btn__content{
-    background: linear-gradient(to bottom, #FFF100, #CEC700) !important; 
+    background: #ED4916 !important; 
     border-color: none !important;
 	margin: 0 auto;     
     margin-bottom: 0.8em;
     padding: 8px 13px;
-    color: #1414A0;
+    color: #FFF;
     font-weight: bold;
     border-radius: 4px;
     width: 100% !important;
@@ -294,12 +344,12 @@ footer .no-gutters{
 	padding: 10px 8px 0 !important;
 }
 .v-card__text p.ug-p a{
-    background: linear-gradient(to bottom, #FF8000, #C66300) !important; 
+    background: linear-gradient(to bottom, #62708C, #070F3D) !important; 
     border-color: none !important;
 	margin: 0 auto;     
     margin-bottom: 0.8em;
     padding: 7px 13px;
-    color: #fff;
+    color: #fff !important;
     font-weight: bold;
     border-radius: 4px;
     font-size: 0.8rem !important;
@@ -310,10 +360,10 @@ footer .no-gutters{
 	box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 }
 .col-sm-6 .v-card__text h3{
-	background: #1414A0;
+	background: #00A8A9;
 	border-bottom: 0;
 	padding: 0.6em 1.2em;
-	color: #ffec00;
+	color: #FFF;
 	font-size: 1.2rem;
 	margin-bottom: 0em;
 }
@@ -323,7 +373,7 @@ footer .no-gutters{
 	margin-bottom: 0em;
 }
 .v-sheet.v-card {
-    border-radius: 8px !important;
+    /*border-radius: 8px !important;*/
 }
 .article-page{
 	/*background: #FFF;*/
@@ -338,9 +388,12 @@ footer .no-gutters{
     background: #F3F3F3;
 }
 .theme--light.v-sheet--outlined {
-    border: 2px solid #1414A0 !important;
+    /*border: 2px solid #070F3D !important;*/
+    border: none !important;
 }
-
+.v-form .theme--light.v-sheet--outlined{
+	border: 2px solid #070F3D !important;
+}
 .v-card__text .pro-inner p{
 	margin-bottom: 5px;
 	display: table;
@@ -355,15 +408,17 @@ footer .no-gutters{
 }
 .v-card__text .pro-inner p strong{
 	width: 30%;
-	background: #D3D3ED;
+	background: #B8E7E7;
 	text-align: center;
 }
 .v-card__text .pro-inner p span{
 	display: table-cell;
 }
 .mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td.date{
-	font-size: 0.75rem;
+	font-size: 0.9rem;
 	white-space: nowrap;
+	color: #070F3D;
+	font-family: 'Oswald';
 }
 .mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td.arw .v-size--default.v-btn--icon {
     height: 26px;
@@ -388,15 +443,15 @@ footer .no-gutters{
 	padding: 0;
 }
 .howto .v-list-group{
-	border: 1px solid #1414A0;
+	border: 1px solid #070F3D;
 	margin-bottom: -1px;
 }
 .howto .v-list-group .v-list-group__header{
-	background: #E8E8F6;
+	background: #F0F0F0;
 }
 .howto .v-list-item__icon i{
 	font-weight: bold;
-	color: #1414A0 !important;
+	color: #070F3D !important;
 	font-size: 1.2rem !important;
 	font-style: normal;
 }
@@ -418,12 +473,12 @@ footer .no-gutters{
 	padding-left: 20px !important;
 }
 .kiyaku .v-list-item{
-	border: 1px solid #1414A0;
+	border: 1px solid #070F3D;
 	margin-bottom: -1px;
 	background: #E8E8F6;
 }
 .kiyaku .v-list-item .v-list-item__title{
-	color: #1414A0 !important;	
+	color: #070F3D !important;	
 }
 /*--------------------------------*/
 /*チケット購入*/
@@ -442,8 +497,8 @@ footer .no-gutters{
 	text-align: center;
 	font-size: 2.2rem !important;
 	margin-bottom: 5px;
-	font-family: 'Rubik';
-	color: #999;
+	font-family: 'Oswald';
+	color: #070F3D;
 }
 
 /*----------------------------------------*/
@@ -451,7 +506,7 @@ footer .no-gutters{
 @media screen and (max-width: 980px){
 
 	main.v-main{
-		padding-top: 34px !important;
+		padding-top: 70px !important;
 		padding-bottom: 60px !important;
 	}
 	header.v-toolbar .v-toolbar__title {
@@ -468,17 +523,18 @@ footer .no-gutters{
 		display: inline;
 	}
 	.container {
-	    padding: 10px !important;
+	    padding: 5px !important;
 	}
 	.container>.container{
 		padding: 0px !important;
 	}
 	.v-toolbar__content{
 		padding: 4px 10px !important;
+		height: 70px !important;		
 	}
 	.v-toolbar__content .v-toolbar__title a img{
-		height: 44px !important;
-		width: 195px !important;
+		height: 60px !important;
+		width: auto !important;
 		padding-left: 0 !important;
 	}
 	.v-toolbar__content .v-btn.v-btn--icon.v-size--default{
@@ -539,6 +595,20 @@ footer .no-gutters{
 	}
 
 	/*ログイン関連*/
+	.v-application .login-screen .mb-3{
+		font-size: 1.6rem;
+		padding-left: 2em;
+	}
+	.v-application .login-screen .mb-3 span{
+		font-size: 0.85rem;
+	}
+	.lgn-left h3{
+		background-size: auto 3rem;
+	}
+	.lgn-right h3{
+		background-size: auto 3rem;	
+	}
+		
 	.v-application .login-page {
 	    padding: 5px;
 	}	
@@ -603,7 +673,7 @@ footer .no-gutters{
 		padding: 0.5em;
 	}	
 	.mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td{
-		padding: 5px 5px;
+		padding: 5px 5px !important;
 	}
 	.mypage .v-data-table > .v-data-table__wrapper > table > tbody > tr > td.date{
 		font-size: 0.65rem;
@@ -642,8 +712,17 @@ footer .no-gutters{
 	    padding: 0 !important;	
 	}
 	.ticket-box .container.container--fluid{
-	    padding: 0px 10px 0 !important;
+	    /*padding: 0px 10px 0 !important;*/
+	 }
+	.v-card__text h3 {
+	    background: #00A8A9;
+	    padding: 0.5em 0.5em;
+	    color: #FFF;
+	    font-size: 1.0rem;
+	    margin-bottom: 0em;
 	}
+	 
+	 
 }
 
 

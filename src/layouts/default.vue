@@ -33,15 +33,15 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark fixed app>
+    <v-app-bar :clipped-left="clipped" color="#FFFFFF" dense dark fixed app>
       <v-toolbar-title>
         <a href="/">
-          <!--
+          
           <img
             src="@/assets/images/temp_icon.png"
-            style="width: 133px; height: 107px; padding: 10px;"
+            style="width: 210px; padding: 10px;"
           />
-        -->
+        
         </a>
       </v-toolbar-title>
       <v-spacer />
@@ -64,7 +64,7 @@
       </v-container>
     </v-main>
 
-    <v-footer color="#1414A0" padless app absolute inset>
+    <v-footer color="#00A8A9" padless app absolute inset>
       <v-row justify="center" no-gutters>
         <v-btn color="white" text rounded class="my-2" to="/inquiry">
           お問い合わせ
