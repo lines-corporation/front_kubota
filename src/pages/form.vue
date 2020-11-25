@@ -552,29 +552,33 @@
                 </v-col>
                 <v-col cols="8">
                   <v-radio-group v-model="product_id">
+                    <!--
                     <img
                       src="@/assets/images/RR.png"
                       style="width: 240px; padding: 10px;"
                     />
+                  -->
                     <v-radio
-                      label="NECレッド・ロケッツ会員（年会費¥1,000）"
+                      label="一般会員"
                       value="41204"
                     />
                     <v-radio
-                      label="NECレッド・スター会員（年会費¥5,000）"
+                      label="ジュニア会員"
                       value="41202"
                     />
                     <v-spacer />
+                    <!--
                     <img
                       src="@/assets/images/GR.png"
                       style="width: 240px; padding: 10px;"
                     />
+                  -->
                     <v-radio
-                      label="NECグリーン・ロケッツ会員（年会費¥1,000）"
+                      label="一般会員"
                       value="41201"
                     />
                     <v-radio
-                      label="NECグリーン・スター会員（年会費¥5,000）"
+                      label="ジュニア会員"
                       value="41203"
                     />
                   </v-radio-group>
