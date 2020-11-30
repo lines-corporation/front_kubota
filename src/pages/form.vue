@@ -28,7 +28,6 @@
         <v-stepper-step step="4">
           会員種別選択
         </v-stepper-step>
-
       </v-stepper-header>
 
       <v-stepper-items>
