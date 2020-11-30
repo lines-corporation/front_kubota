@@ -1,12 +1,19 @@
 {
   "projects": {
-    "default": "dev-l-kubota"
+    "default": "kuroco-member-kubota"
   },
   "targets": {
     "dev-l-kubota": {
       "hosting": {
         "development": [
-          "dev-l-kubota"
+          "kuroco-member-kubota"
+        ]
+      }
+    },
+    "kuroco-member-kubota": {
+      "hosting": {
+        "production": [
+          "member-kubota-spears"
         ]
       }
     }
