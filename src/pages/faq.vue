@@ -39,8 +39,8 @@ export default {
     return {
       category_items: [
         {
-          action: "NECロケッツクラブについて",
-          title: "NECロケッツクラブの会員組織についてのご質問はこちら",
+          action: "クボタスピアーズについて",
+          title: "クボタスピアーズの会員組織についてのご質問はこちら",
           active: false,
           items: [],
           category_id: 19,

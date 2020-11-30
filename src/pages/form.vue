@@ -26,7 +26,7 @@
         <v-divider />
 
         <v-stepper-step step="4">
-          会員登録完了
+          会員種別選択
         </v-stepper-step>
 
       </v-stepper-header>
@@ -537,12 +537,161 @@
         <v-stepper-content step="4">
           <header>
             <h2>
-              クボタスピアーズ　登録完了
+              クボタスピアーズ　会員種別・支払い方法登録
             </h2>
-            <p class="mt-1 max-w-4xl text-sm leading-5 text-gray-500">
-              クボタスピアーズ 無料会員登録しました。
-            </p>
           </header>
+          <v-form
+            ref="form4"
+            v-model="valid"
+            lazy-validation
+            @submit.prevent="purchase"
+          >
+            <v-container fluid>
+              <v-row>
+                <v-col cols="4">
+                  <v-subheader>会員種別</v-subheader>
+                </v-col>
+                <v-col cols="8">
+                  <v-radio-group v-model="product_id">
+                    <!--
+                    <img
+                      src="@/assets/images/RR.png"
+                      style="width: 240px; padding: 10px;"
+                    />
+                  -->
+                    <v-radio
+                      label="一般会員"
+                      value="41248"
+                    />
+                    <v-spacer />
+                    <!--
+                    <img
+                      src="@/assets/images/GR.png"
+                      style="width: 240px; padding: 10px;"
+                    />
+                  -->
+                  <!--
+                    <v-radio
+                      label="一般会員"
+                      value="41201"
+                    />
+                    <v-radio
+                      label="ジュニア会員"
+                      value="41203"
+                    />
+                  -->
+                  </v-radio-group>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-subheader>支払方法</v-subheader>
+                </v-col>
+                <v-col cols="8">
+                  <v-radio-group v-model="ec_payment_id">
+                    <!--<v-radio label="クレジットカード決済" value="58" /> -->
+                    <v-radio label="銀行振りこみ" value="60" />
+                  </v-radio-group>
+                  <p v-if="ec_payment_id == '60'" class="body-1">
+                    銀行振込先の口座名、振込方法がメールにて送信されますので、ご確認ください。
+                  </p>
+                  <p v-if="ec_payment_id == '59'" class="body-1">
+                    コンビニ決済方法に関する詳細をメールにて送信いたしますので、そちらのご案内をご確認のうえ、お支払いをお願いいたします。
+                  </p>
+                  <div v-if="ec_payment_id == '58'" class="card-wrapper">
+                    <v-text-field
+                      id="cardNumber"
+                      v-model="cardNumber"
+                      label="クレジットカード番号"
+                      outlined
+                      :rules="[rules.required]"
+                    />
+                    <v-text-field
+                      id="cardName"
+                      v-model="cardName"
+                      label="お名前（ローマ字）"
+                      outlined
+                      :rules="[rules.required]"
+                    />
+                    <v-row dense>
+                      <v-col cols="4">
+                        <v-select
+                          v-model="cardMonth"
+                          :items="[
+                            { value: '1', text: '1月' },
+                            { value: '2', text: '2月' },
+                            { value: '3', text: '3月' },
+                            { value: '4', text: '4月' },
+                            { value: '5', text: '5月' },
+                            { value: '6', text: '6月' },
+                            { value: '7', text: '7月' },
+                            { value: '8', text: '8月' },
+                            { value: '9', text: '9月' },
+                            { value: '10', text: '10月' },
+                            { value: '11', text: '11月' },
+                            { value: '12', text: '12月' },
+                          ]"
+                          menu-props="auto"
+                          label="有効期限(月)"
+                          hide-details
+                          single-line
+                          outlined
+                          :rules="[rules.required]"
+                        />
+                      </v-col>
+                      <v-col cols="4">
+                        <v-select
+                          v-model="cardYear"
+                          :items="[
+                            { value: '20', text: '2020年' },
+                            { value: '21', text: '2021年' },
+                            { value: '22', text: '2022年' },
+                            { value: '23', text: '2023年' },
+                            { value: '24', text: '2024年' },
+                            { value: '25', text: '2025年' },
+                            { value: '26', text: '2026年' },
+                            { value: '27', text: '2027年' },
+                            { value: '28', text: '2028年' },
+                            { value: '29', text: '2029年' },
+                            { value: '30', text: '2030年' },
+                          ]"
+                          menu-props="auto"
+                          label="有効期限(年)"
+                          hide-details
+                          single-line
+                          outlined
+                          :rules="[rules.required]"
+                        />
+                      </v-col>
+                      <v-col cols="4">
+                        <v-text-field
+                          id="cardCvv"
+                          v-model="cardCvv"
+                          label="セキュリティコード(CVV)"
+                          outlined
+                          :rules="[rules.required]"
+                        />
+                      </v-col>
+                    </v-row>
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12">
+                  <v-btn
+                    type="submit"
+                    block
+                    x-large
+                    color="success"
+                    dark
+                    :loading="loading3"
+                  >
+                    登録する
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -627,8 +776,8 @@ export default {
         { code: "46", name: "鹿児島県" },
         { code: "47", name: "沖縄県" },
       ],
-      ec_payment_id: "58",
-      product_id: "41204",
+      ec_payment_id: "60",
+      product_id: "41248",
       product_id2: "",
       cardName: "",
       cardNumber: "",
@@ -793,6 +942,13 @@ export default {
             self.product_id2 = "41207"
           }
         }
+        self.$store.dispatch(
+          "snackbar/setMessage",
+          "会員登録のお申し込みが完了しました"
+        )
+        self.$store.dispatch("snackbar/snackOn")
+        self.$router.push("/")
+        self.loading3 = false
 
         if (this.ec_payment_id == 58) {
           let paygentToken = new PaygentToken()
@@ -808,6 +964,15 @@ export default {
             },
             function (response) {
               if (response.result == "0000") {
+                self.$store.dispatch(
+                  "snackbar/setMessage",
+                  "会員登録のお申し込みが完了しました"
+                )
+                self.$store.dispatch("snackbar/snackOn")
+                self.$router.push("/")
+                self.loading3 = false
+
+                /*
                 self.$auth.ctx.$axios
                   .post(
                     "/rcms-api/1/ec/purchase",
@@ -836,6 +1001,7 @@ export default {
                     self.$store.dispatch("snackbar/snackOn")
                     self.loading3 = false
                   })
+                  */
               } else {
                 self.$store.dispatch(
                   "snackbar/setError",
@@ -849,12 +1015,13 @@ export default {
             }
           )
         } else {
+          // 銀行振り込み
           self.$auth.ctx.$axios
             .post(
               "/rcms-api/1/ec/purchase",
               {
                 ec_payment_id: parseInt(self.ec_payment_id),
-                product_id: parseInt(self.product_id2),
+                product_id: parseInt(self.product_id),
                 quantity: 1,
               },
               { withCredentials: true }

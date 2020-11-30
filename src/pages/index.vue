@@ -4,8 +4,7 @@
       <div v-if="!auth.loggedIn">
         <form class="login-page" @submit.prevent="login">
           <p class="fnt-w">
-            <strong>今シーズンは以前ご入会されていた方も改めて新規入会が必要になりますので、必ず新規入会のお手続きをお願い致します。<br />
-              詳しくは下記をご確認ください。</strong><br />
+            <strong>お知らせを設定できます。お知らせを設定できます。お知らせを設定できます。お知らせを設定できます。</strong><br />
             <br />
             <a href=""
               >クボタスピアーズのご案内</a
@@ -93,7 +92,7 @@
                     <strong>会員種別</strong><span>{{ group_nm }}</span>
                   </p>
                 </div>
-                <v-img :src="require('@/assets/images/temp_member_card.jpg')"></v-img>
+                <!--<v-img :src="require('@/assets/images/temp_member_card.jpg')"></v-img>-->
               </v-card-text>
               <v-card-actions>
                 <v-btn text color="deep-purple accent-4" to="/profile_edit">
@@ -102,6 +101,7 @@
               </v-card-actions>
             </v-card>
 
+<!--
             <v-card v-if="can_upgrade" class="mx-auto" outlined>
               <v-card-text>
                 <h3>アップグレードのご案内</h3>
@@ -112,6 +112,7 @@
                 </p>
               </v-card-text>
             </v-card>
+          -->
           </v-col>
           <v-col cols="12" sm="6">
             <v-card class="mx-auto" outlined>
@@ -142,6 +143,8 @@
                 </v-simple-table>
               </v-card-text>
             </v-card>
+            <!--
+
             <v-card v-if="tester" class="mx-auto" outlined>
               <v-card-text>
                 <h3>購入済み・予約済みのチケット</h3>
@@ -228,6 +231,7 @@
                 </v-simple-table>
               </v-card-text>
             </v-card>
+          -->
           </v-col>
           <v-col cols="12" sm="3" />
         </v-row>
