@@ -426,38 +426,6 @@
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-subheader>携帯電話番号</v-subheader>
-                </v-col>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="m_tel"
-                    label="携帯電話番号"
-                    type="tel"
-                    :rules="[rules.tel]"
-                    hint="ハイフンなしの半角数字をご入力ください"
-                    counter
-                    outlined
-                  />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="4">
-                  <v-subheader>FAX番号</v-subheader>
-                </v-col>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="fax"
-                    label="FAX番号"
-                    type="tel"
-                    :rules="[rules.tel]"
-                    hint="ハイフンなしの半角数字をご入力ください"
-                    counter
-                    outlined
-                  />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="4">
                   <v-subheader>
                     第１メールアドレス(ログイン時のIDになります)
                   </v-subheader>
@@ -507,7 +475,7 @@
               <v-row>
                 <v-col cols="4">
                   <v-subheader>
-                    <span style="color: red;">*</span>メールマガジン配信
+                    <span style="color: red;">*</span>ファンクラブ会員限定情報配信
                   </v-subheader>
                 </v-col>
                 <v-col cols="8">
@@ -726,7 +694,7 @@ export default {
       address3: "",
       birth: "",
       sex: "",
-      mailmaga_flg: false,
+      mailmaga_flg: true,
       menu: false,
       arrTdfk_cd: [
         { code: "01", name: "北海道" },
@@ -900,8 +868,6 @@ export default {
             address2: this.address2,
             address3: this.address3,
             tel: this.tel,
-            m_tel: this.m_tel,
-            fax: this.fax,
             email: this.email,
             email2: this.subemail,
             email_send_ng_flg: this.mailmaga_flg ? 0 : 1,
@@ -932,6 +898,7 @@ export default {
       if (this.$refs.form4.validate()) {
         let self = this
 
+/*
         if (this.ec_payment_id != 58) {
           if (self.product_id == "41201") {
             self.product_id2 = "41209"
@@ -950,6 +917,7 @@ export default {
         self.$store.dispatch("snackbar/snackOn")
         self.$router.push("/")
         self.loading3 = false
+        */
 
         if (this.ec_payment_id == 58) {
           let paygentToken = new PaygentToken()
@@ -1033,10 +1001,13 @@ export default {
                 "会員登録のお申し込みが完了しました。メールをご確認の上、決済手続きをお願いいたします。"
               )
               self.$store.dispatch("snackbar/snackOn")
-              self.$router.push("/")
-              self.loading3 = false
+              self.$auth.logout().then((response) => {
+                self.$router.push("/")
+                self.loading3 = false
+              })
             })
             .catch(function (error) {
+              console.warn(error)
               self.$store.dispatch(
                 "snackbar/setError",
                 error.response.data.errors?.[0]
