@@ -530,7 +530,7 @@
                   -->
                     <v-radio
                       label="一般会員"
-                      value="41248"
+                      value="41249"
                     />
                     <v-spacer />
                     <!--
@@ -746,7 +746,7 @@ export default {
         { code: "47", name: "沖縄県" },
       ],
       ec_payment_id: "60",
-      product_id: "41248",
+      product_id: "41249",
       product_id2: "",
       cardName: "",
       cardNumber: "",
