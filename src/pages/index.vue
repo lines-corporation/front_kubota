@@ -348,23 +348,22 @@ export default {
             JSON.stringify(this.$auth.user.group_ids)
           )
           let upgraded_flg = false
-          let temporary_registration = false
-          Object.keys(group_ids).forEach(function (key) {
-            // 仮登録の場合にはloginをさせない
-            if(key == 116) {
-              temporary_registration = true
-            }
+          let gids = Object.keys(group_ids)
+          // 仮登録の場合にはloginをさせない
+          if(gids.length == 1 && gids[0] == "116") {
+            this.$auth.logout().then((response) => {
+              this.$store.dispatch("snackbar/setMessage", "仮登録ではログインできません")
+              this.$store.dispatch("snackbar/snackOn")
+              this.loading = false
+              this.$router.push("/")
+            })
+            return
+          }
+          gids.forEach(function (key) {
             if (key == 114 || key == 111 || key == 110 || key == 113) {
               upgraded_flg = true
             }
           })
-          if(temporary_registration) {
-            this.$auth.logout().then((response) => {
-              this.$store.dispatch("snackbar/setMessage", "仮登録ではログインできません")
-              this.$store.dispatch("snackbar/snackOn")
-              this.$router.push("/")
-            })
-          }
           //if (!upgraded_flg) {
           // TODO いったんアップグレードなし
             //this.$router.push("/upgrade")
