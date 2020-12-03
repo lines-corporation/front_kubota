@@ -4,11 +4,6 @@
       <div v-if="!auth.loggedIn">
         <form class="login-page" @submit.prevent="login">
           <p class="fnt-w">
-            <strong>お知らせを設定できます。お知らせを設定できます。お知らせを設定できます。お知らせを設定できます。</strong><br />
-            <br />
-            <a href=""
-              >クボタスピアーズのご案内</a
-            >
           </p>
           <div class="login-screen lgn-left">
             <h3 class="subtitle mb-3">
@@ -295,7 +290,7 @@ export default {
         const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
         let group_idnms = ""
         Object.keys(group_ids).forEach(function (key) {
-          if (key == 114 || key == 111) {
+          if (key == 118) {
             group_idnms += " " + group_ids[key]
           }
         })
@@ -353,11 +348,23 @@ export default {
             JSON.stringify(this.$auth.user.group_ids)
           )
           let upgraded_flg = false
+          let temporary_registration = false
           Object.keys(group_ids).forEach(function (key) {
+            // 仮登録の場合にはloginをさせない
+            if(key == 116) {
+              temporary_registration = true
+            }
             if (key == 114 || key == 111 || key == 110 || key == 113) {
               upgraded_flg = true
             }
           })
+          if(temporary_registration) {
+            this.$auth.logout().then((response) => {
+              this.$store.dispatch("snackbar/setMessage", "仮登録ではログインできません")
+              this.$store.dispatch("snackbar/snackOn")
+              this.$router.push("/")
+            })
+          }
           //if (!upgraded_flg) {
           // TODO いったんアップグレードなし
             //this.$router.push("/upgrade")

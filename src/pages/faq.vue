@@ -47,7 +47,7 @@ export default {
         },
         {
           action: "Ｑ＆Ａ",
-          title: "入会、更新、退会などに関するご質問はこちら",
+          title: "",
           active: false,
           items: [],
           category_id: 28,
