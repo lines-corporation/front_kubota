@@ -7,6 +7,11 @@
       <h2 v-if="temp_user" class="form-ttl">
         クボタスピアーズ 会員種別・支払い方法登録
       </h2>
+      <p class="fnt-w">
+        【お知らせ】​<br />
+        現在、iPhoneからの会員登録に不具合が発生しております。​<br />
+        恐れ入りますが、PCやiPhone以外のデバイスからの登録をお願いいたします。​
+      </p>
     </header>
     <div class="theme--light v-stepper">
       <div class="v-stepper__content">
@@ -22,13 +27,21 @@
                 <v-subheader>料金プラン</v-subheader>
               </v-col>
               <v-col cols="8">
-                <!--
                 <v-radio-group v-model="product_id" :rules="[rules.required]">
+                  <!--
                   <img
                     src="@/assets/images/RR.png"
                     v-if="red_star || red_rockets"
                     style="width: 240px; padding: 10px;"
                   />
+                -->
+                  <v-radio
+                    label="個人会員"
+                    value="41249"
+                  />
+                  <v-spacer />
+
+                  <!--
                   <v-radio
                     v-if="red_rockets"
                     label="NECレッド・ロケッツ会員"
@@ -55,8 +68,8 @@
                     label="NECグリーン・スター会員"
                     value="41203"
                   />
-                </v-radio-group>
               -->
+                </v-radio-group>
               </v-col>
             </v-row>
             <v-row>
@@ -65,7 +78,7 @@
               </v-col>
               <v-col cols="8">
                 <v-radio-group v-model="ec_payment_id">
-                  <v-radio label="カード決済" value="58" />
+                  <!--<v-radio label="カード決済" value="58" />-->
                   <v-radio label="銀行振り込み" value="60" />
                 </v-radio-group>
                 <p v-if="ec_payment_id == '60'" class="body-1">
@@ -185,10 +198,10 @@ export default {
       red_rockets: false,
       temp_user: false,
       success_message: "",
-      product_id: null,
+      product_id: "41249",
       product_id2: null,
       present: "1",
-      ec_payment_id: "58",
+      ec_payment_id: "60",
       token: "",
       rules: {
         required: (value) => !!value || "この項目は必須入力です",
@@ -305,6 +318,8 @@ export default {
             }
           )
         } else {
+          // 銀行振り込み
+          /*
           if (this.ec_payment_id != 58) {
             if (self.product_id == "41201") {
               self.product_id2 = "41209"
@@ -316,10 +331,11 @@ export default {
               self.product_id2 = "41207"
             }
           }
+          */
           self.$auth.ctx.$axios
             .post("/rcms-api/1/ec/purchase", {
               ec_payment_id: parseInt(self.ec_payment_id),
-              product_id: parseInt(self.product_id2),
+              product_id: parseInt(self.product_id),
               quantity: 1,
             })
             .then(() => {
@@ -329,8 +345,10 @@ export default {
                   "メールをご確認の上、決済手続きをお願いいたします。"
               )
               self.$store.dispatch("snackbar/snackOn")
-              self.$router.push("/")
-              self.loading = false
+              self.$auth.logout().then((response) => {
+                self.$router.push("/")
+                self.loading = false
+              })
             })
             .catch(function (error) {
               self.$store.dispatch(

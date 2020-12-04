@@ -4,6 +4,13 @@
       <div v-if="!auth.loggedIn">
         <form class="login-page" @submit.prevent="login">
           <p class="fnt-w">
+            【お知らせ１】​<br />
+            現在、iPhoneからの会員登録に不具合が発生しております。​<br />
+            恐れ入りますが、PCやiPhone以外のデバイスからの登録をお願いいたします。​<br />
+            <br />
+            【お知らせ２】​<br />
+            会員種別・支払い登録ができなかった場合は、下記会員ログイン画面より、ご登録のメールアドレス・パスワードをご入力いただくと、会員種別・支払い登録画面にてお手続きいただけます。​<br />
+            上記をお試しいただいても、登録できない場合は、ブラウザのキャッシュクリアしていただけますよう、お願いいたします。​<br />
           </p>
           <div class="login-screen lgn-left">
             <h3 class="subtitle mb-3">
@@ -349,28 +356,12 @@ export default {
           )
           let upgraded_flg = false
           let gids = Object.keys(group_ids)
-          // 仮登録の場合にはloginをさせない
           if(gids.length == 1 && gids[0] == "116") {
-            this.$auth.logout().then((response) => {
-              this.$store.dispatch("snackbar/setMessage", "仮登録ではログインできません")
-              this.$store.dispatch("snackbar/snackOn")
-              this.loading = false
-              this.$router.push("/")
-            })
-            return
-          }
-          gids.forEach(function (key) {
-            if (key == 114 || key == 111 || key == 110 || key == 113) {
-              upgraded_flg = true
-            }
-          })
-          //if (!upgraded_flg) {
-          // TODO いったんアップグレードなし
-            //this.$router.push("/upgrade")
-          //} else {
+            this.$router.push("/upgrade")
+          } else {
             this.getInfo()
             this.$router.push("/")
-          //}
+          }
           this.$store.dispatch("snackbar/setMessage", "ログインしました")
           this.$store.dispatch("snackbar/snackOn")
           this.loading = false
