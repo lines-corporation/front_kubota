@@ -10,7 +10,7 @@
       <p class="fnt-w">
         【お知らせ】​<br />
         現在、iPhoneからの会員登録に不具合が発生しております。​<br />
-        恐れ入りますが、PCやiPhone以外のデバイスからの登録をお願いいたします。​
+        恐れ入りますが、iPhone以外のデバイスからの登録をお願いいたします。
       </p>
     </header>
     <div class="theme--light v-stepper">
@@ -227,6 +227,10 @@ export default {
   created() {
     let self = this
     const group_ids = JSON.parse(JSON.stringify(this.$auth.user.group_ids))
+    if(Object.keys(group_ids).length == 1 && Object.keys(group_ids)[0] == "116") {
+      self.temp_user = true
+    }
+    /*
     Object.keys(group_ids).forEach(function (key) {
       if (["113"].indexOf(key) !== -1) {
         self.green_star = true
@@ -250,6 +254,7 @@ export default {
       self.red_rockets = true
       self.temp_user = true
     }
+    */
   },
   methods: {
     purchase() {
