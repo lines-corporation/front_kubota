@@ -24,7 +24,7 @@ $ npm run build-prod
 $ npm run export-prod
 
 # deploy to Firebase hosting
-$ firebase target:apply hosting production member-kubota-spears
+$ firebase target:apply hosting production kubota-spears-fanclub
 $ firebase deploy --only hosting:production
 $ firebase target:apply hosting development kuroco-member-kubota
 $ firebase deploy --only hosting:development
