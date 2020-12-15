@@ -5,9 +5,6 @@
         クボタスピアーズ 会員登録
       </h2>
       <p class="fnt-w">
-        【お知らせ】​<br />
-        現在、iPhoneからの会員登録に不具合が発生しております。​<br />
-        恐れ入りますが、iPhone以外のデバイスからの登録をお願いいたします。​
       </p>
     </header>
     <v-stepper v-model="e1">
@@ -667,6 +664,13 @@
             </v-container>
           </v-form>
         </v-stepper-content>
+
+        <v-stepper-content step="5">
+          <p style="color: red;">
+            すでにメールアドレスのご登録が完了しています。<br />
+            ファンクラブトップページの【会員ログイン】からご登録のメールアドレスとパスワードにてログインしてください
+          </p>
+        </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
   </div>
@@ -812,6 +816,15 @@ export default {
         })
         .then(function (response) {
           self.email = response.data.data.email
+          // emailが登録されていない場合にはエラーメッセージを表示する
+          if(!self.email) {
+            self.$store.dispatch(
+              "snackbar/setMessage",
+              "すでにメールアドレスのご登録が完了しています。ファンクラブトップページの【会員ログイン】からご登録のメールアドレスとパスワードにてログインしてください"
+            )
+            self.e1 = 5
+            return
+          }
           self.$store.dispatch(
             "snackbar/setMessage",
             "メールアドレスを確認しました"

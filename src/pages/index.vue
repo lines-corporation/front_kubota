@@ -4,14 +4,11 @@
       <div v-if="!auth.loggedIn">
         <form class="login-page" @submit.prevent="login">
           <p class="fnt-w">
-            【お知らせ１】​<br />
-            現在、iPhoneからの会員登録に不具合が発生しております。​<br />
-            恐れ入りますが、iPhone以外のデバイスからの登録をお願いいたします。​<br />
-            <br />
-            【お知らせ２】​<br />
+            【お知らせ】​<br />
             会員種別・支払い登録ができなかった場合は、下記会員ログイン画面より、ご登録のメールアドレス・パスワードをご入力いただくと、会員種別・支払い登録画面にてお手続きいただけます。​<br />
             上記をお試しいただいても、登録できない場合は、ブラウザのキャッシュクリアしていただけますよう、お願いいたします。​<br />
           </p>
+
           <div class="login-screen lgn-left">
             <h3 class="subtitle mb-3">
               MEMBERS<span>会員ログイン</span>

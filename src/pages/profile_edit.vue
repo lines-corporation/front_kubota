@@ -162,38 +162,6 @@
             </v-row>
             <v-row>
               <v-col cols="4">
-                <v-subheader>携帯電話番号</v-subheader>
-              </v-col>
-              <v-col cols="8">
-                <v-text-field
-                  v-model="m_tel"
-                  label="携帯電話番号"
-                  type="tel"
-                  :rules="[rules.tel]"
-                  hint="ハイフンなしの半角数字をご入力ください"
-                  counter
-                  outlined
-                />
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="4">
-                <v-subheader>FAX番号</v-subheader>
-              </v-col>
-              <v-col cols="8">
-                <v-text-field
-                  v-model="fax"
-                  label="FAX番号"
-                  type="tel"
-                  :rules="[rules.tel]"
-                  hint="ハイフンなしの半角数字をご入力ください"
-                  counter
-                  outlined
-                />
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="4">
                 <v-subheader>
                   第１メールアドレス(ログイン時のIDになります)
                 </v-subheader>

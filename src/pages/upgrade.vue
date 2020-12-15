@@ -8,9 +8,6 @@
         クボタスピアーズ 会員種別・支払い方法登録
       </h2>
       <p class="fnt-w">
-        【お知らせ】​<br />
-        現在、iPhoneからの会員登録に不具合が発生しております。​<br />
-        恐れ入りますが、iPhone以外のデバイスからの登録をお願いいたします。
       </p>
     </header>
     <div class="theme--light v-stepper">
