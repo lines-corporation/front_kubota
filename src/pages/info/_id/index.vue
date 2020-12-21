@@ -6,9 +6,9 @@
           {{ item.subject }}
         </h2>
       </header>
-     
+
 	  <div class="theme--light v-stepper">
-	  	<div class="v-stepper__content">
+	  	<div class="v-stepper__content info-contents">
 	      <p>
 	        {{ item.ymd }}
 	      </p>
@@ -34,3 +34,15 @@ export default {
   },
 }
 </script>
+
+
+<style scoped>
+  /deep/ .image img {
+    max-width: 100%;
+    height: auto;
+  }
+  /deep/ .table {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
